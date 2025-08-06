@@ -17,7 +17,7 @@ function Header() {
              <Link to="/">HOME</Link>
             </li>
             <li className="hover:text-yellow-400 transition-colors duration-200 cursor-pointer">
-              COMPANY
+              <Link to="/about">ABOUT</Link>
             </li>
             <li className="hover:text-yellow-400 transition-colors duration-200 cursor-pointer">
               SERVICES
