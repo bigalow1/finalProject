@@ -2,8 +2,8 @@ import React from "react";
 
 function Home() {
   return (
-    <div className="bg-gradient-to-r from-black via-gray-900 to-black shadow-lg ">
-      <div className="max-w-7xl mx-auto flex items-center justify-between h-[80px] px-8">
+    <div className="bg-gradient-to-r from-black via-gray-900 to-black shadow-lg text-white ">
+      {/* <div className="max-w-7xl mx-auto flex items-center justify-between h-[80px] px-8">
         <div className="flex items-center">
           <h1 className="text-4xl font-extrabold text-white tracking-wide drop-shadow-lg">
             JETMEALS
@@ -33,7 +33,8 @@ function Home() {
             Signup / Login
           </button>
         </div>
-      </div>
+      </div> */}
+      hello
     </div>
   );
 }
