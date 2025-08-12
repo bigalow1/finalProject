@@ -46,39 +46,39 @@ function Restaurants() {
           </h2>
         </div>
      </div>
-      <div className="h-[100px] bg-black bg-opacity-50 flex justify-center items-center">
+      <div className="h-[100px] bg-white bg-opacity-50 flex justify-center items-center">
         <div className="flex justify-center items-center h-full">
-          <h2 className="text-4xl font-bold text-white drop-shadow-lg">
-            Explore Our Delicious Menu
-          </h2>
+           <div className="h-[50px] w-[200%] bg-black rounded-t-lg"><h2 className="text-4xl font-bold text-white drop-shadow-lg">
+           <i> Explore Our Delicious Menu</i>
+          </h2></div>
         </div>  
         
         </div>
         <div className="h-[1000px] bg-black">
-          <div className="  h-[500px] bg-amber-100 gap-10">  
-              <div className="h-[400px] bg-white flex gap-10">
+          <div className="  h-[500px] bg-white gap-10">  
+              <div className="h-[400px] bg-white flex gap-10 items-center justify-center">
               <div className="h-[400px] bg-blue-300 w-[35%] bg-[url(sparg.jpeg)]  bg-cover rounded-full"></div>
               <div className="h-[400px] bg-blue-500 w-[35%]  bg-[url(pinerice.jpeg)]  bg-cover rounded-full"></div>
               <div className="h-[400px] bg-blue-300 w-[35%] bg-[url(Ribs.jpeg)]  bg-cover rounded-full"></div>
               </div>
-             <div className="bg-black h-[100px] gap-10 flex">
-               <section className="h-[100px] w-[35%] bg-black text-white font-bold text-3xl text-center">Delicious <br />Sparghetti with beef</section>
-               <section className="h-[100px] w-[35%] bg-black text-white font-bold text-3xl text-center"> Pineapple <br />Rice</section>
-               <section className="h-[100px] w-[35%] bg-black  text-white font-bold text-3xl text-center">Grilled Meats</section>
+             <div className="bg-pink-50 h-[100px] w-[100%] gap-40 flex items-center justify-center ">
+               <section className="h-[100px] w-[30%] bg-white text-black font-bold text-3xl text-center gap-6">Delicious <br />Sparghetti with beef</section>
+               <section className="h-[100px] w-[30%] bg-white text-black font-bold text-3xl text-center"> Pineapple <br />Rice</section>
+               <section className="h-[100px] w-[30%] bg-white  text-black font-bold text-3xl text-center">Grilled Meats</section>
               
              </div>
               
             </div>
           <div className=" h-[500px] bg-black gap-10">
-            <div className="h-[400px]  bg-pink-200 flex gap-10">
+            <div className="h-[400px]  bg-pink-50 flex gap-10">
               <div className="h-[400px] bg-blue-300 w-[35%] bg-[url(sharwama.jpeg)]  bg-cover rounded-full"></div>
               <div className="h-[400px] bg-blue-500 w-[35%]  bg-[url(desert.jpeg)]  bg-cover rounded-full"></div>
               <div className="h-[400px] bg-blue-300 w-[35%] bg-[url(pasta.jpeg)] rounded-full bg-cover"></div>
             </div>
-            <div className="bg-black h-[100px] gap-10 flex">
-               <section className="h-[100px] w-[35%] bg-black text-white font-bold text-3xl text-center">Delicious <br />Sharwama with beef</section>
-               <section className="h-[100px] w-[35%] bg-black text-white font-bold text-3xl text-center">  <br />ice</section>
-               <section className="h-[100px] w-[35%] bg-black  text-white font-bold text-3xl text-center">Pasta</section>
+            <div className="bg-pink-50 h-[100px] gap-10 flex">
+               <section className="h-[100px] w-[35%] bg-white text-black font-bold text-3xl text-center">Delicious <br />Sharwama with beef</section>
+               <section className="h-[100px] w-[35%] bg-white text-black font-bold text-3xl text-center">  <br />ice</section>
+               <section className="h-[100px] w-[35%] bg-white text-black font-bold text-3xl text-center">Pasta</section>
               
              </div>
             <div></div>
@@ -86,23 +86,23 @@ function Restaurants() {
               
           </div>
       </div>
-      <div className="h-[70px]  bg-pink-200 flex items-center justify-center text-white font-medium text-2xl"><i> HERE ARE SOME OF THE NICE DISHES YOU CAN FOR YOURSELF AND FAMILY</i><button className="text-white font-medium text-2xl bg-amber-500 h-[50px] w-[150px] rounded-full"> see more...</button></div>
-        <div className="h-[70px] bg-black text-white text-3xl text-shadow-amber-100 items-center justify-center flex"><i> Odering your favourite meals is easy with JetMeals! just follow this steps.</i></div>
+      <div className="h-[70px]  bg-pink-50 flex items-center justify-center text-black font-medium text-2xl"><i> HERE ARE SOME OF THE NICE DISHES YOU CAN FOR YOURSELF AND FAMILY</i><button className="text-white font-medium text-2xl bg-amber-500 h-[50px] w-[150px] rounded-full"> see more...</button></div>
+        <div className="h-[70px]   bg-pink-50 text-white text-3xl text-shadow-amber-100 items-center justify-center flex"><div className="h-[70px] w-[80%]   bg-black text-white text-3xl text-shadow-amber-100 items-center justify-center flex"><i> Odering your favourite meals is easy with JetMeals! just follow this steps.</i></div></div>
        <div className="h-[200px] bg-gray-100 flex gap-5">
         <div className="h-[170px] w-[30%] bg-red-400">
-           <section className="h-[70px]  bg-pink-200 flex justify-center items-center"><h1 className="font-extrabold text-6xl text-amber-500"><FaSearchLocation /></h1></section>
+           <section className="h-[70px]  bg-white flex justify-center items-center"><h1 className="font-extrabold text-6xl text-amber-500"><FaSearchLocation /></h1></section>
            <section className="h-[100px] bg-black text-white text-center"><i>Choose a Resturants <br /> Find all resturants available <br />In your zone.</i></section>
         </div>
          <div className="h-[170px] w-[30%] bg-blue-100">
-          <section className="h-[70px]  bg-pink-200 flex justify-center items-center "><h1 className="text-6xl text-center text-red-600"><IoFastFood /></h1></section>
+          <section className="h-[70px]  bg-pink-50 flex justify-center items-center "><h1 className="text-6xl text-center text-red-600"><IoFastFood /></h1></section>
            <section className="h-[100px] text-white bg-black text-center"><i>Order your food <br />Go to order and order your favourite meals</i></section>
          </div>
          <div className="h-[170px] w-[30%] bg-blue-800">
-           <section className="h-[70px]  bg-pink-200 flex justify-center items-center "><h1 className="text-6xl text-red-600"><FaCcMastercard /></h1></section>
+           <section className="h-[70px]  bg-pink-50 flex justify-center items-center "><h1 className="text-6xl text-red-600"><FaCcMastercard /></h1></section>
            <section className="h-[100px] bg-black text-white text-center"> <i>Pay by cash or card <br />its quick and easy,and totally secure. <br />Be rest assured.</i></section>
          </div>
          <div className="h-[170px] w-[30%] bg-blue-200">
-           <section className="h-[70px]   bg-pink-200 flex justify-center items-center "><h1 className="text-6xl text-blue-600"><RiEBike2Line /></h1></section>
+           <section className="h-[70px]   bg-pink-50 flex justify-center items-center "><h1 className="text-6xl text-blue-600"><RiEBike2Line /></h1></section>
            <section className="h-[100px] bg-black text-white text-center"><i>Delivery <br />Relax while we bring your food <br />To your doorstep</i></section>
          </div>
          
