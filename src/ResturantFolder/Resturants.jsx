@@ -1,5 +1,8 @@
 import React from "react";
 import { FaSearchLocation } from "react-icons/fa";
+import { IoFastFood } from "react-icons/io5";
+import { FaCcMastercard } from "react-icons/fa";
+import { RiEBike2Line } from "react-icons/ri";
 
 function Restaurants() {
   return (
@@ -53,7 +56,7 @@ function Restaurants() {
         </div>
         <div className="h-[1000px] bg-black">
           <div className="  h-[500px] bg-amber-100 gap-10">  
-              <div className="h-[400px] bg-black flex gap-10">
+              <div className="h-[400px] bg-white flex gap-10">
               <div className="h-[400px] bg-blue-300 w-[35%] bg-[url(sparg.jpeg)]  bg-cover rounded-full"></div>
               <div className="h-[400px] bg-blue-500 w-[35%]  bg-[url(pinerice.jpeg)]  bg-cover rounded-full"></div>
               <div className="h-[400px] bg-blue-300 w-[35%] bg-[url(Ribs.jpeg)]  bg-cover rounded-full"></div>
@@ -61,39 +64,45 @@ function Restaurants() {
              <div className="bg-black h-[100px] gap-10 flex">
                <section className="h-[100px] w-[35%] bg-black text-white font-bold text-3xl text-center">Delicious <br />Sparghetti with beef</section>
                <section className="h-[100px] w-[35%] bg-black text-white font-bold text-3xl text-center"> Pineapple <br />Rice</section>
-               <section className="h-[100px] w-[35%] bg-black  text-white font-bold text-3xl text-center"></section>
+               <section className="h-[100px] w-[35%] bg-black  text-white font-bold text-3xl text-center">Grilled Meats</section>
               
              </div>
               
             </div>
-          <div className=" h-[400px] bg-black gap-10">
-            <div className="h-[400px] bg-green-300 flex gap-10">
+          <div className=" h-[500px] bg-black gap-10">
+            <div className="h-[400px]  bg-pink-200 flex gap-10">
               <div className="h-[400px] bg-blue-300 w-[35%] bg-[url(sharwama.jpeg)]  bg-cover rounded-full"></div>
               <div className="h-[400px] bg-blue-500 w-[35%]  bg-[url(desert.jpeg)]  bg-cover rounded-full"></div>
               <div className="h-[400px] bg-blue-300 w-[35%] bg-[url(pasta.jpeg)] rounded-full bg-cover"></div>
             </div>
+            <div className="bg-black h-[100px] gap-10 flex">
+               <section className="h-[100px] w-[35%] bg-black text-white font-bold text-3xl text-center">Delicious <br />Sharwama with beef</section>
+               <section className="h-[100px] w-[35%] bg-black text-white font-bold text-3xl text-center">  <br />ice</section>
+               <section className="h-[100px] w-[35%] bg-black  text-white font-bold text-3xl text-center">Pasta</section>
+              
+             </div>
             <div></div>
 
               
           </div>
       </div>
-      <div className="h-[70px] bg-black flex items-center justify-center text-white font-medium text-2xl"><i> HERE ARE SOME OF THE NICE DISHES YOU CAN FOR YOURSELF AND FAMILY</i><button className="text-white font-medium text-2xl bg-amber-500 h-[50px] w-[150px] rounded-full"> see more...</button></div>
+      <div className="h-[70px]  bg-pink-200 flex items-center justify-center text-white font-medium text-2xl"><i> HERE ARE SOME OF THE NICE DISHES YOU CAN FOR YOURSELF AND FAMILY</i><button className="text-white font-medium text-2xl bg-amber-500 h-[50px] w-[150px] rounded-full"> see more...</button></div>
         <div className="h-[70px] bg-black text-white text-3xl text-shadow-amber-100 items-center justify-center flex"><i> Odering your favourite meals is easy with JetMeals! just follow this steps.</i></div>
        <div className="h-[200px] bg-gray-100 flex gap-5">
         <div className="h-[170px] w-[30%] bg-red-400">
-           <section className="h-[70px] bg-amber-100 flex justify-center items-center"><h1 ><FaSearchLocation /></h1></section>
+           <section className="h-[70px]  bg-pink-200 flex justify-center items-center"><h1 className="font-extrabold text-6xl text-amber-500"><FaSearchLocation /></h1></section>
            <section className="h-[100px] bg-black text-white text-center"><i>Choose a Resturants <br /> Find all resturants available <br />In your zone.</i></section>
         </div>
          <div className="h-[170px] w-[30%] bg-blue-100">
-          <section className="h-[70px] bg-amber-100"></section>
+          <section className="h-[70px]  bg-pink-200 flex justify-center items-center "><h1 className="text-6xl text-center text-red-600"><IoFastFood /></h1></section>
            <section className="h-[100px] text-white bg-black text-center"><i>Order your food <br />Go to order and order your favourite meals</i></section>
          </div>
          <div className="h-[170px] w-[30%] bg-blue-800">
-           <section className="h-[70px] bg-amber-100"></section>
+           <section className="h-[70px]  bg-pink-200 flex justify-center items-center "><h1 className="text-6xl text-red-600"><FaCcMastercard /></h1></section>
            <section className="h-[100px] bg-black text-white text-center"> <i>Pay by cash or card <br />its quick and easy,and totally secure. <br />Be rest assured.</i></section>
          </div>
          <div className="h-[170px] w-[30%] bg-blue-200">
-           <section className="h-[70px] bg-amber-100"></section>
+           <section className="h-[70px]   bg-pink-200 flex justify-center items-center "><h1 className="text-6xl text-blue-600"><RiEBike2Line /></h1></section>
            <section className="h-[100px] bg-black text-white text-center"><i>Delivery <br />Relax while we bring your food <br />To your doorstep</i></section>
          </div>
          
@@ -108,17 +117,17 @@ function Restaurants() {
          <div className="h-[300px] w-[30%] bg-blue-800"></div>
       </div>
       <div className="h-[50px] bg-gray-400"></div>
-      <div className="h-[400px] bg-white flex gap-5">
-          <div className="h-[400px] w-[35%] bg-orange-300">
-              <div className="h-[200px] bg-pink-300"></div>
+      <div className="h-[400px]  bg-green-300 flex gap-3">
+          <div className="h-[600px] w-[35%] bg-orange-300">
+              <div className="h-[400px]  bg-pink-200 oo"></div>
               <div className="h-[200px] bg-black"><i><h1 className="text-white text-3xl text-center">Become a rider</h1 > <h1 className="text-white text-1xl text-center">Enjoy flexibility ,freedom and competitive <br />earnings by delivering through Jetmeals. <br /> Register  and start earning <br /><button className="bg-yellow-400 h-[60px] w-[100px] text-white text-1xl rounded-full">Register Here</button></h1></i></div>
           </div>
-          <div className="h-[400px] w-[35%] bg-orange-700">
-              <div className="h-[200px] bg-pink-300"></div>
+          <div className="h-[600px] w-[35%] bg-orange-700">
+              <div className="h-[400px]  bg-pink-200 obi"></div>
               <div className="h-[200px] bg-black"><i><h1 className="text-white text-3xl text-center">Become a Partner</h1 > <h1 className="text-white text-1xl text-center">Let's work together to bring the best <br />food experiences to our customers. <br />Join us as a partner  <br /><button className="bg-yellow-400 h-[60px] w-[100px] text-white text-1xl rounded-full">Register Here</button></h1></i></div>
           </div>
-          <div className="h-[400px] w-[35%] bg-orange-300">
-              <div className="h-[200px] bg-pink-300"></div>
+          <div className="h-[600px] w-[35%] bg-orange-300">
+              <div className="h-[400px]  bg-pink-200 oop"></div>
               <div className="h-[200px] bg-black"><i><h1 className="text-white text-3xl text-center">Add your Resturant</h1 > <h1 className="text-white text-1xl text-center">Expand your food business<br />by reaching your audience target. <br />Join us to achieve that ambition.  <br /><button className="bg-yellow-400 h-[60px] w-[100px] text-white text-1xl rounded-full">Register Here</button></h1></i></div>
           </div>
       </div>

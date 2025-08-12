@@ -21,6 +21,24 @@
   background-position: center;
   background-repeat: no-repeat;
 }
+.oo{
+  background-image: url("rider.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.obi{
+  background-image: url("partner.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.oop{
+  background-image: url("career.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
 .kk{
   
   width: 100%;
