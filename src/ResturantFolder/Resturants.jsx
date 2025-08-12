@@ -29,8 +29,8 @@ function Restaurants() {
           </ol>
         </nav>
         <div className="flex items-center">
-          <button className="bg-yellow-400 hover:bg-yellow-500 text-black text-lg font-semibold py-2 px-6 rounded-full shadow transition-colors duration-200">
-            Signup / Login
+          <button className="bg-yellow-400 hover:bg-yellow-500 text-white text-lg font-semibold py-2 px-6 rounded-full shadow transition-colors duration-200">
+            Signup/Login
           </button>
         </div>
       </div>
@@ -39,7 +39,7 @@ function Restaurants() {
      <div className="h-[700px]  bg-[url(jollof.jpeg)] ok bg-cover  ">
         <div className="flex  justify-center items-center h-full">
           <h2 className="text-5xl font-bold text-white drop-shadow-lg mt-20">
-           <marquee behavior="" direction=""><h1 className="text-center text-black"> Welcome to JetMeals</h1> <br /><h1 className="text-black">Delivery made possible to your doorstep</h1></marquee>
+           <marquee behavior="" direction=""><h1 className="text-center text-white"> Welcome to JetMeals</h1> <br /><h1 className="text-white">Delivery made possible to your doorstep</h1></marquee>
           </h2>
         </div>
      </div>
@@ -82,30 +82,45 @@ function Restaurants() {
        <div className="h-[200px] bg-gray-100 flex gap-5">
         <div className="h-[170px] w-[30%] bg-red-400">
            <section className="h-[70px] bg-amber-100 flex justify-center items-center"><h1 ><FaSearchLocation /></h1></section>
-           <section className="h-[100px] bg-black text-white "><i>Choose a Resturants <br /> Find all resturants available <br />In your zone.</i></section>
+           <section className="h-[100px] bg-black text-white text-center"><i>Choose a Resturants <br /> Find all resturants available <br />In your zone.</i></section>
         </div>
          <div className="h-[170px] w-[30%] bg-blue-100">
           <section className="h-[70px] bg-amber-100"></section>
-           <section className="h-[100px] text-white bg-black"><i>Order your food <br />Go to order and order your favourite meals</i></section>
+           <section className="h-[100px] text-white bg-black text-center"><i>Order your food <br />Go to order and order your favourite meals</i></section>
          </div>
          <div className="h-[170px] w-[30%] bg-blue-800">
            <section className="h-[70px] bg-amber-100"></section>
-           <section className="h-[100px] bg-black text-white"> <i>Pay by cash or card <br />its quick and easy,and totally secure. <br />Be rest assured.</i></section>
+           <section className="h-[100px] bg-black text-white text-center"> <i>Pay by cash or card <br />its quick and easy,and totally secure. <br />Be rest assured.</i></section>
          </div>
          <div className="h-[170px] w-[30%] bg-blue-200">
            <section className="h-[70px] bg-amber-100"></section>
-           <section className="h-[100px] bg-black text-white"><i>Delivery <br />Relax while we bring your food <br />To your doorstep</i></section>
+           <section className="h-[100px] bg-black text-white text-center"><i>Delivery <br />Relax while we bring your food <br />To your doorstep</i></section>
          </div>
          
        </div>
       <div className="h-[300px] bg-amber-300 flex">
-         <div className="h-[300px] w-[30%] bg-blue-800"></div>
+          <div className="h-[300px] w-[30%] bg-blue-800"></div>
          <div className="h-[300px] w-[30%] bg-blue-100"></div>
          <div className="h-[300px] w-[30%] bg-blue-800"></div>
          <div className="h-[300px] w-[30%] bg-blue-200"></div>
          <div className="h-[300px] w-[30%] bg-blue-800"></div>
           <div className="h-[300px] w-[30%] bg-blue-200"></div>
          <div className="h-[300px] w-[30%] bg-blue-800"></div>
+      </div>
+      <div className="h-[50px] bg-gray-400"></div>
+      <div className="h-[400px] bg-white flex gap-5">
+          <div className="h-[400px] w-[35%] bg-orange-300">
+              <div className="h-[200px] bg-pink-300"></div>
+              <div className="h-[200px] bg-black"><i><h1 className="text-white text-3xl text-center">Become a rider</h1 > <h1 className="text-white text-1xl text-center">Enjoy flexibility ,freedom and competitive <br />earnings by delivering through Jetmeals. <br /> Register  and start earning <br /><button className="bg-yellow-400 h-[60px] w-[100px] text-white text-1xl rounded-full">Register Here</button></h1></i></div>
+          </div>
+          <div className="h-[400px] w-[35%] bg-orange-700">
+              <div className="h-[200px] bg-pink-300"></div>
+              <div className="h-[200px] bg-black"><i><h1 className="text-white text-3xl text-center">Become a Partner</h1 > <h1 className="text-white text-1xl text-center">Let's work together to bring the best <br />food experiences to our customers. <br />Join us as a partner  <br /><button className="bg-yellow-400 h-[60px] w-[100px] text-white text-1xl rounded-full">Register Here</button></h1></i></div>
+          </div>
+          <div className="h-[400px] w-[35%] bg-orange-300">
+              <div className="h-[200px] bg-pink-300"></div>
+              <div className="h-[200px] bg-black"><i><h1 className="text-white text-3xl text-center">Add your Resturant</h1 > <h1 className="text-white text-1xl text-center">Expand your food business<br />by reaching your audience target. <br />Join us to achieve that ambition.  <br /><button className="bg-yellow-400 h-[60px] w-[100px] text-white text-1xl rounded-full">Register Here</button></h1></i></div>
+          </div>
       </div>
    </>
   );
