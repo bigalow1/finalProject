@@ -1,10 +1,43 @@
 @import "tailwindcss";
 
-.ok{
-  height: 300px;
-  width: 300px;
+/* .pp {
+  background-image: url("FriedRice1.jpeg");
+  background-size: contain;
+} */
+.pp {
+  background-image: url("FriedRice1.jpeg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
-.kk{
-  
-  width: 100%;
+
+.aa {
+  background-image: url("Shawarma2.jpeg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.bb {
+  background-image: url("Egusi1.jpeg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.cc {
+  background-image: url("Akara1.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.ss{
+  font-family: 'impact';
+  font-size: 50px;
+  text-align: center;
+}
+
+.ab{
+  transform: scaleX(0.9);
 }

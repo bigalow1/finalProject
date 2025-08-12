@@ -1,51 +1,77 @@
 import React from "react";
+import { IoPersonAddOutline } from "react-icons/io5";
+import { CiSearch } from "react-icons/ci";
+import { AiOutlineShoppingCart } from "react-icons/ai";
 
 function Home() {
   return (
-   <>
-     <div className="bg-gradient-to-r from-black via-gray-900 to-black shadow-lg text-white  fixed top-0 left-0 w-full z-50">
-      <div className="max-w-7xl mx-auto flex items-center justify-between h-[80px] px-8">
-        <div className="flex items-center">
-          <h1 className="text-4xl font-extrabold text-white tracking-wide drop-shadow-lg">
-            JETMEALS
-          </h1>
-        </div>
-        <nav className="flex-1 flex items-center justify-center ">
-          <ol className="flex gap-12 text-xl font-medium text-white">
-            <li className="hover:text-yellow-400 transition-colors duration-200 cursor-pointer">
-              HOME
-            </li>
-            <li className="hover:text-yellow-400 transition-colors duration-200 cursor-pointer">
-            ABOUT
-            </li>
-            <li className="hover:text-yellow-400 transition-colors duration-200 cursor-pointer">
-              SERVICES
-            </li>
-            <li className="hover:text-yellow-400 transition-colors duration-200 cursor-pointer">
-              MENU
-            </li>
-            <li className="hover:text-yellow-400 transition-colors duration-200 cursor-pointer">
-              ABOUT US
-            </li>
-          </ol>
-        </nav>
-        <div className="flex items-center">
-          <button className="bg-yellow-400 hover:bg-yellow-500 text-black text-lg font-semibold py-2 px-6 rounded-full shadow transition-colors duration-200">
-            Signup / Login
+    <div>
+      <div className="h-[80px] grid grid-cols-[30%_40%_30%] bg-gradient-to-b from-rose-200 to">
+        <div className=" w-[full] flex justify-start pt-2 pl-4 bg-green">
+          <button className="hover:cursor-pointer">
+            <img className="h-[70px]" src="Logo.png" alt="" />
           </button>
         </div>
-      </div>
-      
-    </div>
-     <div className="h-[700px] bg-amber-500 bg-[url(food.png)] kk bg-cover  ">
-        <div className="flex justify-center  h-full">
-          <h2 className="text-5xl font-bold text-white drop-shadow-lg mt-20">
-           <marquee behavior="" direction=""><h1 className="text-center"> Welcome to JetMeals</h1> <br />Delivery made possible to your doorstep</marquee>
-          </h2>
+        <div className="bg-pink flex text-[15px] items-center">
+          <main className=" w-[100%] flex justify-between gap-6 bg-blue text-black-500 ">
+            <span className="hover:cursor-pointer hover:text-[#e81f1f]">About Us</span>
+            <span className="hover:cursor-pointer hover:text-[#e81f1f]">Resturants</span>
+            <span className="hover:cursor-pointer hover:text-[#e81f1f]">Menu</span>
+            <span className=" hover:cursor-pointer flex items-center gap-3 hover:text-[#e81f1f]">
+              <CiSearch />{" "}
+              <input
+                type="text"
+                className="outline-red-500 w-[120px]"
+                placeholder="Search..."
+              />
+            </span>
+          </main>
         </div>
-     </div>
-      <div className="h-[100px] bg-amber-600"></div>
-   </>
+        <div className="bg-orange text-white flex justify-end pr-4 items-center text-[15px] gap-2">
+          <button className="text-[20px] hover:cursor-pointer text-black">
+            <AiOutlineShoppingCart />
+          </button>
+          <div className="h-[50px] w-[100px] flex bg-[#E81F1F] rounded-full justify-center items-center gap-2 hover:text-[#E81F1F] hover:bg-white">
+            <span className="">
+              <IoPersonAddOutline />
+            </span>
+            <span className="font-bold">Login</span>
+          </div>
+        </div>
+      </div>
+
+      <div className="h-[500px] w-[100%] bg-white grid grid-cols-[30%_40%_30%]">
+        <main className="h-[inherit] bg-blue gap-2 flex flex-col justify-between">
+          <div className="h-[45%] bg-red-400 pp rounded-tr-2xl rounded-br-2xl">
+            {" "}
+          </div>
+          <div className="h-[52%] bg-pink-400 aa rounded-tr-2xl rounded-br-2xl"></div>
+        </main>
+        <main className="h-[inherit] bg-red">
+          <div className="bg-amber h-[60%] ss">
+            <p>DELICIOUS MEALS DELIVERED FROM KITCHEN TO YOUR DOORSTEP</p>
+          </div>
+          <div className="bg-blue h-[40%] flex gap-3 justify-center items-center">
+            <main className="h-[150px] w-[140px] bg-green flex flex-col items-center hover:cursor-pointer hover:scale-110 transition-all duration-500 hover:text-[#e81f1f]">
+              <p className="h-32 w-32 bg-white rounded-full ab shadow-lime-400 flex items-center justify-center hover:bg-[#e81f1f]">
+                <img src="fast-food.png" alt="" className="h-20" />
+              </p>
+              <p className="text-xl font-sans font-semibold">Order Now</p>
+            </main>
+            <main className="h-[150px] w-[140px] bg-green flex flex-col items-center hover:cursor-pointer hover:scale-110 transition-all duration-500 hover:text-[#e81f1f]">
+              <p className="h-32 w-32 bg-white rounded-full ab shadow-lime-400 flex items-center justify-center hover:bg-[#e81f1f]">
+                <img src="delivery-man.png" alt="" className="h-20" />
+              </p>
+              <p className="text-[18px] font-sans font-semibold">Package Delivery</p>
+            </main>
+          </div>
+        </main>
+        <main className="h-[inherit] bg-green flex flex-col justify-between ">
+          <div className="h-[60%] bg-red-400 bb rounded-tl-2xl rounded-bl-2xl"></div>
+          <div className="h-[37%] bg-pink-400 cc rounded-tl-2xl rounded-bl-2xl"></div>
+        </main>
+      </div>
+    </div>
   );
 }
 
