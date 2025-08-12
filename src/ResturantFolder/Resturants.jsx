@@ -16,30 +16,30 @@ function Restaurants() {
         </div>
         <nav className="flex-1 flex items-center justify-center ">
           <ol className="flex gap-12 text-xl font-medium text-white">
-            <li className="hover:text-yellow-400 transition-colors duration-200 cursor-pointer">
+            <li className="hover:text-red-600 transition-colors duration-200 cursor-pointer">
             <i>  FOODS</i>
             </li>
-            <li className="hover:text-yellow-400 transition-colors duration-200 cursor-pointer">
+            <li className="hover:text-red-600 transition-colors duration-200 cursor-pointer">
             <i>ORDER</i>
             </li>
-            <li className="hover:text-yellow-400 transition-colors duration-200 cursor-pointer">
+            <li className="hover:text-red-600 transition-colors duration-200 cursor-pointer">
               <i> SERVICES</i>
             </li>
-            <li className="hover:text-yellow-400 transition-colors duration-200 cursor-pointer">
+            <li className="hover:text-red-600 transition-colors duration-200 cursor-pointer">
               <i>FAQS</i>
             </li>
       
           </ol>
         </nav>
         <div className="flex items-center">
-          <button className="bg-yellow-400 hover:bg-yellow-500 text-white text-lg font-semibold py-2 px-6 rounded-full shadow transition-colors duration-200">
+          <button className="bg-red-600 hover:bg-yellow-500 text-white text-lg font-semibold py-2 px-6 rounded-full shadow transition-colors duration-200">
             Signup/Login
           </button>
         </div>
       </div>
       
     </div>
-     <div className="h-[700px]  bg-[url(jollof.jpeg)] ok bg-cover  ">
+     <div className="h-[300px]  bg-[url(bg.jpg)] ok bg-cover  ">
         <div className="flex  justify-center items-center h-full">
           <h2 className="text-5xl font-bold text-white drop-shadow-lg mt-20">
            <marquee behavior="" direction=""><h1 className="text-center text-white"> Welcome to JetMeals</h1> <br /><h1 className="text-white">Delivery made possible to your doorstep</h1></marquee>
