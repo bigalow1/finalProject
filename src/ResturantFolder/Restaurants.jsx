@@ -59,6 +59,7 @@ function Restaurants() {
                 <Link to="/Restaurants">
                   {" "}
                   <i>RESTAURANTS</i>
+                   <span className="block h-1 bg-red-500 rounded-full mt-1"></span>
                 </Link>
               </a>
   

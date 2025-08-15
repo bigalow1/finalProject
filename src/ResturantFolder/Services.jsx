@@ -1,10 +1,9 @@
-import React from 'react'
+import React from "react";
 import { Link } from "react-router-dom";
 
 function Services() {
   return (
     <>
-      
       <div className="bg-gradient-to-r from-black via-gray-900 to-black shadow-lg text-white  fixed top-0 left-0 w-full z-50">
         <div className="max-w-7xl mx-auto flex items-center justify-between h-[80px] px-8">
           <div className="flex items-center">
@@ -20,10 +19,12 @@ function Services() {
                   <i>RESTAURANTS</i>
                 </Link>
               </a>
-  
-              <li className="hover:text-red-600  hover:cursor-pointer hover:scale-110 transition-all duration-500 cursor-pointer">
+
+              <li className="hover:text-red-600 hover:cursor-pointer hover:scale-110 transition-all duration-500 cursor-pointer relative">
                 <Link to="/services">
                   <i> SERVICES</i>
+                  
+                  <span className="block h-1 bg-red-500 rounded-full mt-1"></span>
                 </Link>
               </li>
               <li className="hover:text-red-600  hover:cursor-pointer hover:scale-110 transition-all duration-500 cursor-pointer">
@@ -41,11 +42,9 @@ function Services() {
           </div>
         </div>
       </div>
-      <div className='h-[300px] bg-amber-200'></div>
-    
-    
+      <div className="h-[300px] bg-amber-200"></div>
     </>
-  )
+  );
 }
 
-export default Services
+export default Services;
