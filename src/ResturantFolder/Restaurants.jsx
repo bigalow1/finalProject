@@ -30,6 +30,14 @@ function Restaurants() {
     return () => clearInterval(interval);
   }, [slides.length]);
 
+  let [holdData,setHoldData] = useState();
+
+    useEffect(()=>{
+        fetch('https://fakestoreapi.com/products/1')
+            .then(response => response.json())
+            .then(data => setHoldData(data));
+    },[])
+
   return (
     <>
       <div className="bg-gradient-to-r from-black via-gray-900 to-black shadow-lg text-white  fixed top-0 left-0 w-full z-50">
@@ -40,24 +48,26 @@ function Restaurants() {
             </h1>
           </div>
           <nav className="flex-1 flex items-center justify-center ">
-            <ol className="flex gap-12 text-xl font-medium text-white">
-              <a className="hover:text-red-600 transition-colors duration-200 cursor-pointer">
+            <ol className="flex  hover:cursor-pointer gap-12 text-xl font-medium text-white">
+              <a className="hover:text-red-600   hover:cursor-pointer hover:scale-110 transition-all-color duration-500 cursor-pointer">
                 <Link to="/">
                   {" "}
-                  <i>RESTURANTS</i>
+                  <i>ABOUT US</i>
                 </Link>
               </a>
-              <li className="hover:text-red-600 transition-colors duration-200 cursor-pointer">
-                <Link to="/order">
-                  <i>ORDER</i>
+              <a className="hover:text-red-600   hover:cursor-pointer hover:scale-110 transition-all-color duration-500 cursor-pointer">
+                <Link to="/Restaurants">
+                  {" "}
+                  <i>RESTAURANTS</i>
                 </Link>
-              </li>
-              <li className="hover:text-red-600 transition-colors duration-200 cursor-pointer">
-                <Link to="/service">
+              </a>
+  
+              <li className="hover:text-red-600  hover:cursor-pointer hover:scale-110 transition-all duration-500 cursor-pointer">
+                <Link to="/services">
                   <i> SERVICES</i>
                 </Link>
               </li>
-              <li className="hover:text-red-600 transition-colors duration-200 cursor-pointer">
+              <li className="hover:text-red-600  hover:cursor-pointer hover:scale-110 transition-all duration-500 cursor-pointer">
                 <Link to="/Faqs">
                   {" "}
                   <i>FAQS</i>
@@ -66,7 +76,7 @@ function Restaurants() {
             </ol>
           </nav>
           <div className="flex items-center">
-            <button className="bg-red-600 hover:bg-yellow-500 text-white text-lg font-semibold py-2 px-6 rounded-full shadow transition-colors duration-200">
+            <button className="bg-red-600 hover:bg-black text-white text-lg font-semibold py-2 px-6 rounded-full shadow  hover:cursor-pointer hover:scale-110 transition-all duration-500">
               <i>Signup/Login</i>
             </button>
           </div>
@@ -87,7 +97,7 @@ function Restaurants() {
       </div>
       <div className="h-[100px] bg-white bg-opacity-50 flex justify-center items-center">
         <div className="flex justify-center items-center h-full">
-          <div className="h-[50px] w-[200%]  bg-gradient-to-r from-pink-100 to-amber-100 rounded-t-lg">
+          <div className="h-[50px] w-[200%]  hover:cursor-pointer hover:scale-110 transition-all duration-500  bg-gradient-to-r from-pink-100 to-amber-100 rounded-t-lg">
             <h2 className="text-4xl font-bold text-black drop-shadow-lg">
               <i> Explore Our Delicious Menu</i>
             </h2>
@@ -139,7 +149,7 @@ function Restaurants() {
           <div></div>
         </div>
       </div>
-      <div className="h-[70px] bg-gradient-to-r from-pink-200 via-amber-100 to-pink-100 flex items-center justify-center text-black font-semibold text-2xl shadow-md">
+      <div className="h-[70px] hover:animate-bounce  bg-gradient-to-r from-pink-200 via-amber-100 to-pink-100 flex items-center justify-center text-black font-semibold text-2xl shadow-md">
         <i className="mr-6">
           HERE ARE SOME OF THE NICE DISHES YOU CAN ENJOY WITH YOUR FAMILY
         </i>
@@ -148,8 +158,8 @@ function Restaurants() {
         </button>
       </div>
       <div className="h-[70px] bg-gradient-to-r from-pink-100 via-amber-100 to-pink-200 flex items-center justify-center">
-        <div className="h-[60px] w-[80%]  bg-gradient-to-r from-pink-100 to-amber-100 rounded-xl flex items-center justify-center shadow-lg">
-          <i className="text-black text-2xl md:text-3xl tracking-wide">
+        <div className="h-[60px] w-[80%]  hover:cursor-pointer hover:scale-110 transition-all duration-500 bg-gradient-to-r to-amber-100 rounded-xl flex items-center justify-center shadow-lg">
+          <i className="text-black  hover:cursor-pointer hover:scale-110  hover:text-red-600 transition-colors duration-200 cursor-pointer text-2xl md:text-3xl tracking-wide">
             Ordering your favourite meals is easy with JetMeals! Just follow
             these steps.
           </i>
@@ -157,12 +167,12 @@ function Restaurants() {
       </div>
       <div className="h-[220px] bg-gradient-to-r from-amber-50 via-pink-50 to-amber-100 flex gap-8 px-8 py-4 justify-center items-center">
         <div className="h-[180px] w-[22%] bg-white rounded-2xl shadow-lg flex flex-col">
-          <section className="h-[70px] bg-gradient-to-r from-amber-100 to-pink-100 flex justify-center items-center rounded-t-2xl">
+          <section className="h-[70px]  hover:cursor-pointer hover:scale-110 transition-all duration-500 bg-gradient-to-r from-amber-100 to-pink-100 flex justify-center items-center rounded-t-2xl">
             <h1 className="font-extrabold text-6xl text-amber-500">
               <FaSearchLocation />
             </h1>
           </section>
-          <section className="flex-1 bg-gradient-to-r from-pink-100 to-amber-100 text-black text-center flex flex-col justify-center rounded-b-2xl px-2">
+          <section className="flex-1  hover:cursor-pointer hover:scale-110 transition-all duration-500 bg-gradient-to-r from-pink-100 to-amber-100 text-black text-center flex flex-col justify-center rounded-b-2xl px-2">
             <i>
               Choose a Restaurant
               <br />
@@ -173,12 +183,12 @@ function Restaurants() {
           </section>
         </div>
         <div className="h-[180px] w-[22%] bg-white rounded-2xl shadow-lg flex flex-col">
-          <section className="h-[70px] bg-gradient-to-r from-pink-100 to-amber-100 flex justify-center items-center rounded-t-2xl">
+          <section className="h-[70px]  hover:cursor-pointer hover:scale-110 transition-all duration-500 bg-gradient-to-r from-pink-100 to-amber-100 flex justify-center items-center rounded-t-2xl">
             <h1 className="text-6xl text-center text-red-600">
               <IoFastFood />
             </h1>
           </section>
-          <section className="flex-1 bg-gradient-to-r from-pink-100 to-amber-100 text-black text-center flex flex-col justify-center rounded-b-2xl px-2">
+          <section className="flex-1  hover:cursor-pointer hover:scale-110 transition-all duration-500 bg-gradient-to-r from-pink-100 to-amber-100 text-black text-center flex flex-col justify-center rounded-b-2xl px-2">
             <i>
               Order your food
               <br />
@@ -187,12 +197,12 @@ function Restaurants() {
           </section>
         </div>
         <div className="h-[180px] w-[22%] bg-white rounded-2xl shadow-lg flex flex-col">
-          <section className="h-[70px] bg-gradient-to-r from-amber-100 to-pink-100 flex justify-center items-center rounded-t-2xl">
+          <section className="h-[70px]  hover:cursor-pointer hover:scale-110 transition-all duration-500 bg-gradient-to-r from-amber-100 to-pink-100 flex justify-center items-center rounded-t-2xl">
             <h1 className="text-6xl text-red-600">
               <FaCcMastercard />
             </h1>
           </section>
-          <section className="flex-1 bg-gradient-to-r from-pink-100 to-amber-100 text-black text-center flex flex-col justify-center rounded-b-2xl px-2">
+          <section className="flex-1 bg-gradient-to-r  hover:cursor-pointer hover:scale-110 transition-all duration-500 from-pink-100 to-amber-100 text-black text-center flex flex-col justify-center rounded-b-2xl px-2">
             <i>
               Pay by cash or card
               <br />
@@ -203,12 +213,12 @@ function Restaurants() {
           </section>
         </div>
         <div className="h-[180px] w-[22%] bg-white rounded-2xl shadow-lg flex flex-col">
-          <section className="h-[70px] bg-gradient-to-r from-pink-100 to-amber-100 flex justify-center items-center rounded-t-2xl">
+          <section className="h-[70px] bg-gradient-to-r from-pink-100 to-amber-100  hover:cursor-pointer hover:scale-110 transition-all duration-700 flex justify-center items-center rounded-t-2xl">
             <h1 className="text-6xl text-blue-600">
               <RiEBike2Line />
             </h1>
           </section>
-          <section className="flex-1  bg-gradient-to-r from-pink-100 to-amber-100 text-black text-center flex flex-col justify-center rounded-b-2xl px-2">
+          <section className="flex-1  hover:cursor-pointer hover:scale-110 transition-all duration-500 bg-gradient-to-r from-pink-100 to-amber-100 text-black text-center flex flex-col justify-center rounded-b-2xl px-2">
             <i>
               Delivery
               <br />
@@ -236,10 +246,10 @@ function Restaurants() {
         </div>
       </div>
       <div className="h-[50px] bg-red-500 bg-blend-darken flex justify-center items-center text-3xl text-white "><i>You can order from any Resturant of your choice</i></div>
-      <div className="h-[400px]  bg-green-300 flex gap-3">
+      <div className="h-[600px] bg-gradient-to-r from-pink-100 to-amber-100 flex gap-3">
         <div className="h-[600px] w-[35%] bg-orange-300">
           <div className="h-[400px]  bg-pink-200 oo"></div>
-          <div className="h-[200px] bg-black">
+          <div className="h-[200px] bg-red-600">
             <i>
               <h1 className="text-white text-3xl text-center">
                 Become a rider
@@ -248,7 +258,7 @@ function Restaurants() {
                 Enjoy flexibility ,freedom and competitive <br />
                 earnings by delivering through Jetmeals. <br /> Register and
                 start earning <br />
-                <button className="bg-yellow-400 h-[60px] w-[100px] text-white text-1xl rounded-full">
+                <button className="bg-yellow-400 h-[60px] w-[100px] text-white text-1xl rounded-full  hover:cursor-pointer hover:scale-110 transition-all duration-500">
                   Register Here
                 </button>
               </h1>
@@ -256,8 +266,8 @@ function Restaurants() {
           </div>
         </div>
         <div className="h-[600px] w-[35%] bg-orange-700">
-          <div className="h-[400px]  bg-pink-200 obi"></div>
-          <div className="h-[200px] bg-black">
+          <div className="h-[400px]  bg-pink-200 oop"></div>
+          <div className="h-[200px] bg-red-600">
             <i>
               <h1 className="text-white text-3xl text-center">
                 Become a Partner
@@ -266,7 +276,7 @@ function Restaurants() {
                 Let's work together to bring the best <br />
                 food experiences to our customers. <br />
                 Join us as a partner <br />
-                <button className="bg-yellow-400 h-[60px] w-[100px] text-white text-1xl rounded-full">
+                <button className="bg-yellow-400 h-[60px] w-[100px] text-white text-1xl rounded-full  hover:cursor-pointer hover:scale-110 transition-all duration-500">
                   Register Here
                 </button>
               </h1>
@@ -274,18 +284,18 @@ function Restaurants() {
           </div>
         </div>
         <div className="h-[600px] w-[35%] bg-orange-300">
-          <div className="h-[400px]  bg-pink-200 oop"></div>
-          <div className="h-[200px] bg-black">
+          <div className="h-[400px]  bg-pink-200 obi"></div>
+          <div className="h-[200px] bg-red-600">
             <i>
               <h1 className="text-white text-3xl text-center">
-                Add your Resturant
+                Add your Restaurant
               </h1>{" "}
               <h1 className="text-white text-1xl text-center">
                 Expand your food business
                 <br />
                 by reaching your audience target. <br />
                 Join us to achieve that ambition. <br />
-                <button className="bg-yellow-400 h-[60px] w-[100px] text-white text-1xl rounded-full">
+                <button className="bg-yellow-400 h-[60px] w-[100px] text-white text-1xl rounded-full  hover:cursor-pointer hover:scale-110 transition-all duration-500">
                   Register Here
                 </button>
               </h1>

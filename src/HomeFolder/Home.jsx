@@ -2,6 +2,7 @@ import React from "react";
 import { IoPersonAddOutline } from "react-icons/io5";
 import { CiSearch } from "react-icons/ci";
 import { AiOutlineShoppingCart } from "react-icons/ai";
+import { Link } from "react-router-dom";
 
 function Home() {
   return (
@@ -14,9 +15,9 @@ function Home() {
         </div>
         <div className="bg-pink flex text-[15px] items-center">
           <main className=" w-[100%] flex justify-between gap-6 bg-blue text-black-500 ">
-            <span className="hover:cursor-pointer hover:text-[#e81f1f]">About Us</span>
-            <span className="hover:cursor-pointer hover:text-[#e81f1f]">Resturants</span>
-            <span className="hover:cursor-pointer hover:text-[#e81f1f]">Menu</span>
+            <span className="hover:cursor-pointer hover:text-[#e81f1f] text-1xl font-medium">ABOUT US</span>
+            <Link to="/Restaurants" className="hover:cursor-pointer hover:text-[#e81f1f] text-1xl font-medium">RESTAURANTS</Link>
+            <span className="hover:cursor-pointer hover:text-[#e81f1f] text-1xl font-medium">MENU</span>
             <span className=" hover:cursor-pointer flex items-center gap-3 hover:text-[#e81f1f]">
               <CiSearch />{" "}
               <input

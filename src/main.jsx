@@ -4,7 +4,9 @@ import './index.css'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Home from './HomeFolder/Home.jsx'
 import About from './AboutFolder/About.jsx'
-import Restaurants from './ResturantFolder/Resturants.jsx'
+import Restaurants from './ResturantFolder/Restaurants.jsx'
+import Services from './ResturantFolder/Services.jsx'
+import Footer from './AboutFolder/Footer.jsx'
 
 
 createRoot(document.getElementById('root')).render(
@@ -12,8 +14,10 @@ createRoot(document.getElementById('root')).render(
     <BrowserRouter>
       <Routes>
       <Route path="/" element={<Home />} />
-      <Route path="/Resturants" element={<Restaurants />} />
+      <Route path="/Restaurants" element={<Restaurants />} />
+      <Route path="/Services" element={<Services />} />
       </Routes>
+      <Footer/>
     </BrowserRouter>
   </StrictMode>
 );
