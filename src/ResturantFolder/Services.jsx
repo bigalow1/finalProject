@@ -40,7 +40,7 @@ function Services() {
         </div>
       </div>
 
-      <div className="h-[300px]  bg-gradient-to-r from-black-200 to-red-500 flex flex-col justify-center items-center pt-[80px]">
+      <div className="h-[300px]  bg-gradient-to-r from-black-200 to-red-500 bg-blend-darken flex flex-col justify-center items-center pt-[80px]">
         <h2 className="text-5xl font-bold text-white mb-4">Our Services</h2>
         <p className="text-xl text-white max-w-2xl text-center">
           At JetMeals, we’re dedicated to making your food experience seamless
