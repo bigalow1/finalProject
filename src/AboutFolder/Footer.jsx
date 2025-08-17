@@ -5,7 +5,7 @@ function Footer() {
   return (
 
     <>
-     <div className='h-[300px] bg-black mt-6'>
+     <div className='h-[300px] bg-black '>
         <div className='h-[70px] bg-black flex justify-center items-center gap-1'>
              <h1 className='h-[70px] w-[30%] bg-black text-3xl font-bold flex justify-around text-white'><i>Jetmeals</i> <i className='text-2xl'>Company</i></h1>
              <h1  className='h-[70px] w-[30%] bg-black text-2xl font-bold flex justify-around text-white text-center'><i>Locations</i></h1>
@@ -68,7 +68,8 @@ function Footer() {
                     <li className="hover:text-red-600  hover:cursor-pointer hover:scale-110 transition-all duration-500 cursor-pointer">
                     <Link to="/Restaurants">
                         {" "}
-                    <i>Contact Us</i>
+                    <i>Contact Us</i> <br />
+                     +234567890
                     </Link>
                 </li>
                     <li className="hover:text-red-600  hover:cursor-pointer hover:scale-110 transition-all duration-500 cursor-pointer">

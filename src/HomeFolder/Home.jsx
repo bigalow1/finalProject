@@ -15,7 +15,9 @@ function Home() {
         </div>
         <div className="bg-pink flex text-[15px] items-center">
           <main className=" w-[100%] flex justify-between gap-6 bg-blue text-black-500 ">
-            <span className="hover:cursor-pointer hover:text-[#e81f1f] text-1xl font-medium">ABOUT US</span>
+            <span className="hover:cursor-pointer hover:text-[#e81f1f] text-1xl font-medium">ABOUT US
+                <span className="block h-1 bg-red-500 rounded-full mt-1"></span>
+            </span>
             <Link to="/Restaurants" className="hover:cursor-pointer hover:text-[#e81f1f] text-1xl font-medium">RESTAURANTS</Link>
             <span className="hover:cursor-pointer hover:text-[#e81f1f] text-1xl font-medium">MENU</span>
             <span className=" hover:cursor-pointer flex items-center gap-3 hover:text-[#e81f1f]">
@@ -36,7 +38,12 @@ function Home() {
             <span className="">
               <IoPersonAddOutline />
             </span>
-            <span className="font-bold">Login</span>
+            <span className="font-bold">
+              <Link to="/ForSignup">
+                {" "}
+                <i>Login</i>
+                </Link>
+            </span>
           </div>
         </div>
       </div>
