@@ -9,6 +9,7 @@ import Services from './ResturantFolder/Services.jsx'
 import Footer from './AboutFolder/Footer.jsx'
 import ForSignup from './AlldetailsFolder/ForSignup.jsx'
 import ForLogin from './AlldetailsFolder/ForLogin.jsx'
+import Faqs from './ResturantFolder/Faqs.jsx'
 
 
 createRoot(document.getElementById('root')).render(
@@ -18,6 +19,7 @@ createRoot(document.getElementById('root')).render(
       <Route path="/" element={<Home />} />
       <Route path="/Restaurants" element={<Restaurants />} />
       <Route path="/Services" element={<Services />} />
+      <Route path="/Faqs" element={<Faqs />} />
       <Route path="/ForSignup" element={<ForSignup />} />
       <Route path="/ForLogin" element={<ForLogin />} />
       </Routes>

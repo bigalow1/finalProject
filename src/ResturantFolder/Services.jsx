@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { FaTruck, FaUtensils, FaBullhorn } from "react-icons/fa";
+import { IoPersonAddOutline } from "react-icons/io5";
 
 function Services() {
   return (
@@ -33,8 +34,16 @@ function Services() {
             </ol>
           </nav>
           <div className="flex items-center">
-            <button className="bg-red-400 hover:bg-black text-white text-lg font-semibold py-2 px-6 rounded-full shadow hover:cursor-pointer hover:scale-110 transition-all duration-500">
-              <i>Signup/Login</i>
+            <button className="bg-red-400 flex hover:bg-black text-white text-lg font-semibold py-2 px-6 rounded-full shadow hover:cursor-pointer hover:scale-110 transition-all duration-500">
+              <span className="">
+                <IoPersonAddOutline />
+             </span>
+                  <span className="font-bold">
+                    <Link to="/ForSignup">
+                       {" "}
+                     <i>Login</i>
+                    </Link>
+                 </span>
             </button>
           </div>
         </div>
