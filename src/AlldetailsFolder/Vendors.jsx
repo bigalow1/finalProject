@@ -13,7 +13,7 @@ function Vendors() {
         setFormData({ ...formData, [joe.target.name]:  joe.target.value });
     }
 
-    let handleSubmit =  (e) => {
+    let candleSubmit =  (e) => {
         e.preventDefault();
         const response = async () => {
             try {
@@ -42,7 +42,7 @@ function Vendors() {
           <div className="bg-gradient-to-r from-black-200 to-red-500 p-8 rounded-lg shadow-lg w-full max-w-md justify-center flex flex-col">
            
             <h1 className="text-2xl font-bold mb-6 text-center text-white">Welcome <br /> <b className='text-1xl font-light'>Continue with one of the following options</b></h1>
-          <form onSubmit={handleSubmit} className='flex flex-col space-y-4 w-80 text-white'>
+          <form onSubmit={candleSubmit} className='flex flex-col space-y-4 w-80 text-white'>
               
               <label className='flex flex-col' >
               Profile Picture:
@@ -64,7 +64,7 @@ function Vendors() {
            </label>
             <button type='submit' className='mt-4 p-2 bg-blue-600 rounded-2xl h-[50px] w-[300px]'>Signup </button> <h1 className='text-center'>OR</h1>
             <button type='submity' className=' p-2 bg-blue-600 rounded-2xl'>
-              <Link to="/ForLogin" className='text-white'>Login</Link>
+              <Link to="/Vendors" className='text-white'>Login</Link>
               
                </button>
             <div className='h-[50px] w-[450px] bg-inherit'>
