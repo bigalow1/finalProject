@@ -10,6 +10,7 @@ import Footer from './AboutFolder/Footer.jsx'
 import ForSignup from './AlldetailsFolder/ForSignup.jsx'
 import ForLogin from './AlldetailsFolder/ForLogin.jsx'
 import Faqs from './ResturantFolder/Faqs.jsx'
+import Vendors from './AlldetailsFolder/Vendors.jsx'
 
 
 createRoot(document.getElementById('root')).render(
@@ -22,6 +23,7 @@ createRoot(document.getElementById('root')).render(
       <Route path="/Faqs" element={<Faqs />} />
       <Route path="/ForSignup" element={<ForSignup />} />
       <Route path="/ForLogin" element={<ForLogin />} />
+      <Route path="/Vendors" element={<Vendors />} />
       </Routes>
       <Footer/>
     </BrowserRouter>

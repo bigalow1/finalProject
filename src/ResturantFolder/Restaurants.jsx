@@ -93,7 +93,7 @@ function Restaurants() {
           </div>
         </div>
       </div>
-      <div className="h-[300px]  bg-[url(bg.jpg)] ok bg-cover  ">
+      <div className="h-[300px]  bg-[url(bg.jpg)] ok bg-cover cursor-pointer ">
         <div className="flex  justify-center items-center h-full">
           <h2 className="text-5xl font-bold text-white drop-shadow-lg mt-20">
             <marquee behavior="" direction="">
@@ -106,7 +106,7 @@ function Restaurants() {
           </h2>
         </div>
       </div>
-      <div className="h-[100px] bg-white bg-opacity-50 flex justify-center items-center">
+      <div className="h-[100px] bg-white bg-opacity-50 flex justify-center cursor-pointer items-center">
         <div className="flex justify-center items-center h-full">
           <div className="h-[50px] w-[200%]  hover:cursor-pointer hover:scale-110 transition-all duration-500  bg-gradient-to-r from-black-200 to-red-500 rounded-t-lg">
             <h2 className="text-4xl font-bold text-black drop-shadow-lg">
@@ -137,7 +137,7 @@ function Restaurants() {
             </section>
           </div>
         </div>
-        <div className=" h-[500px] bg-black gap-10">
+        <div className=" h-[500px] bg-black gap-10 cursor-pointer">
           <div className="h-[400px]  bg-pink-50 flex gap-10">
             <div className="h-[400px] bg-blue-300 w-[35%] bg-[url(sharwama.jpeg)]  bg-cover"></div>
             <div className="h-[400px] bg-blue-500 w-[35%]  bg-[url(desert.jpeg)]  bg-cover "></div>
@@ -176,7 +176,7 @@ function Restaurants() {
           </i>
         </div>
       </div>
-      <div className="h-[220px] bg-gradient-to-r from-amber-50 via-pink-50 to-amber-100 flex gap-8 px-8 py-4 justify-center items-center">
+      <div className="h-[220px] cursor-pointer bg-gradient-to-r from-amber-50 via-pink-50 to-amber-100 flex gap-8 px-8 py-4 justify-center items-center">
         <div className="h-[180px] w-[22%] bg-white rounded-2xl shadow-lg flex flex-col">
           <section className="flex-1  hover:cursor-pointer hover:scale-110 transition-all duration-500 bg-gradient-to-r from-amber-200 to-pink-300 text-black text-center items-center flex flex-col justify-center rounded-b-2xl px-2">
             <h1 className="font-extrabold text-6xl text-red-600">
@@ -248,7 +248,7 @@ function Restaurants() {
           ))}
         </div>
       </div>
-      <div className="h-[50px]  bg-gradient-to-r from-black-200 to-red-500 bg-blend-darken flex justify-center items-center text-3xl text-black ">
+      <div className="h-[50px] cursor-pointer  bg-gradient-to-r from-black-200 to-red-500 bg-blend-darken flex justify-center items-center text-3xl text-black ">
         <i>You can order from any Resturant of your choice</i>
       </div>
       <div className="h-[600px] bg-gradient-to-r from-pink-100 to-amber-100 flex gap-3">

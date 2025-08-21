@@ -16,6 +16,11 @@ function Services() {
           <nav className="flex-1 flex items-center justify-center ">
             <ol className="flex hover:cursor-pointer gap-12 text-xl font-medium text-white">
               <li className="hover:text-red-600 hover:cursor-pointer hover:scale-110 transition-all duration-500 cursor-pointer">
+                <Link to="/">
+                  <i>ABOUT US</i>
+                </Link>
+              </li>
+              <li className="hover:text-red-600 hover:cursor-pointer hover:scale-110 transition-all duration-500 cursor-pointer">
                 <Link to="/Restaurants">
                   <i>RESTAURANTS</i>
                 </Link>
@@ -49,7 +54,7 @@ function Services() {
         </div>
       </div>
 
-      <div className="h-[300px]  bg-gradient-to-r from-black-200 to-red-500 bg-blend-darken flex flex-col justify-center items-center pt-[80px]">
+      <div className="h-[300px]  bg-gradient-to-r from-black-200 to-red-500 bg-blend-darken flex flex-col justify-center items-center cursor-pointer pt-[80px]">
         <h2 className="text-5xl font-bold text-white mb-4">Our Services</h2>
         <p className="text-xl text-white max-w-2xl text-center">
           At JetMeals, we’re dedicated to making your food experience seamless
@@ -58,7 +63,7 @@ function Services() {
         </p>
       </div>
 
-      <div className="max-w-8xl bg-black mx-auto py-16 px-4 grid grid-cols-1 md:grid-cols-3 gap-10">
+      <div className="max-w-8xl bg-black mx-auto py-16 px-4 grid grid-cols-1 cursor-pointer md:grid-cols-3 gap-10">
         <div className=" bg-gradient-to-r from-black-200 to-red-500 rounded-xl shadow-lg p-8 flex flex-col items-center hover:scale-105 transition-transform duration-300">
           <FaUtensils className="text-5xl text-white mb-4" />
           <h3 className="text-2xl font-bold mb-2 text-white">
@@ -95,7 +100,7 @@ function Services() {
           </p>
         </div>
       </div>
-      <div className="h-[400px] bg-black flex justify-center items-center gap-12 relative overflow-hidden">
+      <div className="h-[400px] bg-black flex justify-center cursor-pointer items-center gap-12 relative overflow-hidden">
       
         <img
           src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=facearea&w=300&q=80"
@@ -116,7 +121,7 @@ function Services() {
         
         <div className="absolute inset-0 bg-black/10 pointer-events-none"></div>
       </div>
-      <div className="h-[100px] bg-black flex justify-center   gap-12">
+      <div className="h-[100px] bg-black flex justify-center cursor-pointer   gap-12">
          <section className="h-[70px] w-[30%] bg-black text-white text-center font-medium">Allows us handle your catering  <br />Events everything about catering we offer the best! <br />Let's serve your quests the best dishes</section>
          <section className="h-[70px] w-[30%] bg-black  text-white text-center font-medium">Delivery made possible to your <br />Doorstep within few minutes with cheap fee! <br />With our trusted riders.</section>
          <section className="h-[70px] w-[30%] bg-black  text-white text-center font-medium">As  a chef who is skilled <br />Looking for large  customers then worry no more ! <br />Jetmeals gat you covered</section>

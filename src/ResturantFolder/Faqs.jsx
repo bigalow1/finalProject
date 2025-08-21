@@ -25,7 +25,7 @@ function Faqs() {
                         <Link to="/Restaurants">
                           {" "}
                           <i>RESTAURANTS</i>
-                          <span className="block h-1 bg-black rounded-full mt-1"></span>
+                         
                         </Link>
                       </a>
         
@@ -38,6 +38,7 @@ function Faqs() {
                         <Link to="/Faqs">
                           {" "}
                           <i>FAQS</i>
+                           <span className="block h-1 bg-black rounded-full mt-1"></span>
                         </Link>
                       </li>
                     </ol>
@@ -58,7 +59,19 @@ function Faqs() {
                 </div>
             </div>
         </div>
-        <div className='h-[300px] bg-red-400'></div>
+        <div className='h-[550px] max-w-8xl bg-black mx-auto w-full py-16 px-4 cursor-pointer'>
+           <div className='h-[200px] bg-gradient-to-r from-black-200 to-red-500 bg-blend-darken flex justify-center items-center'><h1 className='text-3xl font-bold text-white'><i>FREQUENTLY ASKED QUESTIONS</i></h1></div>
+           <div className='bg-gradient-to-r from-black-200 to-red-500 bg-blend-darken h-[450px]'>
+              <h1 className='text-2xl font-bold text-white'><i><u>1. What is JetMeals?</u></i></h1>
+              <p className='text-xl text-white'><i>JetMeals is a food delivery service that connects you with local restaurants to bring delicious meals right to your doorstep.</i></p>
+              <h1 className='text-2xl font-bold text-white'><i><u>2. How do I place an order?</u></i></h1>
+              <p className='text-xl text-white'><i>You can place an order through our website or mobile app. Simply browse the available restaurants, select your items, and proceed to checkout.</i></p>
+              <h1 className='text-2xl font-bold text-white'><i><u>3. What payment methods do you accept?</u></i></h1>
+              <p className='text-xl text-white'><i>We accept various payment methods including credit/debit cards, digital wallets, and cash on delivery in select areas.</i></p>
+              <h1 className='text-2xl font-bold text-white'><i><u>4. How can I track my order?</u></i></h1>
+              <p className='text-xl text-white'><i>You can track your order in real-time through our website or app. Once your order is confirmed, you will receive a tracking link via SMS or email.</i></p>  
+           </div>
+        </div>
     </>
   )
 }
