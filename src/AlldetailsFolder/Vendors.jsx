@@ -1,8 +1,9 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-function  Vendors() {
+function Vendors() {
     let [formData, setFormData] = React.useState({
+        profilepicture: "", 
         fullname: "", 
         email: "",
         password: ""
@@ -41,13 +42,13 @@ function  Vendors() {
           <div className="bg-gradient-to-r from-black-200 to-red-500 p-8 rounded-lg shadow-lg w-full max-w-md justify-center flex flex-col">
            
             <h1 className="text-2xl font-bold mb-6 text-center text-white">Welcome <br /> <b className='text-1xl font-light'>Continue with one of the following options</b></h1>
-            <form onSubmit={handleSubmit} className='flex flex-col space-y-4 w-80 text-white'>
+          <form onSubmit={handleSubmit} className='flex flex-col space-y-4 w-80 text-white'>
               
               <label className='flex flex-col' >
               Profile Picture:
                 <input  onChange={handlchange} type="file" name='profilepicture' className='flex flex-col h-[200px] bg-amber-300 '>
                </input>
-           </label>
+              </label>
            
            <label className='flex flex-col'>
             Full Name:
@@ -72,7 +73,7 @@ function  Vendors() {
         
 
 
-            </form>
+         </form>
 
           </div> 
           
