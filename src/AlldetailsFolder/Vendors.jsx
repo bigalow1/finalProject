@@ -1,87 +1,119 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React from "react";
+import { Link } from "react-router-dom";
+
 
 function Vendors() {
-    let [formData, setFormData] = React.useState({
-        profilepicture: "", 
-        fullname: "", 
-        email: "",
-        password: ""
-    });
+  let [formData, setFormData] = React.useState({
+    profilepicture: "",
+    fullname: "",
+    email: "",
+    password: "",
+  });
 
-    let handlchange = (joe) => {
-        setFormData({ ...formData, [joe.target.name]:  joe.target.value });
+  let handlchange = (joe) => {
+    if (joe.target.type === "file") {
+      setFormData({ ...formData, [joe.target.name]: joe.target.files[0] });
+    } else {
+      setFormData({ ...formData, [joe.target.name]: joe.target.value });
     }
+  };
 
-    let candleSubmit =  (e) => {
-        e.preventDefault();
-        const response = async () => {
-            try {
-                const res = await fetch("https://blogbackend-cgj8.onrender.com/vendors", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                     credentials:'include',
-                    body: JSON.stringify(formData)
-                });
-                
-                const data = await res.json();
+  let handleSubmit = async (e) => {
+    e.preventDefault();
+    const data = new FormData();
+    if (formData.profilepicture) {
+      data.append("profilepicture", formData.profilepicture);
+    }
+    data.append("fullname", formData.fullname);
+    data.append("email", formData.email);
+    data.append("password", formData.password);
 
-                console.log('Sucess:', data);
-            } catch (error) {
-                console.error('Error:', error);
-            }
-        }    
-        response();                                              
-      }
+    try {
+      const res = await fetch("https://blogbackend-cgj8.onrender.com/vendors", {
+        method: "POST",
+        body: data,
+        credentials: "include",
+      });
+      const result = await res.json();
+      console.log("Success:", result);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
   return (
     <>
-
-        <div className="h-[1000px] bg-gradient-to-r from-black-200  to-red-500 flex flex-col items-center justify-center cursor-pointer">  
-          <div className="bg-gradient-to-r from-black-200 to-red-500 p-8 rounded-lg shadow-lg w-full max-w-md justify-center flex flex-col">
-           
-            <h1 className="text-2xl font-bold mb-6 text-center text-white">Welcome <br /> <b className='text-1xl font-light'>Continue with one of the following options</b></h1>
-          <form onSubmit={candleSubmit} className='flex flex-col space-y-4 w-80 text-white'>
-              
-              <label className='flex flex-col' >
+      <div className="h-[1000px] bg-gradient-to-r from-black-200  to-red-500 flex flex-col items-center justify-center cursor-pointer">
+        <div className="bg-gradient-to-r from-black-200 to-red-500 p-8 rounded-lg shadow-lg w-full max-w-md justify-center flex flex-col">
+          <h1 className="text-2xl font-bold mb-6 text-center text-white">
+            Welcome <br />{" "}
+            <b className="text-1xl font-light">
+              Continue with one of the following options
+            </b>
+          </h1>
+          <form
+            onSubmit={handleSubmit}
+            className="flex flex-col space-y-4 w-80 text-white"
+          >
+            <label className="flex flex-col">
               Profile Picture:
-                <input  onChange={handlchange} type="file" name='profilepicture' className='flex flex-col h-[200px] bg-amber-300 '>
-               </input>
-              </label>
-           
-           <label className='flex flex-col'>
-            Full Name:
-            <input onChange={handlchange}  type="text" name='fullname' className='mt-1 p-2 bg-inherit border border-b-gray-700 rounded' />
-           </label>
-           <label className='flex flex-col'>
-            Email:
-            <input onChange={handlchange} type="email" name='email' className='mt-1 p-2 bg-inherit border border-b-gray-700 rounded' />
-           </label>
-            <label className='flex flex-col'>
-            password:
-            <input onChange={handlchange} type="password" name='password' className='mt-1 p-2 bg-inherit border border-b-gray-700 rounded' />
-           </label>
-            <button type='submit' className='mt-4 p-2 bg-blue-600 rounded-2xl h-[50px] w-[300px]'>Signup </button> <h1 className='text-center'>OR</h1>
-            <button type='submity' className=' p-2 bg-blue-600 rounded-2xl'>
-              <Link to="/Vendors" className='text-white'>Login</Link>
-              
-               </button>
-            <div className='h-[50px] w-[450px] bg-inherit'>
-              <p className=' text-white'>By signing up, you agree to our  <span className='text-blue-600'>Terms of Service</span> and <br /> <span className='text-blue-600'>Privacy Policy</span>.</p>
+              <input
+                onChange={handlchange}
+                type="file"
+                name="profilepicture"
+                className="flex flex-col h-[200px] bg-amber-300 "
+              ></input>
+            </label>
+            <label className="flex flex-col">
+              Full Name:
+              <input
+                onChange={handlchange}
+                type="text"
+                name="fullname"
+                className="mt-1 p-2 bg-inherit border border-b-gray-700 rounded"
+              />
+            </label>
+            <label className="flex flex-col">
+              Email:
+              <input
+                onChange={handlchange}
+                type="email"
+                name="email"
+                className="mt-1 p-2 bg-inherit border border-b-gray-700 rounded"
+              />
+            </label>
+            <label className="flex flex-col">
+              password:
+              <input
+                onChange={handlchange}
+                type="password"
+                name="password"
+                className="mt-1 p-2 bg-inherit border border-b-gray-700 rounded"
+              />
+            </label>
+            <button
+              type="submit"
+              className="mt-4 p-2 bg-blue-600 rounded-2xl h-[50px] w-[300px]"
+            >
+              Signup{" "}
+            </button>{" "}
+            <h1 className="text-center">OR</h1>
+            <button type="submity" className=" p-2 bg-blue-600 rounded-2xl">
+              <Link to="/Vendors" className="text-white">
+                Login
+              </Link>
+            </button>
+            <div className="h-[50px] w-[450px] bg-inherit">
+              <p className=" text-white">
+                By signing up, you agree to our{" "}
+                <span className="text-blue-600">Terms of Service</span> and{" "}
+                <br /> <span className="text-blue-600">Privacy Policy</span>.
+              </p>
             </div>
-        
-
-
-         </form>
-
-          </div> 
-          
+          </form>
         </div>
-    
-    
+      </div>
     </>
-  )
+  );
 }
 
-export default Vendors
+export default Vendors;

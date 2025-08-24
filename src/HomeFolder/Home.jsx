@@ -6,80 +6,117 @@ import { Link } from "react-router-dom";
 
 function Home() {
   return (
-    <div>
-      <div className="h-[80px] grid grid-cols-[30%_40%_30%] bg-gradient-to-b from-rose-200 to">
-        <div className=" w-[full] flex justify-start pt-2 pl-4 bg-green">
+    <>
+      {/* Header */}
+      <header className="h-[80px] grid grid-cols-3 bg-gradient-to-b from-rose-200 to-rose-100 shadow-md">
+        {/* Logo */}
+        <div className="flex items-center pl-6">
           <button className="hover:cursor-pointer">
-            <img className="h-[70px]" src="Logo.png" alt="" />
+            <img className="h-[60px]" src="Logo.png" alt="Logo" />
           </button>
         </div>
-        <div className="bg-pink flex text-[15px] items-center">
-          <main className=" w-[100%] flex justify-between gap-6 bg-blue text-black-500 ">
-            <span className="hover:cursor-pointer hover:text-[#e81f1f] text-1xl font-medium">ABOUT US
-                <span className="block h-1 bg-red-500 rounded-full mt-1"></span>
-            </span>
-            <Link to="/Restaurants" className="hover:cursor-pointer hover:text-[#e81f1f] text-1xl font-medium">RESTAURANTS</Link>
-            <span className="hover:cursor-pointer hover:text-[#e81f1f] text-1xl font-medium">MENU</span>
-            <span className=" hover:cursor-pointer flex items-center gap-3 hover:text-[#e81f1f]">
-              <CiSearch />{" "}
-              <input
-                type="text"
-                className="outline-red-500 w-[120px]"
-                placeholder="Search..."
-              />
-            </span>
-          </main>
-        </div>
-        <div className="bg-orange text-white flex justify-end pr-4 items-center text-[15px] gap-2">
-          <button className="text-[20px] hover:cursor-pointer text-black">
+
+        {/* Navigation */}
+        <nav className="flex items-center justify-center">
+          <ul className="flex gap-5  font-medium text-gray-700">
+            <li className="relative group">
+              <span className="hover:text-[#e81f1f] cursor-pointer">
+                ABOUT US
+                <span className="block h-1 bg-red-500 rounded-full mt-1 w-0 group-hover:w-full transition-all duration-300"></span>
+              </span>
+            </li>
+            <li>
+              <Link
+                to="/Restaurants"
+                className="hover:text-[#e81f1f] cursor-pointer"
+              >
+                RESTAURANTS
+              </Link>
+            </li>
+            <li>
+              <span className="hover:text-[#e81f1f] cursor-pointer">MENU</span>
+            </li>
+            <li>
+              <span className="flex items-center gap-2 hover:text-[#e81f1f]">
+                <CiSearch />
+                <input
+                  type="text"
+                  className="outline-red-500 w-[120px] px-2 py-1 rounded border border-gray-300"
+                  placeholder="Search..."
+                />
+              </span>
+            </li>
+          </ul>
+        </nav>
+
+        {/* Actions */}
+        <div className="flex items-center justify-end pr-6 gap-4">
+          <button className="text-2xl text-black hover:text-[#e81f1f]">
             <AiOutlineShoppingCart />
           </button>
-          <div className="h-[50px] w-[100px] flex bg-[#E81F1F] rounded-full justify-center items-center gap-2 hover:text-[#E81F1F] hover:bg-white">
-            <span className="">
-              <IoPersonAddOutline />
-            </span>
+          <div className="flex items-center gap-2 bg-[#E81F1F] text-white rounded-full px-4 py-2 hover:bg-white hover:text-[#E81F1F] transition-all duration-300">
+            <IoPersonAddOutline />
             <span className="font-bold">
               <Link to="/ForSignup">
-                {" "}
                 <i>Login</i>
-                </Link>
+              </Link>
             </span>
           </div>
         </div>
-      </div>
+      </header>
+       <div className="h-[300px] bg-green"></div>
 
-      <div className="h-[500px] w-[100%] bg-white grid grid-cols-[30%_40%_30%]">
-        <main className="h-[inherit] bg-blue gap-2 flex flex-col justify-between">
-          <div className="h-[45%] bg-red-400 pp rounded-tr-2xl rounded-br-2xl">
-            {" "}
+      {/* Hero Section */}
+      <section className="h-[500px] w-full grid grid-cols-3 bg-white">
+        {/* Left Images */}
+        <div className="flex flex-col justify-between h-full py-6">
+          <div className="h-[45%] bg-red-400 rounded-tr-2xl rounded-br-2xl shadow-lg"></div>
+          <div className="h-[52%] bg-pink-400 rounded-tr-2xl rounded-br-2xl shadow-lg"></div>
+        </div>
+
+        {/* Center Content */}
+        <div className="flex flex-col justify-between h-full py-6">
+          <div className="flex flex-col items-center justify-center h-[60%] bg-amber-100 rounded-lg shadow-md p-6">
+            <p className="text-2xl font-bold text-center text-[#e81f1f]">
+              DELICIOUS MEALS DELIVERED
+              <br />
+              FROM KITCHEN TO YOUR DOORSTEP
+            </p>
           </div>
-          <div className="h-[52%] bg-pink-400 aa rounded-tr-2xl rounded-br-2xl"></div>
-        </main>
-        <main className="h-[inherit] bg-red">
-          <div className="bg-amber h-[60%] ss">
-            <p>DELICIOUS MEALS DELIVERED FROM KITCHEN TO YOUR DOORSTEP</p>
+          <div className="flex gap-8 justify-center items-center h-[40%]">
+            {/* Order Now */}
+            <div className="flex flex-col items-center bg-green-100 rounded-lg p-4 hover:scale-105 transition-transform duration-300 cursor-pointer">
+              <div className="h-28 w-28 bg-white rounded-full flex items-center justify-center shadow-md mb-2 hover:bg-[#e81f1f] transition-colors">
+                <img src="fast-food.png" alt="Order Now" className="h-16" />
+              </div>
+              <span className="text-lg font-semibold">Order Now</span>
+            </div>
+            {/* Package Delivery */}
+            <div className="flex flex-col items-center bg-green-100 rounded-lg p-4 hover:scale-105 transition-transform duration-300 cursor-pointer">
+              <div className="h-28 w-28 bg-white rounded-full flex items-center justify-center shadow-md mb-2 hover:bg-[#e81f1f] transition-colors">
+                <img
+                  src="delivery-man.png"
+                  alt="Package Delivery"
+                  className="h-16"
+                />
+              </div>
+              <span className="text-lg font-semibold">Package Delivery</span>
+            </div>
           </div>
-          <div className="bg-blue h-[40%] flex gap-3 justify-center items-center">
-            <main className="h-[150px] w-[140px] bg-green flex flex-col items-center hover:cursor-pointer hover:scale-110 transition-all duration-500 hover:text-[#e81f1f]">
-              <p className="h-32 w-32 bg-white rounded-full ab shadow-lime-400 flex items-center justify-center hover:bg-[#e81f1f]">
-                <img src="fast-food.png" alt="" className="h-20" />
-              </p>
-              <p className="text-xl font-sans font-semibold">Order Now</p>
-            </main>
-            <main className="h-[150px] w-[140px] bg-green flex flex-col items-center hover:cursor-pointer hover:scale-110 transition-all duration-500 hover:text-[#e81f1f]">
-              <p className="h-32 w-32 bg-white rounded-full ab shadow-lime-400 flex items-center justify-center hover:bg-[#e81f1f]">
-                <img src="delivery-man.png" alt="" className="h-20" />
-              </p>
-              <p className="text-[18px] font-sans font-semibold">Package Delivery</p>
-            </main>
-          </div>
-        </main>
-        <main className="h-[inherit] bg-green flex flex-col justify-between ">
-          <div className="h-[60%] bg-red-400 bb rounded-tl-2xl rounded-bl-2xl"></div>
-          <div className="h-[37%] bg-pink-400 cc rounded-tl-2xl rounded-bl-2xl"></div>
-        </main>
-      </div>
-    </div>
+        </div>
+
+        {/* Right Images */}
+        <div className="flex flex-col justify-between h-full py-6">
+          <div className="h-[60%] bg-red-400 rounded-tl-2xl rounded-bl-2xl shadow-lg"></div>
+          <div className="h-[37%] bg-pink-400 rounded-tl-2xl rounded-bl-2xl shadow-lg"></div>
+        </div>
+      </section>
+
+      {/* Footer or Extra Section */}
+      <footer className="h-[300px] bg-gradient-to-t from-red-400 to-rose-200 flex items-center justify-center">
+        {/* Add footer content here if needed */}
+      </footer>
+    </>
   );
 }
 
