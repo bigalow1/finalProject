@@ -5,6 +5,7 @@ import { IoFastFood } from "react-icons/io5";
 import { FaCcMastercard } from "react-icons/fa";
 import { RiEBike2Line } from "react-icons/ri";
 import { Link } from "react-router-dom";
+import { AiOutlineShoppingCart } from "react-icons/ai";
 
 function Restaurants() {
   const slides = [
@@ -31,13 +32,7 @@ function Restaurants() {
     return () => clearInterval(interval);
   }, [slides.length]);
 
-  let [holdData, setHoldData] = useState();
-
-  useEffect(() => {
-    fetch("https://fakestoreapi.com/products/1")
-      .then((response) => response.json())
-      .then((data) => setHoldData(data));
-  }, []);
+ 
 
   return (
     <>
@@ -78,7 +73,12 @@ function Restaurants() {
             </ol>
           </nav>
           <div className="flex items-center">
+            <button className="text-2xl text-white hover:text-red-600 mr-6 hover:cursor-pointer hover:scale-110 transition-all duration-500">
+              <AiOutlineShoppingCart />
+            </button>
+             
             <button className="bg-red-600 flex hover:bg-black text-white text-lg font-semibold py-2 px-6 rounded-full shadow  hover:cursor-pointer hover:scale-110 transition-all duration-500">
+              
               <span className="">
                <IoPersonAddOutline />
                 </span>
@@ -146,7 +146,7 @@ function Restaurants() {
           <div className="bg-pink-50 h-[100px] gap-10 flex">
             <section className="h-[100px] w-[35%]  bg-white text-black font-bold text-3xl text-center">
               Delicious <br />
-              Sharwama with beef
+              Sharwama with beef  
             </section>
             <section className="h-[100px] w-[35%]  bg-white text-black font-bold text-3xl text-center">
               {" "}

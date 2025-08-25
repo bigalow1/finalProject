@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-
 function Vendors() {
   let [formData, setFormData] = React.useState({
     profilepicture: "",
@@ -10,15 +9,16 @@ function Vendors() {
     password: "",
   });
 
-  let handlchange = (joe) => {
-    if (joe.target.type === "file") {
-      setFormData({ ...formData, [joe.target.name]: joe.target.files[0] });
+  // Renamed to handleChange
+  let handleChange = (e) => {
+    if (e.target.type === "file") {
+      setFormData({ ...formData, [e.target.name]: e.target.files[0] });
     } else {
-      setFormData({ ...formData, [joe.target.name]: joe.target.value });
+      setFormData({ ...formData, [e.target.name]: e.target.value });
     }
   };
 
-  let handleSubmit = async (e) => {
+  let candleSubmit = async (e) => {
     e.preventDefault();
     const data = new FormData();
     if (formData.profilepicture) {
@@ -40,6 +40,7 @@ function Vendors() {
       console.error("Error:", error);
     }
   };
+
   return (
     <>
       <div className="h-[1000px] bg-gradient-to-r from-black-200  to-red-500 flex flex-col items-center justify-center cursor-pointer">
@@ -51,22 +52,22 @@ function Vendors() {
             </b>
           </h1>
           <form
-            onSubmit={handleSubmit}
+            onSubmit={candleSubmit}
             className="flex flex-col space-y-4 w-80 text-white"
           >
             <label className="flex flex-col">
               Profile Picture:
               <input
-                onChange={handlchange}
+                onChange={handleChange}
                 type="file"
                 name="profilepicture"
-                className="flex flex-col h-[200px] bg-amber-300 "
-              ></input>
+                className="flex flex-col bg-amber-300"
+              />
             </label>
             <label className="flex flex-col">
               Full Name:
               <input
-                onChange={handlchange}
+                onChange={handleChange}
                 type="text"
                 name="fullname"
                 className="mt-1 p-2 bg-inherit border border-b-gray-700 rounded"
@@ -75,16 +76,16 @@ function Vendors() {
             <label className="flex flex-col">
               Email:
               <input
-                onChange={handlchange}
+                onChange={handleChange}
                 type="email"
-                name="email"
+                name="Email"
                 className="mt-1 p-2 bg-inherit border border-b-gray-700 rounded"
               />
             </label>
             <label className="flex flex-col">
-              password:
+              Password:
               <input
-                onChange={handlchange}
+                onChange={handleChange}
                 type="password"
                 name="password"
                 className="mt-1 p-2 bg-inherit border border-b-gray-700 rounded"
@@ -94,22 +95,26 @@ function Vendors() {
               type="submit"
               className="mt-4 p-2 bg-blue-600 rounded-2xl h-[50px] w-[300px]"
             >
-              Signup{" "}
-            </button>{" "}
-            <h1 className="text-center">OR</h1>
-            <button type="submity" className=" p-2 bg-blue-600 rounded-2xl">
-              <Link to="/Vendors" className="text-white">
-                Login
-              </Link>
+              Signup
             </button>
+            <h1 className="text-center">OR</h1>
+            {/* Login button moved outside the form below */}
             <div className="h-[50px] w-[450px] bg-inherit">
               <p className=" text-white">
                 By signing up, you agree to our{" "}
-                <span className="text-blue-600">Terms of Service</span> and{" "}
+                <span className="text-blue-600">Terms of Service</span> and
                 <br /> <span className="text-blue-600">Privacy Policy</span>.
               </p>
             </div>
           </form>
+          <button
+            type="button"
+            className="p-2 bg-blue-600 rounded-2xl mt-4 w-80"
+          >
+            <Link to="/Vendors" className="text-white">
+              Login
+            </Link>
+          </button>
         </div>
       </div>
     </>

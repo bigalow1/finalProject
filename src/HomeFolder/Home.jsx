@@ -8,66 +8,99 @@ function Home() {
   return (
     <>
       {/* Header */}
-      <header className="h-[80px] grid grid-cols-3 bg-gradient-to-b from-rose-200 to-rose-100 shadow-md">
+      <header className="h-[80px] flex items-center justify-between bg-gradient-to-r from-black-200 to-red-500 shadow-md px-8 fixed top-0 left-0 w-full z-50">
         {/* Logo */}
-        <div className="flex items-center pl-6">
-          <button className="hover:cursor-pointer">
-            <img className="h-[60px]" src="Logo.png" alt="Logo" />
-          </button>
+        <div className="flex items-center">
+          <Link to="/">
+            <img
+              className="h-[60px] hover:scale-105 transition-transform"
+              src="Logo.png"
+              alt="Logo"
+            />
+          </Link>
         </div>
 
         {/* Navigation */}
-        <nav className="flex items-center justify-center">
-          <ul className="flex gap-5  font-medium text-gray-700">
-            <li className="relative group">
-              <span className="hover:text-[#e81f1f] cursor-pointer">
-                ABOUT US
-                <span className="block h-1 bg-red-500 rounded-full mt-1 w-0 group-hover:w-full transition-all duration-300"></span>
-              </span>
+        <nav className="flex-1 flex justify-center">
+          <ul className="flex gap-8 font-medium text-white items-center">
+            <li>
+              <Link
+                to="/"
+                className="hover:text-[#e81f1f] font-bold transition-colors duration-200 px-2 py-1 rounded hover:bg-rose-100"
+              >
+                <i>ABOUT US</i>
+              </Link>
             </li>
             <li>
               <Link
                 to="/Restaurants"
-                className="hover:text-[#e81f1f] cursor-pointer"
+                className="hover:text-[#e81f1f] font-bold transition-colors duration-200 px-2 py-1 rounded hover:bg-rose-100"
               >
-                RESTAURANTS
+                <i>RESTAURANTS</i>
               </Link>
             </li>
             <li>
-              <span className="hover:text-[#e81f1f] cursor-pointer">MENU</span>
+              <Link
+                to="/OrderPage"
+                className="hover:text-[#e81f1f] font-bold transition-colors duration-200 px-2 py-1 rounded hover:bg-rose-100"
+              >
+                <i>MENUS</i>
+              </Link>
             </li>
             <li>
-              <span className="flex items-center gap-2 hover:text-[#e81f1f]">
-                <CiSearch />
+              <div className="flex items-center gap-2 bg-white rounded-full px-3 py-1 border border-gray-200 shadow-sm">
+                <CiSearch className="text-xl text-gray-500" />
                 <input
                   type="text"
-                  className="outline-red-500 w-[120px] px-2 py-1 rounded border border-gray-300"
+                  className="outline-none w-[120px] px-1 py-1 bg-transparent text-gray-700"
                   placeholder="Search..."
                 />
-              </span>
+              </div>
             </li>
           </ul>
         </nav>
 
         {/* Actions */}
-        <div className="flex items-center justify-end pr-6 gap-4">
-          <button className="text-2xl text-black hover:text-[#e81f1f]">
+        <div className="flex items-center gap-4">
+          {/* Cart Icon */}
+          <button className="text-2xl text-black hover:text-[#e81f1f] transition-colors">
             <AiOutlineShoppingCart />
           </button>
-          <div className="flex items-center gap-2 bg-[#E81F1F] text-white rounded-full px-4 py-2 hover:bg-white hover:text-[#E81F1F] transition-all duration-300">
-            <IoPersonAddOutline />
-            <span className="font-bold">
-              <Link to="/ForSignup">
+          <Link to="/ForSignup">
+            <div className="flex items-center gap-2 bg-[#E81F1F] text-white rounded-full px-4 py-2 hover:bg-white hover:text-[#E81F1F] border border-[#E81F1F] transition-all duration-300 font-bold">
+              <IoPersonAddOutline />
+              <span>
                 <i>Login</i>
-              </Link>
-            </span>
-          </div>
+              </span>
+            </div>
+          </Link>
         </div>
       </header>
-       <div className="h-[300px] bg-green"></div>
+      <div className="h-[700px] w-full bg-blue overflow-hidden flex justify-center items-center ok relative">
+        <video
+          src="People.mp4"
+          className="w-full h-full object-cover"
+          autoPlay
+          loop
+          muted
+          playsInline
+        />
+        <div className="h-[300px] w-[800px] bg-inherit absolute flex items-center justify-center rounded-lg shadow-lg bg-opacity-90 left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 cursor-pointer">
+          <p className="text-3xl font-bold text-white text-center drop-shadow-lg">
+           <i> Jetmeals is your trusted partner for fast, fresh, and reliable meal
+            delivery.</i>
+            <br />
+           <i> We connect you with your favorite local restaurants and deliver
+            delicious meals straight from the kitchen to your doorstep.</i>
+            <br />
+            <i>Experience convenience, variety, and quality with Jetmeals—where
+            every meal is just a click away!</i>
+          </p>
+        </div>
+      </div>
 
       {/* Hero Section */}
-      <section className="h-[500px] w-full grid grid-cols-3 bg-white">
+      <section className="h-[500px] w-full grid grid-cols-3 bg-gradient-to-r from-red-400 to-rose-200 px-8 gap-4">
         {/* Left Images */}
         <div className="flex flex-col justify-between h-full py-6">
           <div className="h-[45%] bg-red-400 rounded-tr-2xl rounded-br-2xl shadow-lg"></div>
@@ -113,9 +146,9 @@ function Home() {
       </section>
 
       {/* Footer or Extra Section */}
-      <footer className="h-[300px] bg-gradient-to-t from-red-400 to-rose-200 flex items-center justify-center">
-        {/* Add footer content here if needed */}
-      </footer>
+      <div className="h-[300px] bg-gradient-to-t from-red-400 to-rose-200 flex items-center justify-center">
+        <div className="h-[300px] bg-gradient-to-t from-red-400 to-rose-200 "></div>
+      </div>
     </>
   );
 }
