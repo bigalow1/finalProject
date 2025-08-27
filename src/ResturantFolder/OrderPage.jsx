@@ -141,7 +141,7 @@ function OrderPage() {
       <div className="grid grid-cols-1 lg:grid-cols-[27%_73%] bg-gradient-to-r from-black-200">
         {/* Sidebar */}
         <div
-          className={`bg-amber-800 lg:relative fixed top-0 left-0 h-full w-72 transform ${
+          className={`bg-amber-800 lg:relative fixed top-0 left-0 h-[600px] w-72 transform ${
             sidebarOpen ? "translate-x-0" : "-translate-x-full"
           } lg:translate-x-0 transition-transform duration-300 z-50`}
         >
@@ -241,7 +241,7 @@ function OrderPage() {
                 </span>
               </button>
               {orderOpen && (
-                <div className="absolute w-full bg-white mt-1 rounded-md shadow-lg z-10">
+                <div className="absolute w-full bg-black mt-1 rounded-md shadow-lg z-10">
                   {[
                     "Default",
                     "Price: Low to High",

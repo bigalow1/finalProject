@@ -13,6 +13,7 @@
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+
 }
 .pi {
   background-image: url("pasta.jpeg");
@@ -37,6 +38,12 @@
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+}
+.kl{
+  height: 300px;
+    width: 100%;
+    gap: 10px;
+    background-image: 100%,100%;
 }
 
 
