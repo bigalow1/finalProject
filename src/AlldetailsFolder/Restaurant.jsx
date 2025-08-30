@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 function Restaurant() {
   const [formData, setFormData] = React.useState({
-    profilepicture: "",
+    restaurantpicture: "",
     fullname: "",
     opentime: "",
     closetime: "",
@@ -23,30 +23,26 @@ function Restaurant() {
     const data = new FormData();
     if (formData.restaurantpicture) {
       data.append("restaurantpicture", formData.restaurantpicture);
-      data.append("opentime", formData.opentime);
-      data.append("closetime", formData.closetime);
     }
-    data.append("fullname", formData.fullname);
+    data.append("opentime", formData.opentime);
+    data.append("closetime", formData.closetime);
+    data.append("restaurantname", formData.fullname);
 
     try {
       const res = await fetch(
-        "https://blogbackend-cgj8.onrender.com/restaurant",
+        // "https://blogbackend-cgj8.onrender.com/restaurant",
+        "https://localhost:5173/restaurant",
         {
           method: "POST",
-          body: data,
           credentials: "include",
+          body: data,
         }
       );
-
-      if (!res.ok) {
-        const text = await res.text();
-        throw new Error(`HTTP ${res.status}: ${text}`);
-      }
 
       const result = await res.json();
       console.log("Success:", result);
     } catch (error) {
-      console.error("Error submitting form:", error);
+      console.error("Error:", error);
     }
   };
 
@@ -122,7 +118,7 @@ function Restaurant() {
           </div>
         </form>
 
-        <button type="button" className="p-2 bg-blue-600 rounded-2xl mt-4 w-80">
+        <button type="submit" className="p-2 bg-blue-600 rounded-2xl mt-4 w-80">
           <Link to="/Restaurant" className="text-white">
             Login
           </Link>
