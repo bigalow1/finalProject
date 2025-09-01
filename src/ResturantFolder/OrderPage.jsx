@@ -9,12 +9,12 @@ const categories = [
   "Pasta",
   "Sushi",
   "Desserts",
-    "Rice",
-  "Pizza",
-  "Burger",
-  "Pasta",
-  "Sushi",
-  "Desserts",
+  "soda",
+  "drinks",
+  "fruits",
+  "noodles",
+  "Soups",
+  "sharwama",
 ];
 
 const OrderPage = () => {

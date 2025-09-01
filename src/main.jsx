@@ -14,6 +14,8 @@ import Vendors from './AlldetailsFolder/Restaurant.jsx'
 import OrderPage from './ResturantFolder/OrderPage.jsx'
 import CartPage from './AlldetailsFolder/CartPage.jsx'
 import { CartProvider } from './AlldetailsFolder/CartContext.jsx'
+import Dashboard from './Admin/Dashboard.jsx'
+import ApproveVendors from './Admin/ApproveVendors.jsx'
 
 
 
@@ -35,9 +37,10 @@ createRoot(document.getElementById('root')).render(
         <Route path='/ForSignup' element={<ForSignup />} />
         <Route path='/ForLogin' element={<ForLogin />} />
         <Route path='/Faqs' element={<Faqs />} />
-        <Route path='/Vendors' element={<Vendors />} />
-        <Route path='/Cart' element={<CartPage />} />
-      </Routes>
+        <Route path='/CartPage' element={<CartPage />} />
+        <Route path='/Dashboard' element={<Dashboard />} />
+        <Route path='/ApproveVendors' element={<ApproveVendors />} />
+      </Routes> 
       <Footer />  
     </BrowserRouter>
     </CartProvider>

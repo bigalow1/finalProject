@@ -22,7 +22,7 @@ const ForSignup = () => {
     setSuccess("");
 
     try {
-      const res = await fetch("https://blogbackend-cgj8.onrender.com/user", {
+      const res = await fetch("https://localhost:3002/user", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
