@@ -9,12 +9,12 @@ function Header() {
   return (
     <>
        {/* Header */}
-      <header className="h-[80px] flex items-center justify-between bg-gradient-to-r from-rose-700 via-rose-500 to-amber-400 shadow-md px-8 fixed top-0 left-0 w-full z-50">
+      <header className="h-[80px] flex text-white items-center justify-between bg-gradient-to-r from-rose-700 via-rose-500 to-amber-400 shadow-md px-8 fixed top-0 left-0 w-full z-50">
         {/* Logo */}
-        <div className="flex items-center">
+        <div className="flex text-black items-center">
           <Link to="/">
             <img
-              className="h-[60px] hover:scale-105 transition-transform"
+              className="h-[60px] bg-white text-white hover:scale-105 transition-transform"
               src="Logo.png"
               alt="Logo"
             />
@@ -56,14 +56,7 @@ function Header() {
                  SERVICES
               </Link>
                    </li>
-                          <li>
-                            <Link
-                              to="/Faqs"
-                              className="hover:text-amber-200 transition-colors duration-300"
-                            >
-                              FAQS
-                            </Link>
-                          </li>
+                         
             <li>
               <div className="flex items-center gap-2 bg-white rounded-full px-3 py-1 border border-gray-200 shadow-sm">
                 <CiSearch className="text-xl text-gray-500" />
@@ -80,9 +73,10 @@ function Header() {
         {/* Actions */}
         <div className="flex items-center gap-4">
           {/* Cart Icon */}
-          <button className="text-2xl text-black hover:text-[#e81f1f] transition-colors">
+          <Link to="/Cart"
+          className="text-2xl text-black hover:text-[#e81f1f] transition-colors">
             <AiOutlineShoppingCart />
-          </button>
+          </Link>
           <Link to="/ForSignup">
             <div className="flex items-center gap-2 bg-[#E81F1F] text-white rounded-full px-4 py-2 hover:bg-white hover:text-[#E81F1F] border border-[#E81F1F] transition-all duration-300 font-bold">
               <IoPersonAddOutline />

@@ -1,80 +1,136 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
-function ForSignup() {
-    let [formData, setFormData] = React.useState({
-        fullname: "", 
-        email: "",
-        password: ""
-    });
 
-    let handlchange = (joe) => {
-        setFormData({ ...formData, [joe.target.name]:  joe.target.value });
-    }
+const ForSignup = () => {
+  const [formData, setFormData] = useState({
+    fullname: "",
+    email: "",
+    password: "",
+  });
 
-    let handleSubmit =  (e) => {
-        e.preventDefault();
-        const response = async () => {
-            try {
-                const res = await fetch("https://blogbackend-cgj8.onrender.com/user", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                     credentials:'include',
-                    body: JSON.stringify(formData)
-                });
-                
-                const data = await res.json();
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
-                console.log('Sucess:', data);
-            } catch (error) {
-                console.error('Error:', error);
-            }
-        }    
-        response();                                              
+  const handleChange = (e) => {
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
+    setSuccess("");
+
+    try {
+      const res = await fetch("https://blogbackend-cgj8.onrender.com/user", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify(formData),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.message || "Something went wrong");
       }
+
+      setSuccess("Signup successful! You can now log in.");
+      setFormData({ fullname: "", email: "", password: "" });
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
   return (
-    <>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-black via-gray-800 to-red-600 px-4">
+      <div className="bg-white shadow-xl rounded-lg w-full max-w-md p-8">
+        <h2 className="text-2xl font-bold text-center mb-2">Create Account</h2>
+        <p className="text-center text-gray-600 mb-6">
+          Sign up to continue ordering your favorite meals
+        </p>
 
-        <div className="h-[700px] bg-gradient-to-r from-black-200  to-red-500 flex flex-col items-center justify-center cursor-pointer">  
-          <div className="bg-gradient-to-r from-black-200 to-red-500 p-8 rounded-lg shadow-lg w-full max-w-md justify-center flex flex-col">
-           
-            <h1 className="text-2xl font-bold mb-6 text-center text-white">Welcome <br /> <b className='text-1xl font-light'>Continue with one of the following options</b></h1>
-            <form onSubmit={handleSubmit} className='flex flex-col space-y-4 w-80 text-white'>
-        
-           <label className='flex flex-col '>
-            Full Name:
-            <input onChange={handlchange} type="text" name='fullname' className='mt-1 p-2 bg-inherit border border-b-gray-700 rounded' />
+        {error && (
+          <p className="text-red-500 text-sm text-center mb-3">{error}</p>
+        )}
+        {success && (
+          <p className="text-green-500 text-sm text-center mb-3">{success}</p>
+        )}
+
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <label htmlFor="fullname" className="block font-medium text-sm">
+              Full Name
             </label>
-           <label className='flex flex-col'>
-            Email:
-            <input onChange={handlchange}  type="text" name='email' className='mt-1 p-2 bg-inherit border border-b-gray-700 rounded' />
-           </label>
-           <label className='flex flex-col'>
-            Password:
-            <input onChange={handlchange} type="password" name='password' className='mt-1 p-2 bg-inherit border border-b-gray-700 rounded' />
-           </label>
-            <button type='submit' className='mt-4 p-2 bg-blue-600 rounded-2xl h-[50px] w-[300px]'>Signup </button> <h1 className='text-center'>OR</h1>
-            <button type='submity' className=' p-2 bg-blue-600 rounded-2xl'>
-              <Link to="/ForLogin" className='text-white'>Login</Link>
-              
-               </button>
-            <div className='h-[50px] w-[450px] bg-inherit'>
-              <p className=' text-white'>By signing up, you agree to our  <span className='text-blue-600'>Terms of Service</span> and <br /> <span className='text-blue-600'>Privacy Policy</span>.</p>
-            </div>
-        
+            <input
+              type="text"
+              id="fullname"
+              name="fullname"
+              value={formData.fullname}
+              onChange={handleChange}
+              required
+              className="w-full mt-1 px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
+              placeholder="Enter your full name"
+            />
+          </div>
 
+          <div>
+            <label htmlFor="email" className="block font-medium text-sm">
+              Email Address
+            </label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              required
+              className="w-full mt-1 px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
+              placeholder="Enter your email"
+            />
+          </div>
 
-            </form>
+          <div>
+            <label htmlFor="password" className="block font-medium text-sm">
+              Password
+            </label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              required
+              className="w-full mt-1 px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
+              placeholder="Create a password"
+            />
+          </div>
 
-          </div> 
-          
-        </div>
-    
-    
-    </>
-  )
-}
+          <button
+            type="submit"
+            className="w-full bg-red-600 text-white py-2 rounded-md font-semibold hover:bg-red-700 transition"
+          >
+            Sign Up
+          </button>
+        </form>
 
-export default ForSignup
+        <p className="mt-6 text-center text-sm text-gray-600">
+          Already have an account?{" "}
+          <Link to="/ForLogin" className="text-red-600 font-medium hover:underline">
+            Log in here
+          </Link>
+        </p>
+
+        <p className="mt-4 text-xs text-center text-gray-400">
+          By signing up, you agree to our{" "}
+          <span className="text-red-500">Terms of Service</span> and{" "}
+          <span className="text-red-500">Privacy Policy</span>.
+        </p>
+      </div>
+    </div>
+  );
+};
+
+export default ForSignup;

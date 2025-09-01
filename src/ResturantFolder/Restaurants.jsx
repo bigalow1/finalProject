@@ -128,9 +128,10 @@ function Restaurants() {
         </div>
 
         <div className="text-center h-[300px] w-[800px] bg-inherit absolute flex flex-col items-center justify-center rounded-lg shadow-lg bg-opacity-90 left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 cursor-pointer">
-          <h2 className="text-5xl font-extrabold text-white mb-4 drop-shadow-lg">
-            Welcome to JetMeals
-          </h2>
+          <h2 className="text-5xl font-extrabold text-white mb-4 drop-shadow-lg transition-colors duration-300 hover:text-amber-400">
+  Welcome to JetMeals
+</h2>
+
           <p className="text-2xl text-white font-medium">
             Delivery made possible to your doorstep
           </p>
@@ -229,9 +230,9 @@ function Restaurants() {
 
       {/* Steps Section */}
       <section className="py-12 bg-gradient-to-r from-rose-50 via-amber-50 to-rose-100">
-        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div className="max-w-6xl cursor-pointer mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Step 1 */}
-          <div className="bg-white rounded-2xl shadow-lg p-6 flex flex-col items-center">
+          <div className="bg-white rounded-2xl shadow-lg hover:scale-105 transition-transform duration-300  p-6 flex flex-col items-center">
             <FaSearchLocation className="text-5xl text-rose-600 mb-4" />
             <h4 className="font-bold text-lg mb-2">Choose a Restaurant</h4>
             <p className="text-gray-600 text-center">
@@ -239,7 +240,7 @@ function Restaurants() {
             </p>
           </div>
           {/* Step 2 */}
-          <div className="bg-white rounded-2xl shadow-lg p-6 flex flex-col items-center">
+          <div className="bg-white rounded-2xl hover:scale-105 transition-transform duration-300 shadow-lg p-6 flex flex-col items-center">
             <IoFastFood className="text-5xl text-rose-600 mb-4" />
             <h4 className="font-bold text-lg mb-2">Order your food</h4>
             <p className="text-gray-600 text-center">
@@ -247,7 +248,7 @@ function Restaurants() {
             </p>
           </div>
           {/* Step 3 */}
-          <div className="bg-white rounded-2xl shadow-lg p-6 flex flex-col items-center">
+          <div className="bg-white rounded-2xl hover:scale-105 transition-transform duration-300 shadow-lg p-6 flex flex-col items-center">
             <FaCcMastercard className="text-5xl text-rose-600 mb-4" />
             <h4 className="font-bold text-lg mb-2">Pay by cash or card</h4>
             <p className="text-gray-600 text-center">
@@ -255,7 +256,7 @@ function Restaurants() {
             </p>
           </div>
           {/* Step 4 */}
-          <div className="bg-white rounded-2xl  shadow-lg p-6 flex flex-col items-center">
+          <div className="bg-white rounded-2xl hover:scale-105 transition-transform duration-300 shadow-lg p-6 flex flex-col items-center">
             <RiEBike2Line className="text-5xl text-rose-600 mb-4" />
             <h4 className="font-bold text-lg mb-2">Delivery</h4>
             <p className="text-gray-600 text-center">
@@ -266,7 +267,7 @@ function Restaurants() {
       </section>
 
       {/* Carousel */}
-      <section className="bg-gradient-to-r from-white-500 via-pink-400 to-orange-400 py-14">
+      <section className="bg-gradient-to-r from-white-500 via-pink-400 to-orange-400 rounded-bl-full py-14">
         <div className="max-w-5xl mx-auto overflow-hidden rounded-2xl shadow-2xl border-4 border-rose-600 relative">
           <h2 className="absolute top-4 left-1/2 -translate-x-1/2 z-20 text-3xl font-extrabold text-white drop-shadow-lg tracking-wide">
             JetMeals Carousel
@@ -294,14 +295,19 @@ function Restaurants() {
       </section>
 
       {/* Call to Action */}
-      <section className="py-8 bg-gradient-to-r from-rose-200 via-amber-100 to-rose-100 flex flex-col items-center">
-        <h3 className="text-2xl font-semibold text-rose-700 mb-4">
-          Here are some of the nice dishes you can enjoy with your family
-        </h3>
-        <button className="px-8 py-3 bg-rose-700 text-white font-bold rounded-full shadow-lg hover:bg-amber-400 hover:text-rose-700 transition-all duration-300">
-          See more...
-        </button>
-      </section>
+      <section className="py-8 bg-gradient-to-r from-rose-100 via-amber-100 to-rose-100 flex flex-col rounded-bl-full items-center animate-slideIn">
+  <h3 className="text-2xl font-semibold text-rose-700 mb-4">
+    Here are some of the nice dishes you can enjoy with your family
+  </h3>
+  <Link to="/OrderPage">
+      <button className="px-8 py-3 bg-rose-700 text-white font-bold rounded-full shadow-lg hover:bg-amber-400 hover:text-rose-700 transition-all duration-300">
+        See more...
+     </button>
+</Link>
+
+</section>
+ 
+
 
       {/* Partner Section */}
       <section className="bg-gradient-to-r from-amber-100 to-rose-100 py-12">

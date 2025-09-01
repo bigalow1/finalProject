@@ -62,10 +62,10 @@ function Home() {
   return (
     <>
       {/* Hero Section */}
-      <section className="relative h-[700px] w-full flex justify-center items-center overflow-hidden bg-gradient-to-br from-red-100 to-blue-100">
+      <section className="relative h-[700px] w-full flex justify-center items-center overflow-hidden bg-gradient-to-br from-red-100 to-blue-100 mt-21">
         <video
           src="/People.mp4"
-          className="absolute w-full h-full object-cover opacity-60"
+          className="absolute w-full h-full object-cover bg-blend-darken opacity-60"
           autoPlay
           loop
           muted
@@ -82,10 +82,10 @@ function Home() {
             alt="Jetmeals Logo"
             className="h-20 mb-4 animate-bounce"
           />
-          <h1 className="text-4xl md:text-5xl font-extrabold text-white mb-4 text-center drop-shadow-lg">
+          <h1 className="text-4xl md:text-5xl font-extrabold mb-4 text-white drop-shadow-lg">
             Jetmeals: Fast, Fresh, Reliable
           </h1>
-          <p className="text-lg md:text-2xl text-white mb-6 text-center max-w-2xl">
+          <p className="text-xl md:text-2xl mb-6 max-w-2xl mx-auto text-white text-center">
             <i>
               Your trusted partner for meal delivery. Connect with your favorite
               local restaurants and enjoy delicious meals delivered straight to
@@ -112,7 +112,7 @@ function Home() {
       </div>
 
       {/* Customer Reviews Slideshow */}
-      <section className="py-16 bg-gradient-to-r from-blue-900 to-red-900 h-[400px]">
+      <section className="py-16 bg-gray-100 h-[400px]">
         <h2 className="text-3xl font-bold text-center mb-8 text-[#E81F1F]">
           What Our Customers Say
         </h2>
@@ -146,43 +146,10 @@ function Home() {
           ))}
         </Swiper>
       </section>
-      <section className="h-[700px] bg-gradient-to-r from-blue-900 to-red-900">
-        <div className="h-[200px] bg-gradient-to-r from-black-200 to-red-500 bg-blend-darken flex justify-center items-center">
-          <h1 className="text-3xl font-bold text-white">
-            <i>FREQUENTLY ASKED QUESTIONS</i>
-          </h1>
-        </div>
-        <div className="bg-gradient-to-r from-black-200 to-red-500 bg-blend-darken rounded-lg max-w-2xl mx-auto mt-8 shadow-lg">
-          {faqs.map((faq, idx) => (
-            <div key={idx} className="border-b border-white/20">
-              <button
-                className="w-full flex justify-between items-center py-6 px-6 focus:outline-none transition-colors duration-300 hover:bg-black/20"
-                onClick={() => toggleFAQ(idx)}
-              >
-                <span className="text-xl text-white font-semibold text-left">
-                  <i>{faq.question}</i>
-                </span>
-                <span className="ml-4 text-white text-2xl">
-                  {openIndex === idx ? <IoChevronUp /> : <IoChevronDown />}
-                </span>
-              </button>
-              <div
-                className={`overflow-hidden transition-all duration-500 px-6 ${
-                  openIndex === idx ? "max-h-40 py-2" : "max-h-0 py-0"
-                }`}
-                style={{}}
-              >
-                <p className="text-lg text-white/90">
-                  <i>{faq.answer}</i>
-                </p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
+      
 
       {/* Animated Stats Section */}
-      <section className="py-12 bg-gradient-to-r from-blue-900 to-red-900">
+      <section className="py-12 bg-white">
         <div className="max-w-4xl mx-auto flex flex-wrap justify-center gap-10">
           {[
             { label: "Restaurants", value: 120 },
@@ -208,7 +175,7 @@ function Home() {
       </section>
 
       {/* Featured Restaurants Carousel */}
-      <section className="py-12 bg-gradient-to-r from-blue-900 to-red-900">
+      <section className="py-12 bg-white">
         <h2 className="text-3xl font-bold text-center mb-8 text-[#E81F1F]">
           Featured Restaurants
         </h2>
@@ -253,8 +220,43 @@ function Home() {
         </Swiper>
       </section>
 
+      <section className="h-[500px] bg-gradient-to-r from-amber-100 to-rose-100 ">
+        <div className="h-[100px] bg-white bg-blend-darken flex justify-center items-center">
+          <h1 className="text-3xl font-bold text-center mb-8 text-[#E81F1F]">
+            <i>FREQUENTLY ASKED QUESTIONS</i>
+          </h1>
+        </div>
+        <div className="bg-gradient-to-r from-black-200 to-red-500 bg-blend-darken rounded-lg max-w-2xl mx-auto mt-8 shadow-lg">
+          {faqs.map((faq, idx) => (
+            <div key={idx} className="border-b border-white/20">
+              <button
+                className="w-full flex justify-between items-center py-6 px-6 focus:outline-none transition-colors duration-300 hover:bg-black/20"
+                onClick={() => toggleFAQ(idx)}
+              >
+                <span className="text-xl text-white font-semibold text-left">
+                  <i>{faq.question}</i>
+                </span>
+                <span className="ml-4 text-white text-2xl">
+                  {openIndex === idx ? <IoChevronUp /> : <IoChevronDown />}
+                </span>
+              </button>
+              <div
+                className={`overflow-hidden transition-all duration-500 px-6 ${
+                  openIndex === idx ? "max-h-40 py-2" : "max-h-0 py-0"
+                }`}
+                style={{}}
+              >
+                <p className="text-lg text-white/90">
+                  <i>{faq.answer}</i>
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
       {/* Newsletter Signup */}
-      <section className="py-12 bg-gradient-to-r from-blue-900 to-red-900">
+      <section className="h-[200px] bg-white">
         <div className="max-w-xl mx-auto bg-gradient-to-r from-rose-50 to-amber-100 rounded-xl shadow-lg p-8 flex flex-col items-center">
           <h2 className="text-2xl font-bold text-[#E81F1F] mb-4">
             Stay Updated!
@@ -280,7 +282,7 @@ function Home() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-gradient-to-r from-blue-900 to-red-900 text-white py-8 mt-10">
+      <footer className="bg-gradient-to-br from-rose-200 to-amber-200 text-white py-8 mt-10">
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6 px-4">
           <div className="flex items-center gap-2">
             <img src="/Logo.png" alt="Jetmeals Logo" className="h-10" />

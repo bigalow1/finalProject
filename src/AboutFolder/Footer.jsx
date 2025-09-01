@@ -6,10 +6,10 @@ function Footer() {
 
     <>
      <div className='h-[300px] bg-black '>
-        <div className='h-[70px] bg-black flex justify-center items-center gap-1'>
-             <h1 className='h-[70px] w-[30%] bg-black text-3xl font-bold flex justify-around text-white'><i>Jetmeals</i> <i className='text-2xl'>Company</i></h1>
-             <h1  className='h-[70px] w-[30%] bg-black text-2xl font-bold flex justify-around text-white text-center'><i>Locations</i></h1>
-             <h1  className='h-[70px] w-[30%]  bg-black text-2xl font-bold flex justify-around text-white '><i>Restaurants</i></h1>
+        <div className='h-[50px] bg-black flex justify-center items-center gap-1'>
+             <h1 className='h-[50px] w-[30%] bg-black text-3xl font-bold flex justify-around text-white'><i>Jetmeals</i> <i className='text-2xl'>Company</i></h1>
+             <h1  className='h-[50px] w-[30%] bg-black text-2xl font-bold flex justify-around text-white text-center'><i>Locations</i></h1>
+             <h1  className='h-[50px] w-[30%]  bg-black text-2xl font-bold flex justify-around text-white '><i>Restaurants</i></h1>
         </div>
         <div className='h-[300px] bg-black gap-1 flex justify-center items-center'>
              <section className='h-[300px] w-[30%] bg-black flex justify-around text-white text-1xl  '>

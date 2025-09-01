@@ -12,24 +12,35 @@ import ForLogin from './AlldetailsFolder/ForLogin.jsx'
 import Faqs from './ResturantFolder/Faqs.jsx'
 import Vendors from './AlldetailsFolder/Restaurant.jsx'
 import OrderPage from './ResturantFolder/OrderPage.jsx'
+import CartPage from './AlldetailsFolder/CartPage.jsx'
+import { CartProvider } from './AlldetailsFolder/CartContext.jsx'
+
+
+
+
+
+
 
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <BrowserRouter>
-      <Header/>
+   <CartProvider>
+    <BrowserRouter> 
+      <Header />
       <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/Restaurants" element={<Restaurants />} />
-      <Route path="/Services" element={<Services />} />
-      <Route path="/Faqs" element={<Faqs />} />
-      <Route path="/ForSignup" element={<ForSignup />} />
-      <Route path="/ForLogin" element={<ForLogin />} />
-      <Route path="/Vendors" element={<Vendors />} />
-      <Route path="/OrderPage" element={<OrderPage />} />
+        <Route path='/' element={<Home />} />
+        <Route path='/Restaurants' element={<Restaurants />} />
+        <Route path='/OrderPage' element={<OrderPage />} />
+        <Route path='/Services' element={<Services />} />
+        <Route path='/ForSignup' element={<ForSignup />} />
+        <Route path='/ForLogin' element={<ForLogin />} />
+        <Route path='/Faqs' element={<Faqs />} />
+        <Route path='/Vendors' element={<Vendors />} />
+        <Route path='/Cart' element={<CartPage />} />
       </Routes>
-      <Footer/>
+      <Footer />  
     </BrowserRouter>
+    </CartProvider>
   </StrictMode>
 );
 

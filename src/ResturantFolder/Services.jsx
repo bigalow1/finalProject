@@ -146,9 +146,7 @@ function Services() {
             </p>
           </div>
         </div>
-        <div className="text-center bg-amber-500 h-[100px] text-gray-300 mt-8 text-sm">
-        
-        </div>
+       
       </footer>
     </>
   );
