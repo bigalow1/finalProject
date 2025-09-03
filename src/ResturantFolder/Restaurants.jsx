@@ -129,7 +129,7 @@ function Restaurants() {
 
         <div className="text-center h-[300px] w-[800px] bg-inherit absolute flex flex-col items-center justify-center rounded-lg shadow-lg bg-opacity-90 left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 cursor-pointer">
           <h2 className="text-5xl font-extrabold text-white mb-4 drop-shadow-lg transition-colors duration-300 hover:text-amber-400">
-  Welcome to JetMeals
+  <marquee behavior="" direction="right">Welcome to JetMeals</marquee>
 </h2>
 
           <p className="text-2xl text-white font-medium">

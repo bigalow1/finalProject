@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-
+import { auth, googleProvider } from "../AlldetailsFolder/Firebase";
+import { signInWithPopup } from "firebase/auth";
 
 const ForSignup = () => {
   const [formData, setFormData] = useState({
     fullname: "",
     email: "",
     password: "",
+     
   });
 
   const [error, setError] = useState("");
@@ -41,6 +43,18 @@ const ForSignup = () => {
       setFormData({ fullname: "", email: "", password: "" });
     } catch (err) {
       setError(err.message);
+    }
+  };
+
+  // 🔹 Google Sign Up
+  const handleGoogleSignup = async () => {
+    try {
+      const result = await signInWithPopup(auth, googleProvider);
+      console.log("Google signup success:", result.user);
+      setSuccess(`Welcome ${result.user.displayName || "user"}!`);
+    } catch (err) {
+      console.error("Google signup error:", err);
+      setError("Google sign-in failed. Try again.");
     }
   };
 
@@ -115,6 +129,19 @@ const ForSignup = () => {
             Sign Up
           </button>
         </form>
+
+        {/* 🔹 Google Sign Up Button */}
+        <button
+          onClick={handleGoogleSignup}
+          className="w-full mt-4 flex items-center justify-center gap-2 border border-gray-300 py-2 rounded-md hover:bg-gray-100 transition"
+        >
+          <img
+            src="https://www.svgrepo.com/show/355037/google.svg"
+            alt="Google"
+            className="w-5 h-5"
+          />
+          Sign up with Google
+        </button>
 
         <p className="mt-6 text-center text-sm text-gray-600">
           Already have an account?{" "}

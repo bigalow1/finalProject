@@ -1,7 +1,4 @@
-import React from "react";
-import { IoPersonAddOutline } from "react-icons/io5";
-import { CiSearch } from "react-icons/ci";
-import { AiOutlineShoppingCart } from "react-icons/ai";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -9,24 +6,23 @@ import { Autoplay, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 import { IoChevronDown, IoChevronUp } from "react-icons/io5";
-import { useState } from "react";
 
-// Dummy data for reviews and restaurants
+// Dummy data
 const reviews = [
   {
     name: "Sarah L.",
-    text: "Jetmeals is a lifesaver! Fast delivery and the food is always fresh.",
-    img: "customer1.jpg",
+    text: "JetMeals is a lifesaver! Fast delivery and the food is always fresh.",
+    img: "/customer1.jpg",
   },
   {
     name: "Mike D.",
     text: "Love the variety of restaurants. Ordering is so easy!",
-    img: "customer2.jpg",
+    img: "/customer2.jpg",
   },
   {
     name: "Priya S.",
     text: "The best food delivery experience I've had. Highly recommend!",
-    img: "customer3.jpg",
+    img: "/customer3.jpg",
   },
 ];
 
@@ -39,33 +35,26 @@ const faqs = [
   {
     question: "How do I place an order?",
     answer:
-      "You can place an order through our website or mobile app. Simply browse the available restaurants, select your items, and proceed to checkout.",
+      "Browse restaurants, add meals to cart, and checkout easily through our website or app.",
   },
   {
     question: "What payment methods do you accept?",
     answer:
-      "We accept various payment methods including credit/debit cards, digital wallets, and cash on delivery in select areas.",
-  },
-  {
-    question: "How can I track my order?",
-    answer:
-      "You can track your order in real-time through our website or app. Once your order is confirmed, you will receive a tracking link via SMS or email.",
+      "We accept credit/debit cards, digital wallets, and cash on delivery in select areas.",
   },
 ];
 
 function Home() {
   const [openIndex, setOpenIndex] = useState(null);
+  const toggleFAQ = (idx) => setOpenIndex(openIndex === idx ? null : idx);
 
-  const toggleFAQ = (idx) => {
-    setOpenIndex(openIndex === idx ? null : idx);
-  };
   return (
     <>
       {/* Hero Section */}
-      <section className="relative h-[700px] w-full flex justify-center items-center overflow-hidden bg-gradient-to-br from-red-100 to-blue-100 mt-21">
+      <section className="relative h-[700px] w-full flex justify-center items-center overflow-hidden bg-gradient-to-br from-red-100 to-blue-100">
         <video
           src="/People.mp4"
-          className="absolute w-full h-full object-cover bg-blend-darken opacity-60"
+          className="absolute w-full h-full object-cover opacity-60"
           autoPlay
           loop
           muted
@@ -75,22 +64,16 @@ function Home() {
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
-          className="relative z-10 bg-inherit bg-opacity-60 rounded-xl p-10 shadow-2xl flex flex-col items-center"
+          className="relative z-10 bg-black/40 rounded-xl p-10 shadow-2xl flex flex-col items-center"
         >
-          <img
-            src="/Logo.png"
-            alt="Jetmeals Logo"
-            className="h-20 mb-4 animate-bounce"
-          />
+          <img src="/Logo.png" alt="JetMeals" className="h-20 mb-4" />
           <h1 className="text-4xl md:text-5xl font-extrabold mb-4 text-white drop-shadow-lg">
-            Jetmeals: Fast, Fresh, Reliable
+            JetMeals: Fast, Fresh, Reliable
           </h1>
-          <p className="text-xl md:text-2xl mb-6 max-w-2xl mx-auto text-white text-center">
-            <i>
-              Your trusted partner for meal delivery. Connect with your favorite
-              local restaurants and enjoy delicious meals delivered straight to
-              your doorstep.
-            </i>
+          <p className="text-lg md:text-xl mb-6 max-w-2xl mx-auto text-white text-center">
+            Your trusted partner for meal delivery. Connect with your favorite
+            local restaurants and enjoy delicious meals delivered straight to
+            your doorstep.
           </p>
           <Link
             to="/OrderPage"
@@ -100,25 +83,93 @@ function Home() {
           </Link>
         </motion.div>
       </section>
-      <div className="h-[400px] bg-red-400">
-        
-           
 
+      {/* How It Works */}
+      <section className="py-16 bg-white">
+        <h2 className="text-3xl font-bold text-center text-[#E81F1F] mb-10">
+          How It Works
+        </h2>
+        <div className="grid md:grid-cols-3 kl gap-8 max-w-6xl mx-auto text-center">
+          {[
+            {
+              title: "Browse",
+              desc: "Explore top restaurants and cuisines near you.",
+              img: "/ok.jpg " ,
+            },
+            {
+              title: "Order",
+              desc: "Add your favorite meals to cart and checkout securely.",
+              img: "/.png",
+            },
+            {
+              title: "Enjoy",
+              desc: "Sit back, relax, and enjoy fresh meals delivered fast.",
+              img: "/enjoy.png",
+            },
+          ].map((step, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: i * 0.2 }}
+              className="bg-gradient-to-br from-rose-50 to-amber-100 rounded-xl shadow-lg p-6"
+            >
+              <img
+                src={step.img}
+                alt={step.title}
+                className="h-24 mx-auto mb-4"
+              />
+              <h3 className="text-xl font-bold text-[#E81F1F] mb-2">
+                {step.title}
+              </h3>
+              <p className="text-gray-700">{step.desc}</p>
+            </motion.div>
+          ))}
+        </div>
+      </section>
 
+      {/* Popular Categories */}
+      <section className="py-16 bg-gray-100">
+        <h2 className="text-3xl font-bold text-center text-[#E81F1F] mb-10">
+          Popular Categories
+        </h2>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-5xl mx-auto">
+          {[
+            { name: "Egusi", img: "/Egusi1.jpeg" },
+            { name: "FriedRice", img: "/FriedRice1.jpeg" },
+            { name: " Grilled Ribs", img: "/Ribs.jpeg" },
+            { name: "Desserts", img: "/desert.jpeg" },
+          ].map((cat, i) => (
+            <motion.div
+              key={i}
+              whileHover={{ scale: 1.05 }}
+              className="bg-white rounded-xl shadow-md overflow-hidden"
+            >
+              <img
+                src={cat.img}
+                alt={cat.name}
+                className="h-32 w-full object-cover"
+              />
+              <div className="p-3 text-center font-bold text-[#E81F1F]">
+                {cat.name}
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </section>
+       <div className=" bg-black h-[400px] flex justify-center items-center">
+         <section className="h-[300px] w-[40%] bg-amber-700 bg-[url(chef.jpg)] rounded-3xl "></section>
+          <section className="h-[300px] w-[40%] bg-red-600"></section>
+       </div>
 
-
-
-           
-      </div>
-
-      {/* Customer Reviews Slideshow */}
-      <section className="py-16 bg-gray-100 h-[400px]">
+      {/* Reviews */}
+      <section className="py-16 bg-white">
         <h2 className="text-3xl font-bold text-center mb-8 text-[#E81F1F]">
           What Our Customers Say
         </h2>
         <Swiper
           modules={[Autoplay, Pagination]}
-          autoplay={{ delay: 3500, disableOnInteraction: false }}
+          autoplay={{ delay: 3000, disableOnInteraction: false }}
           pagination={{ clickable: true }}
           loop
           slidesPerView={1}
@@ -130,7 +181,7 @@ function Home() {
                 initial={{ scale: 0.95, opacity: 0 }}
                 whileInView={{ scale: 1, opacity: 1 }}
                 transition={{ duration: 0.6 }}
-                className="flex flex-col items-center bg-gradient-to-r from-rose-50 via-amber-50 to-rose-100 rounded-lg shadow-lg p-8"
+                className="flex flex-col items-center bg-gradient-to-r from-rose-50 to-amber-100 rounded-lg shadow-lg p-8"
               >
                 <img
                   src={review.img}
@@ -146,14 +197,13 @@ function Home() {
           ))}
         </Swiper>
       </section>
-      
 
-      {/* Animated Stats Section */}
-      <section className="py-12 bg-white">
+      {/* Stats */}
+      <section className="py-12 bg-gray-100">
         <div className="max-w-4xl mx-auto flex flex-wrap justify-center gap-10">
           {[
             { label: "Restaurants", value: 120 },
-            { label: "Orders Delivered", value: 50000 },
+            { label: "Orders Delivered", value: "50,000+" },
             { label: "Avg. Delivery Time", value: "25 min" },
           ].map((stat, idx) => (
             <motion.div
@@ -174,69 +224,22 @@ function Home() {
         </div>
       </section>
 
-      {/* Featured Restaurants Carousel */}
-      <section className="py-12 bg-white">
-        <h2 className="text-3xl font-bold text-center mb-8 text-[#E81F1F]">
-          Featured Restaurants
+      {/* FAQ */}
+      <section className="py-16 bg-gradient-to-r from-amber-100 to-rose-100">
+        <h2 className="text-3xl font-bold text-center text-[#E81F1F] mb-8">
+          Frequently Asked Questions
         </h2>
-        <Swiper
-          modules={[Autoplay, Pagination]}
-          autoplay={{ delay: 3000, disableOnInteraction: false }}
-          pagination={{ clickable: true }}
-          loop
-          slidesPerView={3}
-          spaceBetween={30}
-          breakpoints={{
-            0: { slidesPerView: 1 },
-            640: { slidesPerView: 2 },
-            1024: { slidesPerView: 3 },
-          }}
-          className="max-w-5xl mx-auto"
-        >
-          {[
-            { name: "Sushi Palace", img: "/desert.jpeg" },
-            { name: "Burger Hub", img: "/FriedRice1.jpeg" },
-            { name: "Pizza Express", img: "/Ribs.jpeg" },
-            { name: "Vegan Delight", img: "/jollof.jpeg" },
-          ].map((rest, idx) => (
-            <SwiperSlide key={idx}>
-              <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5 }}
-                className="bg-gradient-to-br from-rose-50 to-amber-100 rounded-xl shadow-lg p-6 flex flex-col items-center"
-              >
-                <img
-                  src={rest.img}
-                  alt={rest.name}
-                  className="w-28 h-28 rounded-full object-cover mb-4 border-4 border-[#E81F1F]"
-                />
-                <span className="font-bold text-lg text-[#E81F1F]">
-                  {rest.name}
-                </span>
-              </motion.div>
-            </SwiperSlide>
-          ))}
-        </Swiper>
-      </section>
-
-      <section className="h-[500px] bg-gradient-to-r from-amber-100 to-rose-100 ">
-        <div className="h-[100px] bg-white bg-blend-darken flex justify-center items-center">
-          <h1 className="text-3xl font-bold text-center mb-8 text-[#E81F1F]">
-            <i>FREQUENTLY ASKED QUESTIONS</i>
-          </h1>
-        </div>
-        <div className="bg-gradient-to-r from-black-200 to-red-500 bg-blend-darken rounded-lg max-w-2xl mx-auto mt-8 shadow-lg">
+        <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-lg">
           {faqs.map((faq, idx) => (
-            <div key={idx} className="border-b border-white/20">
+            <div key={idx} className="border-b border-gray-200">
               <button
-                className="w-full flex justify-between items-center py-6 px-6 focus:outline-none transition-colors duration-300 hover:bg-black/20"
+                className="w-full flex justify-between items-center py-5 px-6 focus:outline-none hover:bg-gray-100 transition"
                 onClick={() => toggleFAQ(idx)}
               >
-                <span className="text-xl text-white font-semibold text-left">
-                  <i>{faq.question}</i>
+                <span className="text-lg font-semibold text-gray-800">
+                  {faq.question}
                 </span>
-                <span className="ml-4 text-white text-2xl">
+                <span className="ml-4 text-gray-600 text-xl">
                   {openIndex === idx ? <IoChevronUp /> : <IoChevronDown />}
                 </span>
               </button>
@@ -244,19 +247,16 @@ function Home() {
                 className={`overflow-hidden transition-all duration-500 px-6 ${
                   openIndex === idx ? "max-h-40 py-2" : "max-h-0 py-0"
                 }`}
-                style={{}}
               >
-                <p className="text-lg text-white/90">
-                  <i>{faq.answer}</i>
-                </p>
+                <p className="text-gray-700">{faq.answer}</p>
               </div>
             </div>
           ))}
         </div>
       </section>
 
-      {/* Newsletter Signup */}
-      <section className="h-[200px] bg-white">
+      {/* Newsletter */}
+      <section className="py-16 bg-white">
         <div className="max-w-xl mx-auto bg-gradient-to-r from-rose-50 to-amber-100 rounded-xl shadow-lg p-8 flex flex-col items-center">
           <h2 className="text-2xl font-bold text-[#E81F1F] mb-4">
             Stay Updated!
@@ -282,7 +282,7 @@ function Home() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-gradient-to-br from-rose-200 to-amber-200 text-white py-8 mt-10">
+      <footer className="bg-gradient-to-br from-rose-200 to-amber-200 text-gray-800 py-8 mt-10">
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6 px-4">
           <div className="flex items-center gap-2">
             <img src="/Logo.png" alt="Jetmeals Logo" className="h-10" />
@@ -302,31 +302,8 @@ function Home() {
               FAQ
             </a>
           </div>
-          <div className="flex gap-4">
-            <a
-              href="#"
-              aria-label="Facebook"
-              className="hover:text-[#E81F1F] transition"
-            >
-              <i className="fab fa-facebook-f"></i>
-            </a>
-            <a
-              href="#"
-              aria-label="Twitter"
-              className="hover:text-[#E81F1F] transition"
-            >
-              <i className="fab fa-twitter"></i>
-            </a>
-            <a
-              href="#"
-              aria-label="Instagram"
-              className="hover:text-[#E81F1F] transition"
-            >
-              <i className="fab fa-instagram"></i>
-            </a>
-          </div>
         </div>
-        <div className="text-center text-sm mt-4 text-white/70">
+        <div className="text-center text-sm mt-4 text-gray-700">
           &copy; {new Date().getFullYear()} JetMeals. All rights reserved.
         </div>
       </footer>

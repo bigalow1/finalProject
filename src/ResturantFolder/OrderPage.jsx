@@ -55,7 +55,7 @@ const OrderPage = () => {
   });
 
   return (
-    <div className="flex flex-col lg:flex-row bg-amber-500 p-4">
+    <div className="flex flex-col lg:flex-row bg-white-700 p-4">
       {/* Sidebar */}
       <div className="w-full lg:w-1/4 lg:mr-6 mb-6 lg:mb-0 bg-red-400 p-4 shadow rounded">
         <h2 className="text-xl font-bold mb-4">Filter Foods</h2>
@@ -112,7 +112,7 @@ const OrderPage = () => {
       <div className="flex-1">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-xl font-bold">Available Foods</h2>
-          <Link to="/cart" className="bg-blue-500 text-white px-4 py-2 rounded">
+          <Link to="/cartPage" className="bg-blue-500 text-white px-4 py-2 rounded">
             Cart ({cart.reduce((sum, item) => sum + item.quantity, 0)})
           </Link>
         </div>
@@ -120,16 +120,21 @@ const OrderPage = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
           {filteredFoods.length > 0 ? (
             filteredFoods.map((item) => (
-              <div key={item.id} className="border p-4 rounded shadow">
+              <div key={item.id} className="border p-4 rounded shadow flex flex-col">
                 <img
                   src={item.image}
                   alt={item.title}
                   className="h-40 object-contain mx-auto mb-2"
                 />
-                <h3 className="font-semibold text-sm mb-1">{item.title}</h3>
+                <h3
+                  className="font-semibold text-sm mb-1 line-clamp-2"
+                  title={item.title}
+                >
+                  {item.title}
+                </h3>
                 <p className="text-green-600 font-bold mb-2">${item.price}</p>
                 <button
-                  className="bg-blue-600 text-white w-full py-1 rounded"
+                  className="bg-blue-600 text-white w-full py-1 rounded hover:bg-blue-700 transition"
                   onClick={() => addToCart(item)}
                 >
                   Add to cart
