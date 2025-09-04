@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useCart } from "../AlldetailsFolder/CartContext";
 import { Link } from "react-router-dom";
+
  
 const categories = [
   "Rice",
@@ -96,9 +97,9 @@ useEffect(() => {
   });
 
   return (
-    <div className="flex flex-col lg:flex-row bg-white p-4">
+    <div className="flex flex-col lg:flex-row   bg-white p-4">
       {/* Sidebar */}
-      <div className="w-full lg:w-1/4 lg:mr-6 mb-6 lg:mb-0 bg-red-400 p-4 shadow rounded">
+      <div className="w-full lg:w-1/4 lg:mr-6 mb-6 lg:mb-0 bg-amber-100 mt-20 p-4 shadow rounded">
         <h2 className="text-xl font-bold mb-4">Filter Foods</h2>
 
         {/* Search */}
@@ -150,12 +151,12 @@ useEffect(() => {
       </div>
 
       {/* Main Content */}
-      <div className="flex-1">
-        <div className="flex justify-between items-center mb-4">
+      <div className="flex-1  mt-20 lg:mt-20 bg-amber-100  p-4 rounded shadow">
+        <div className="flex justify-between  items-center mb-4">
           <h2 className="text-xl font-bold">Available Foods</h2>
           <Link
             to="/cartPage"
-            className="bg-blue-500 text-white px-4 py-2 rounded"
+            className="bg-blue-500 hover:scale-105 transition-transform duration-300 text-white px-4 py-2 rounded"
           >
             Cart ({cart.reduce((sum, item) => sum + item.quantity, 0)})
           </Link>
@@ -167,17 +168,17 @@ useEffect(() => {
 
         {/* Food Grid */}
         {!loading && !error && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3   xl:grid-cols-4 gap-6">
             {filteredFoods.length > 0 ? (
               filteredFoods.map((item) => (
                 <div
                   key={item._id || item.id}
-                  className="border p-4 rounded shadow flex flex-col"
+                  className="border  p-4 rounded shadow flex flex-col"
                 >
                   <img
                     src={item.menupicture}
                     alt={item.menuname}
-                    className="h-40 object-contain mx-auto mb-2"
+                    className="h-40 object-contain hover:scale-105 transition-transform duration-300 mx-auto mb-2"
                   />
                   <h3
                     className="font-semibold text-sm mb-1 line-clamp-2"
@@ -192,7 +193,7 @@ useEffect(() => {
                     ${item.menuprice}
                   </p>
                   <button
-                    className="bg-blue-600 text-white w-full py-1 rounded hover:bg-blue-700 transition"
+                    className="bg-blue-600 text-white w-full hover:scale-105 transition-transform duration-300 py-1 rounded hover:bg-blue-700 "
                     onClick={() => addToCart(item)}
                   >
                     Add to cart

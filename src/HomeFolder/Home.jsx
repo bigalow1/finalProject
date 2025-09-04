@@ -157,9 +157,25 @@ function Home() {
           ))}
         </div>
       </section>
-       <div className=" bg-black h-[400px] flex justify-center items-center">
+       <div className=" bg-yellow-50 h-[400px] flex justify-center items-center">
          <section className="h-[300px] w-[40%] bg-amber-700 bg-[url(chef.jpg)] rounded-3xl "></section>
-          <section className="h-[300px] w-[40%] bg-red-600"></section>
+          <section className="h-[300px] w-[40%] bg-white flex items-center justify-center p-6 rounded-lg shadow-lg">
+  <div className="text-red-500 text-center">
+    <h2 className="text-2xl font-bold mb-2">Meet Chef Amara</h2>
+    <p className="text-sm  text-gray-400 leading-relaxed">
+      Chef Amara is a passionate culinary artist who turned her love for
+      cooking into a thriving food business. With the support of{" "}
+      <span className="font-semibold">JetMeals Delivery Company</span>, she has
+      been able to share her delicious creations with more people every day.
+    </p>
+    <p className="text-sm leading-relaxed text-gray-600 mt-2">
+      Her vision is simple: bringing restaurant-quality meals to your doorstep—
+      fresh, fast, and full of flavor. Through JetMeals, she continues to grow
+      her brand and make good food accessible to everyone.
+    </p>
+  </div>
+</section>
+
        </div>
 
       {/* Reviews */}

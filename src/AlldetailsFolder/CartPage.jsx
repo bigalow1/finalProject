@@ -1,101 +1,98 @@
-// CartPage.jsx
 import React from "react";
 import { useCart } from "../AlldetailsFolder/CartContext";
 import { Link } from "react-router-dom";
 
 const CartPage = () => {
-  const { cart, increaseQuantity, decreaseQuantity, clearCart } = useCart();
+  const { cart, removeFromCart, clearCart } = useCart();
 
-  const cartIsEmpty = cart.length === 0;
-  const totalAmount = cart.reduce(
-    (sum, item) => sum + item.price * item.quantity,
+  const totalPrice = cart.reduce(
+    (sum, item) => sum + item.menuprice * item.quantity,
     0
   );
 
   return (
-    <div className="p-6 bg-black min-h-screen ">
-      {cartIsEmpty ? (
-        <div className="flex items-center justify-center h-[400px]">
-          <div className="text-center bg-red-500 text-white p-10 rounded-2xl shadow-lg">
+    <div className="min-h-screen bg-amber-50 p-6 mt-20">
+      <div className="max-w-4xl mx-auto bg-white p-6 rounded-xl shadow-md">
+        <h1 className="text-2xl font-bold mb-6 text-center text-rose-600">
+          Your Order
+        </h1>
+
+        {cart.length === 0 ? (
+          <div className="text-center py-10">
             <img
               src="/empty-cart.png"
               alt="Empty Cart"
-              className="mx-auto w-32 mb-4"
+              className="mx-auto w-40 mb-6"
             />
-            <h2 className="text-2xl font-bold mb-2">Your Cart is Empty</h2>
-            <p className="mb-4">Looks like you haven't added anything yet.</p>
-            <Link to="/orderPage">
-              <button className="bg-black px-6 py-3 rounded-lg text-white hover:bg-gray-800">
+            <h2 className="text-lg font-semibold mb-4 text-gray-700">
+              Your cart is empty!
+            </h2>
+            <Link to="/OrderPage">
+              <button className="bg-rose-600 text-white px-6 py-2 rounded-lg hover:bg-rose-700 transition">
                 Browse Meals
               </button>
             </Link>
           </div>
-        </div>
-      ) : (
-        <>
-          <h2 className="text-3xl  font-bold mb-6">Your Cart</h2>
-          <div className="space-y-4 flex flex-col md:flex-row md:flex-wrap gap-4">
-            {cart.map((item) => (
-              <div
-                key={item.id}
-                className="border p-4 rounded-xl shadow-md w-[30%] flex items-center justify-between bg-white"
-              >
-                <div  className="flex items-center gap-4">
+        ) : (
+          <>
+            {/* Cart Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+              {cart.map((item) => (
+                <div
+                  key={item._id}
+                  className="border p-4 rounded-lg shadow-sm bg-white flex flex-col"
+                >
                   <img
-                    src={item.image}
-                    alt={item.title}
-                    className="h-20 w-20 object-contain"
+                    src={item.menupicture}
+                    alt={item.menuname}
+                    className="h-32 object-contain mx-auto mb-3"
                   />
-                  <div>
-                    <h4 className="font-semibold text-lg">{item.title}</h4>
-                    <p className="text-gray-600">${item.price.toFixed(2)}</p>
-                  </div>
-                </div>
-
-                {/* Quantity Controls */}
-                <div className="flex items-center gap-4">
+                  <h3 className="font-semibold text-sm mb-1 text-gray-800">
+                    {item.menuname}
+                  </h3>
+                  <p className="text-gray-500 text-xs mb-2">
+                    {item.quantity} × ${item.menuprice}
+                  </p>
+                  <p className="text-green-600 font-semibold mb-3">
+                    ${(item.menuprice * item.quantity).toFixed(2)}
+                  </p>
                   <button
-                    onClick={() => decreaseQuantity(item.id)}
-                    className="bg-red-500 text-white px-3 py-1 rounded-lg hover:bg-red-600"
+                    onClick={() => removeFromCart(item._id)}
+                    className="bg-red-500 text-white text-xs px-3 py-1 rounded hover:bg-red-600 transition mt-auto"
                   >
-                    -
-                  </button>
-                  <span className="text-lg text-white font-semibold">{item.quantity}</span>
-                  <button
-                    onClick={() => increaseQuantity(item.id)}
-                    className="bg-green-500 text-white px-3 py-1 rounded-lg hover:bg-green-600"
-                  >
-                    +
+                    Remove
                   </button>
                 </div>
+              ))}
+            </div>
 
-                {/* Total for item */}
-                <p className="font-bold text-lg">
-                  ${(item.quantity * item.price).toFixed(2)}
-                </p>
+            {/* Cart Summary */}
+            <div className="mt-10 flex flex-col md:flex-row justify-between items-center bg-gray-100 p-4 rounded-lg gap-3">
+              <h3 className="text-lg font-medium text-gray-800">
+                Total:{" "}
+                <span className="text-green-600 font-semibold">
+                  ${totalPrice.toFixed(2)}
+                </span>
+              </h3>
+
+              <div className="flex gap-3">
+                <button
+                  onClick={clearCart}
+                  className="bg-gray-700 text-white text-sm px-4 py-2 rounded hover:bg-gray-800 transition"
+                >
+                  Clear Cart
+                </button>
+
+                <Link to="/checkoutPage">
+                  <button className="bg-rose-600 text-white text-sm px-4 py-2 rounded hover:bg-rose-700 transition">
+                    Checkout
+                  </button>
+                </Link>
               </div>
-            ))}
-          </div>
-
-          {/* Cart Footer */}
-          <div className="mt-8 flex justify-between items-center">
-            <button
-              onClick={clearCart}
-              className="bg-gray-400 text-white px-6 py-3 rounded-lg hover:bg-gray-500"
-            >
-              Clear Cart
-            </button>
-            <div className="text-2xl font-bold text-white">
-              Total Amount: ${totalAmount.toFixed(2)}
             </div>
-            <div className="bg-red-500 hover:bg-red-600 text-white font-semibold px-6 py-3 rounded-lg">
-                 <Link to="/CheckoutPage" className="bg-red text-white px-6 py-3 rounded-lg hover:bg-gray-800">
-              Checkout
-            </Link>
-            </div>
-          </div>
-        </>
-      )}
+          </>
+        )}
+      </div>
     </div>
   );
 };
