@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useCart } from "../AlldetailsFolder/CartContext";
 import { Link } from "react-router-dom";
-
+ 
 const categories = [
   "Rice",
   "Pizza",
@@ -9,12 +9,12 @@ const categories = [
   "Pasta",
   "Sushi",
   "Desserts",
-  "soda",
-  "drinks",
-  "fruits",
-  "noodles",
+  "Soda",
+  "Drinks",
+  "Fruits",
+  "Noodles",
   "Soups",
-  "sharwama",
+  "Sharwama",
 ];
 
 const OrderPage = () => {
@@ -27,13 +27,45 @@ const OrderPage = () => {
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(1000);
 
+  // Loading & Error states
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
   // Fetch foods
-  useEffect(() => {
-    fetch("https://fakestoreapi.com/products")
-      .then((res) => res.json())
-      .then((data) => setFoods(data))
-      .catch((err) => console.error(err));
-  }, []);
+useEffect(() => {
+  const fetchMenus = async () => {
+    try {
+      const res = await fetch("http://localhost:3002/menus", {
+        headers: {
+          "Content-Type": "application/json",
+          // remove Authorization unless you actually have a token
+        },
+      });
+
+      if (!res.ok) {
+        const text = await res.text();
+        throw new Error(`Error ${res.status}: ${text}`);
+      }
+
+      const data = await res.json();
+      setFoods(data);
+
+      if (data.length > 0) {
+        const maxFoodPrice = Math.max(...data.map((f) => f.menuprice));
+        setMaxPrice(maxFoodPrice);
+      }
+    } catch (err) {
+      console.error("Fetch error:", err.message);
+      setError("Failed to load menus: " + err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  fetchMenus();
+}, []);
+
+
 
   // Handle category toggle
   const toggleCategory = (category) => {
@@ -46,16 +78,25 @@ const OrderPage = () => {
 
   // Filter logic
   const filteredFoods = foods.filter((item) => {
-    const matchesSearch = item.title.toLowerCase().includes(search.toLowerCase());
+    const matchesSearch = item.menuname
+      ?.toLowerCase()
+      .includes(search.toLowerCase());
+
+    // Match category by checking if the food name contains it
     const matchesCategory =
       selectedCategories.length === 0 ||
-      selectedCategories.includes(item.category);
-    const matchesPrice = item.price >= minPrice && item.price <= maxPrice;
+      selectedCategories.some((cat) =>
+        item.menuname?.toLowerCase().includes(cat.toLowerCase())
+      );
+
+    const matchesPrice =
+      item.menuprice >= minPrice && item.menuprice <= maxPrice;
+
     return matchesSearch && matchesCategory && matchesPrice;
   });
 
   return (
-    <div className="flex flex-col lg:flex-row bg-white-700 p-4">
+    <div className="flex flex-col lg:flex-row bg-white p-4">
       {/* Sidebar */}
       <div className="w-full lg:w-1/4 lg:mr-6 mb-6 lg:mb-0 bg-red-400 p-4 shadow rounded">
         <h2 className="text-xl font-bold mb-4">Filter Foods</h2>
@@ -112,39 +153,57 @@ const OrderPage = () => {
       <div className="flex-1">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-xl font-bold">Available Foods</h2>
-          <Link to="/cartPage" className="bg-blue-500 text-white px-4 py-2 rounded">
+          <Link
+            to="/cartPage"
+            className="bg-blue-500 text-white px-4 py-2 rounded"
+          >
             Cart ({cart.reduce((sum, item) => sum + item.quantity, 0)})
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
-          {filteredFoods.length > 0 ? (
-            filteredFoods.map((item) => (
-              <div key={item.id} className="border p-4 rounded shadow flex flex-col">
-                <img
-                  src={item.image}
-                  alt={item.title}
-                  className="h-40 object-contain mx-auto mb-2"
-                />
-                <h3
-                  className="font-semibold text-sm mb-1 line-clamp-2"
-                  title={item.title}
+        {/* Loading & Error */}
+        {loading && <p>Loading menus...</p>}
+        {error && <p className="text-red-500">{error}</p>}
+
+        {/* Food Grid */}
+        {!loading && !error && (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
+            {filteredFoods.length > 0 ? (
+              filteredFoods.map((item) => (
+                <div
+                  key={item._id || item.id}
+                  className="border p-4 rounded shadow flex flex-col"
                 >
-                  {item.title}
-                </h3>
-                <p className="text-green-600 font-bold mb-2">${item.price}</p>
-                <button
-                  className="bg-blue-600 text-white w-full py-1 rounded hover:bg-blue-700 transition"
-                  onClick={() => addToCart(item)}
-                >
-                  Add to cart
-                </button>
-              </div>
-            ))
-          ) : (
-            <p>No foods match your filters.</p>
-          )}
-        </div>
+                  <img
+                    src={item.menupicture}
+                    alt={item.menuname}
+                    className="h-40 object-contain mx-auto mb-2"
+                  />
+                  <h3
+                    className="font-semibold text-sm mb-1 line-clamp-2"
+                    title={item.menuname}
+                  >
+                    {item.menuname}
+                  </h3>
+                  <p className="text-gray-600 text-xs mb-2">
+                    {item.menudescription}
+                  </p>
+                  <p className="text-green-600 font-bold mb-2">
+                    ${item.menuprice}
+                  </p>
+                  <button
+                    className="bg-blue-600 text-white w-full py-1 rounded hover:bg-blue-700 transition"
+                    onClick={() => addToCart(item)}
+                  >
+                    Add to cart
+                  </button>
+                </div>
+              ))
+            ) : (
+              <p>No foods match your filters.</p>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );

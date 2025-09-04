@@ -1,48 +1,44 @@
-// CartContext.jsx
+// AlldetailsFolder/CartContext.js
 import { createContext, useContext, useState } from "react";
 
-const CartContext = createContext();
 
-export const useCart = () => useContext(CartContext);
+const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
   const [cart, setCart] = useState([]);
 
-  const addToCart = (product) => {
+  // Add item to cart
+  const addToCart = (item) => {
     setCart((prev) => {
-      const existing = prev.find((item) => item.id === product.id);
-      if (existing) {
-        return prev.map((item) =>
-          item.id === product.id
-            ? { ...item, quantity: item.quantity + 1 }
-            : item
+      const exists = prev.find((i) => i.id === item.id);
+      if (exists) {
+        return prev.map((i) =>
+          i.id === item.id ? { ...i, quantity: i.quantity + 1 } : i
         );
-      } else {
-        return [...prev, { ...product, quantity: 1 }];
       }
+      return [...prev, { ...item, quantity: 1 }];
     });
   };
 
-  const increaseQuantity = (id) => {
+  // Increase quantity
+  const increaseQuantity = (id) =>
     setCart((prev) =>
-      prev.map((item) =>
-        item.id === id ? { ...item, quantity: item.quantity + 1 } : item
+      prev.map((i) =>
+        i.id === id ? { ...i, quantity: i.quantity + 1 } : i
       )
     );
-  };
 
-  const decreaseQuantity = (id) => {
+  // Decrease quantity
+  const decreaseQuantity = (id) =>
     setCart((prev) =>
       prev
-        .map((item) =>
-          item.id === id
-            ? { ...item, quantity: item.quantity - 1 }
-            : item
+        .map((i) =>
+          i.id === id ? { ...i, quantity: i.quantity - 1 } : i
         )
-        .filter((item) => item.quantity > 0) // remove if 0
+        .filter((i) => i.quantity > 0)
     );
-  };
 
+  // Clear cart
   const clearCart = () => setCart([]);
 
   return (
@@ -53,3 +49,5 @@ export const CartProvider = ({ children }) => {
     </CartContext.Provider>
   );
 };
+
+export const useCart = () => useContext(CartContext);

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useCart } from "../AlldetailsFolder/CartContext"; // adjust path if needed
+import { useCart } from "../AlldetailsFolder/CartContext";
 import { Link } from "react-router-dom";
 
 const CheckoutPage = () => {
@@ -9,24 +9,21 @@ const CheckoutPage = () => {
     fullName: "",
     phone: "",
     address: "",
-    payment: "cod", // default payment: Cash on Delivery
+    payment: "cod",
   });
 
   const cartIsEmpty = cart.length === 0;
 
-  // Total Amount
   const totalAmount = cart.reduce(
     (sum, item) => sum + item.price * item.quantity,
     0
   );
 
-  // Handle Input Changes
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  // Handle Place Order
   const handlePlaceOrder = () => {
     if (!formData.fullName || !formData.phone || !formData.address) {
       alert("Please fill in all required fields.");
@@ -39,7 +36,7 @@ const CheckoutPage = () => {
       }\nTotal: $${totalAmount.toFixed(2)}`
     );
 
-    clearCart(); // ✅ Empty cart after placing order
+    clearCart();
   };
 
   return (
@@ -87,8 +84,6 @@ const CheckoutPage = () => {
                         </p>
                       </div>
                     </div>
-
-                    {/* Quantity Controls */}
                     <div className="flex items-center gap-2">
                       <button
                         onClick={() => decreaseQuantity(item.id)}
@@ -107,7 +102,6 @@ const CheckoutPage = () => {
                   </div>
                 ))}
               </div>
-
               <div className="mt-6 text-right text-lg font-bold">
                 Total: ${totalAmount.toFixed(2)}
               </div>
@@ -145,7 +139,6 @@ const CheckoutPage = () => {
                   required
                 ></textarea>
 
-                {/* Payment Options */}
                 <div className="space-y-2">
                   <label className="block font-semibold">Payment Method</label>
                   <div className="flex gap-4">
@@ -172,7 +165,6 @@ const CheckoutPage = () => {
                   </div>
                 </div>
 
-                {/* Place Order Button */}
                 <button
                   type="button"
                   onClick={handlePlaceOrder}
