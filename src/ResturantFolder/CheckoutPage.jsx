@@ -1,16 +1,19 @@
 import React, { useState } from "react";
 import { useCart } from "../AlldetailsFolder/CartContext";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const CheckoutPage = () => {
   const { cart, increaseQuantity, decreaseQuantity, clearCart } = useCart();
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     fullName: "",
     phone: "",
     address: "",
-    payment: "cod",
+    payment: "cash_on_delivery", // 👈 match backend default
   });
+
+  const [loading, setLoading] = useState(false);
 
   const cartIsEmpty = cart.length === 0;
   const totalAmount = cart.reduce(
@@ -23,17 +26,48 @@ const CheckoutPage = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handlePlaceOrder = () => {
+  const handlePlaceOrder = async () => {
     if (!formData.fullName || !formData.phone || !formData.address) {
       alert("Please fill in all required fields.");
       return;
     }
-    alert(
-      `Order placed!\nName: ${formData.fullName}\nPhone: ${formData.phone}\nAddress: ${formData.address}\nPayment: ${
-        formData.payment === "cod" ? "Cash on Delivery" : "Card Payment"
-      }\nTotal: $${totalAmount.toFixed(2)}`
-    );
-    clearCart();
+
+    const orderData = {
+      fullName: formData.fullName,
+      phone: formData.phone,
+      address: formData.address,
+      paymentMethod: formData.payment, // 👈 already "cash_on_delivery" or "card"
+      items: cart.map((item) => ({
+        name: item.title || item.menuname,
+        qty: item.quantity,
+        price: item.price,
+      })),
+      total: totalAmount,
+    };
+
+    try {
+      setLoading(true);
+      const res = await fetch("http://localhost:3002/orders", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(orderData),
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        alert("✅ Order placed successfully!");
+        clearCart();
+        navigate("/thankyou");
+      } else {
+        alert(`❌ Failed to place order: ${data.message || "Error"}`);
+      }
+    } catch (err) {
+      console.error("Order error:", err);
+      alert("❌ Failed to place order. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -96,7 +130,13 @@ const CheckoutPage = () => {
           {/* Delivery Details */}
           <div>
             <h2 className="text-xl font-bold mb-4">Delivery Details</h2>
-            <form className="space-y-3">
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                handlePlaceOrder();
+              }}
+              className="space-y-3"
+            >
               <input
                 type="text"
                 name="fullName"
@@ -106,7 +146,7 @@ const CheckoutPage = () => {
                 className="w-full border p-2 rounded"
               />
               <input
-                type="tel"
+                type="number"
                 name="phone"
                 value={formData.phone}
                 onChange={handleChange}
@@ -126,8 +166,8 @@ const CheckoutPage = () => {
                   <input
                     type="radio"
                     name="payment"
-                    value="cod"
-                    checked={formData.payment === "cod"}
+                    value="cash_on_delivery"
+                    checked={formData.payment === "cash_on_delivery"}
                     onChange={handleChange}
                   />
                   Cash on Delivery
@@ -144,11 +184,11 @@ const CheckoutPage = () => {
                 </label>
               </div>
               <button
-                type="button"
-                onClick={handlePlaceOrder}
-                className="w-full bg-rose-600 text-white py-2 rounded hover:bg-rose-700"
+                type="submit"
+                disabled={loading}
+                className="w-full bg-rose-600 text-white py-2 rounded hover:bg-rose-700 disabled:opacity-50"
               >
-                Place Order
+                {loading ? "Placing Order..." : "Place Order"}
               </button>
             </form>
           </div>

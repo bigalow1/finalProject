@@ -12,17 +12,17 @@ const reviews = [
   {
     name: "Sarah L.",
     text: "JetMeals is a lifesaver! Fast delivery and the food is always fresh.",
-    img: "/customer1.jpg",
+    img: "/woman.jpg",
   },
   {
     name: "Mike D.",
     text: "Love the variety of restaurants. Ordering is so easy!",
-    img: "/customer2.jpg",
+    img: "/man2.jpg",
   },
   {
     name: "Priya S.",
     text: "The best food delivery experience I've had. Highly recommend!",
-    img: "/customer3.jpg",
+    img: "/man.jpg",
   },
 ];
 
@@ -51,10 +51,10 @@ function Home() {
   return (
     <>
       {/* Hero Section */}
-      <section className="relative h-[700px] w-full flex justify-center items-center overflow-hidden bg-gradient-to-br from-red-100 to-blue-100">
+      <section className="relative h-[700px] w-full flex justify-center items-center overflow-hidden bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700">
         <video
           src="/People.mp4"
-          className="absolute w-full h-full object-cover opacity-60"
+          className="absolute w-full h-full object-cover opacity-50"
           autoPlay
           loop
           muted
@@ -64,47 +64,44 @@ function Home() {
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
-          className="relative z-10 bg-black/40 rounded-xl p-10 shadow-2xl flex flex-col items-center"
+          className="relative z-10 bg-black/50 rounded-xl p-10 shadow-2xl flex flex-col items-center"
         >
           <img src="/Logo.png" alt="JetMeals" className="h-20 mb-4" />
-          <h1 className="text-4xl md:text-5xl font-extrabold mb-4 text-white drop-shadow-lg">
+          <h1 className="text-4xl md:text-5xl font-extrabold mb-4 text-red-500 drop-shadow-lg">
             JetMeals: Fast, Fresh, Reliable
           </h1>
-          <p className="text-lg md:text-xl mb-6 max-w-2xl mx-auto text-white text-center">
+          <p className="text-lg md:text-xl mb-6 max-w-2xl mx-auto text-gray-200 text-center">
             Your trusted partner for meal delivery. Connect with your favorite
             local restaurants and enjoy delicious meals delivered straight to
             your doorstep.
           </p>
           <Link
             to="/OrderPage"
-            className="bg-[#E81F1F] text-white px-8 py-3 rounded-full font-bold text-lg shadow-lg hover:bg-white hover:text-[#E81F1F] transition-all duration-300"
+            className="bg-amber-500 text-white px-8 py-3 rounded-full font-bold text-lg shadow-lg hover:bg-white hover:text-amber-600 transition-all duration-300"
           >
             Order Now
           </Link>
         </motion.div>
       </section>
 
-      {/* How It Works */}
-      <section className="py-16 bg-white">
-        <h2 className="text-3xl font-bold text-center text-[#E81F1F] mb-10">
-          How It Works
-        </h2>
-        <div className="grid md:grid-cols-3 kl gap-8 max-w-6xl mx-auto text-center">
+      <h1 className="text-red-500 text-center text-2xl font-bold">How It Works</h1>
+      <section className="py-16 bg-gray-50">
+        <div className="grid md:grid-cols-3 gap-10 max-w-6xl mx-auto text-center px-4">
           {[
             {
               title: "Browse",
               desc: "Explore top restaurants and cuisines near you.",
-              img: "/ok.jpg " ,
+              img: "/ok.jpg",
             },
             {
               title: "Order",
               desc: "Add your favorite meals to cart and checkout securely.",
-              img: "/.png",
+              img: "/order.jpg",
             },
             {
               title: "Enjoy",
               desc: "Sit back, relax, and enjoy fresh meals delivered fast.",
-              img: "/enjoy.png",
+              img: "/eating.jpg",
             },
           ].map((step, i) => (
             <motion.div
@@ -112,17 +109,19 @@ function Home() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: i * 0.2 }}
-              className="bg-gradient-to-br from-rose-50 to-amber-100 rounded-xl shadow-lg p-6"
+              className="bg-gradient-to-br from-gray-100 to-gray-200 rounded-2xl shadow-lg p-8 flex flex-col items-center"
             >
               <img
                 src={step.img}
                 alt={step.title}
-                className="h-24 mx-auto mb-4"
+                className="h-50 w-60 object-cover rounded-2xl shadow-md mb-6"
               />
-              <h3 className="text-xl font-bold text-[#E81F1F] mb-2">
+              <h3 className="text-lg font-semibold text-red-500 mb-2">
                 {step.title}
               </h3>
-              <p className="text-gray-700">{step.desc}</p>
+              <p className="text-sm text-gray-700 font-medium max-w-xs">
+                {step.desc}
+              </p>
             </motion.div>
           ))}
         </div>
@@ -130,14 +129,14 @@ function Home() {
 
       {/* Popular Categories */}
       <section className="py-16 bg-gray-100">
-        <h2 className="text-3xl font-bold text-center text-[#E81F1F] mb-10">
+        <h2 className="text-3xl font-bold text-center text-red-500 mb-10">
           Popular Categories
         </h2>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-5xl mx-auto">
           {[
             { name: "Egusi", img: "/Egusi1.jpeg" },
             { name: "FriedRice", img: "/FriedRice1.jpeg" },
-            { name: " Grilled Ribs", img: "/Ribs.jpeg" },
+            { name: "Grilled Ribs", img: "/Ribs.jpeg" },
             { name: "Desserts", img: "/desert.jpeg" },
           ].map((cat, i) => (
             <motion.div
@@ -150,37 +149,124 @@ function Home() {
                 alt={cat.name}
                 className="h-32 w-full object-cover"
               />
-              <div className="p-3 text-center font-bold text-[#E81F1F]">
+              <div className="p-3 text-center font-bold text-red-500">
                 {cat.name}
               </div>
             </motion.div>
           ))}
         </div>
       </section>
-       <div className=" bg-yellow-50 h-[400px] flex justify-center items-center">
-         <section className="h-[300px] w-[40%] bg-amber-700 bg-[url(chef.jpg)] rounded-3xl "></section>
-          <section className="h-[300px] w-[40%] bg-white flex items-center justify-center p-6 rounded-lg shadow-lg">
-  <div className="text-red-500 text-center">
-    <h2 className="text-2xl font-bold mb-2">Meet Chef Amara</h2>
-    <p className="text-sm  text-gray-400 leading-relaxed">
-      Chef Amara is a passionate culinary artist who turned her love for
-      cooking into a thriving food business. With the support of{" "}
-      <span className="font-semibold">JetMeals Delivery Company</span>, she has
-      been able to share her delicious creations with more people every day.
-    </p>
-    <p className="text-sm leading-relaxed text-gray-600 mt-2">
-      Her vision is simple: bringing restaurant-quality meals to your doorstep—
-      fresh, fast, and full of flavor. Through JetMeals, she continues to grow
-      her brand and make good food accessible to everyone.
-    </p>
-  </div>
+
+    {/* Chef Showcase Slider */}
+<section className="py-16 bg-gray-50">
+  <Swiper
+    modules={[Pagination, Autoplay]}
+    pagination={{ clickable: true }}
+    autoplay={{ delay: 5000, disableOnInteraction: false }}
+    spaceBetween={30}
+    slidesPerView={1}
+    className="max-w-6xl mx-auto"
+  >
+    {/* Slide 1 */}
+    <SwiperSlide>
+      <div className="flex flex-col md:flex-row justify-center items-center gap-6">
+        {/* Image Section */}
+        <section className="h-[250px] md:h-[400px] w-full md:w-[40%] bg-[url('chef.jpg')] bg-cover bg-center rounded-3xl shadow-lg"></section>
+
+        {/* Text Section */}
+        <section className="h-auto md:h-[400px] w-full md:w-[40%] bg-white flex items-center justify-center p-6 rounded-lg shadow-lg mt-6 md:mt-0">
+          <div className="text-red-500 text-center">
+            <h2 className="text-2xl font-bold mb-2">Meet Chef Amara</h2>
+            <p className="text-sm text-gray-800 leading-relaxed mb-3">
+              Chef Amara is a passionate culinary artist who turned her love for
+              cooking into a thriving food business.
+            </p>
+            <p className="text-sm text-gray-700 leading-relaxed">
+              Through <span className="font-semibold text-rose-600">JetMeals</span>,
+              she now reaches thousands of new customers every week — customers
+              who can browse her menu, place orders instantly, and enjoy her meals
+              right from the comfort of their homes.
+            </p>
+          </div>
+        </section>
+      </div>
+    </SwiperSlide>
+
+    {/* Slide 2 */}
+    <SwiperSlide>
+      <div className="flex flex-col md:flex-row justify-center items-center ">
+        <section className="h-[250px] md:h-[400px] w-full md:w-[40%] bg-[url('partner.png')] bg-cover bg-center rounded-3xl shadow-lg"></section>
+
+        <section className="h-auto md:h-[400px] w-full md:w-[40%] bg-white flex items-center justify-center p-6 rounded-lg shadow-lg mt-6 md:mt-0">
+          <div className="text-red-500 text-center">
+            <h2 className="text-2xl font-bold mb-2">Chef Daniel</h2>
+            <p className="text-sm text-gray-800 leading-relaxed mb-3">
+              Known for his unique take on continental dishes, Chef Daniel blends
+              tradition with modern creativity to craft unforgettable meals.
+            </p>
+            <p className="text-sm text-gray-700 leading-relaxed">
+              By partnering with <span className="font-semibold text-rose-600">JetMeals</span>,
+              Chef Daniel doesn’t worry about location or foot traffic anymore —
+              the platform connects him to a wide audience of food lovers searching
+              online every day.
+            </p>
+          </div>
+        </section>
+      </div>
+    </SwiperSlide>
+
+    {/* Slide 3 */}
+    <SwiperSlide>
+      <div className="flex flex-col md:flex-row justify-center items-center ">
+        <section className="h-[250px] md:h-[400px] w-full md:w-[40%] bg-[url('chef2.jpg')] bg-cover bg-center rounded-3xl shadow-lg"></section>
+
+        <section className="h-auto md:h-[400px] w-full md:w-[40%] bg-white flex items-center justify-center p-6 rounded-lg shadow-lg mt-6 md:mt-0">
+          <div className="text-red-500 text-center">
+            <h2 className="text-2xl font-bold mb-2">Chef Kelechi</h2>
+            <p className="text-sm text-gray-800 leading-relaxed mb-3">
+              Chef Kelechi specializes in Nigerian cuisine with a modern twist,
+              bringing the taste of home to every plate he serves.
+            </p>
+            <p className="text-sm text-gray-700 leading-relaxed">
+              With <span className="font-semibold text-rose-600">JetMeals</span>,
+              his meals are no longer limited to a local neighborhood. The delivery
+              system ensures that families across the city can discover his food,
+              order with ease, and enjoy authentic Nigerian flavors anytime.
+            </p>
+          </div>
+        </section>
+      </div>
+    </SwiperSlide>
+
+    {/* Slide 4 */}
+    <SwiperSlide>
+      <div className="flex flex-col md:flex-row justify-center items-center ">
+        <section className="h-[250px] md:h-[400px] w-full md:w-[40%] bg-[url('chef4.jpg')] bg-cover bg-center rounded-3xl shadow-lg"></section>
+
+        <section className="h-auto md:h-[400px] w-full md:w-[40%] bg-white flex items-center justify-center p-6 rounded-lg shadow-lg mt-6 md:mt-0">
+          <div className="text-red-500 text-center">
+            <h2 className="text-2xl font-bold mb-2">Chef Aisha</h2>
+            <p className="text-sm text-gray-800 leading-relaxed mb-3">
+              Chef Aisha creates rich desserts and continental dishes that are
+              loved by both young and old.
+            </p>
+            <p className="text-sm text-gray-700 leading-relaxed">
+              Thanks to <span className="font-semibold text-rose-600">JetMeals</span>, 
+              she has grown her small kitchen business into a recognized brand. 
+              With just a few clicks, her cakes and pastries now reach customers 
+              celebrating birthdays, weddings, and special occasions across town.
+            </p>
+          </div>
+        </section>
+      </div>
+    </SwiperSlide>
+  </Swiper>
 </section>
 
-       </div>
 
       {/* Reviews */}
       <section className="py-16 bg-white">
-        <h2 className="text-3xl font-bold text-center mb-8 text-[#E81F1F]">
+        <h2 className="text-3xl font-bold text-center mb-8 text-red-500">
           What Our Customers Say
         </h2>
         <Swiper
@@ -197,17 +283,19 @@ function Home() {
                 initial={{ scale: 0.95, opacity: 0 }}
                 whileInView={{ scale: 1, opacity: 1 }}
                 transition={{ duration: 0.6 }}
-                className="flex flex-col items-center bg-gradient-to-r from-rose-50 to-amber-100 rounded-lg shadow-lg p-8"
+                className="flex flex-col items-center bg-gradient-to-r from-gray-100 to-gray-200 rounded-lg shadow-lg p-8"
               >
                 <img
                   src={review.img}
                   alt={review.name}
-                  className="w-20 h-20 rounded-full mb-4 border-4 border-[#E81F1F] object-cover"
+                  className="w-20 h-20 rounded-full mb-4 border-4 border-red-500 object-cover"
                 />
-                <p className="text-lg text-gray-700 italic mb-2 text-center">
+                <p className="text-lg text-black italic mb-2 text-center">
                   "{review.text}"
                 </p>
-                <span className="font-bold text-[#E81F1F]">{review.name}</span>
+                <span className="font-bold text-black">
+                  {review.name}
+                </span>
               </motion.div>
             </SwiperSlide>
           ))}
@@ -229,7 +317,7 @@ function Home() {
               transition={{ duration: 0.7, delay: idx * 0.2 }}
               className="bg-white rounded-xl shadow-lg px-10 py-8 flex flex-col items-center"
             >
-              <span className="text-4xl font-extrabold text-[#E81F1F] mb-2">
+              <span className="text-4xl font-extrabold text-red-500 mb-2">
                 {stat.value}
               </span>
               <span className="text-lg font-semibold text-gray-700">
@@ -241,8 +329,8 @@ function Home() {
       </section>
 
       {/* FAQ */}
-      <section className="py-16 bg-gradient-to-r from-amber-100 to-rose-100">
-        <h2 className="text-3xl font-bold text-center text-[#E81F1F] mb-8">
+      <section className="py-16 bg-gradient-to-r from-gray-100 to-gray-200">
+        <h2 className="text-3xl font-bold text-center text-red-500 mb-8">
           Frequently Asked Questions
         </h2>
         <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-lg">
@@ -273,8 +361,8 @@ function Home() {
 
       {/* Newsletter */}
       <section className="py-16 bg-white">
-        <div className="max-w-xl mx-auto bg-gradient-to-r from-rose-50 to-amber-100 rounded-xl shadow-lg p-8 flex flex-col items-center">
-          <h2 className="text-2xl font-bold text-[#E81F1F] mb-4">
+        <div className="max-w-xl mx-auto bg-gradient-to-r from-gray-100 to-gray-200 rounded-xl shadow-lg p-8 flex flex-col items-center">
+          <h2 className="text-2xl font-bold text-red-500 mb-4">
             Stay Updated!
           </h2>
           <p className="mb-6 text-gray-700 text-center">
@@ -289,7 +377,7 @@ function Home() {
             />
             <button
               type="submit"
-              className="bg-[#E81F1F] text-white px-6 py-2 rounded-r-full font-bold hover:bg-red-700 transition"
+              className="bg-amber-500 text-white px-6 py-2 rounded-r-full font-bold hover:bg-amber-600 transition"
             >
               Subscribe
             </button>
@@ -298,28 +386,28 @@ function Home() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-gradient-to-br from-rose-200 to-amber-200 text-gray-800 py-8 mt-10">
+      <footer className="bg-white text-black py-8 mt-10">
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6 px-4">
           <div className="flex items-center gap-2">
             <img src="/Logo.png" alt="Jetmeals Logo" className="h-10" />
-            <span className="font-bold text-lg">JetMeals</span>
+            <span className="font-bold text-lg text-red-500">JetMeals</span>
           </div>
-          <div className="flex gap-6">
-            <a href="/" className="hover:text-[#E81F1F] transition">
+          <div className="flex gap-6 font-bold">
+            <a href="/" className="hover:text-amber-500 transition">
               Home
             </a>
-            <a href="/OrderPage" className="hover:text-[#E81F1F] transition">
+            <a href="/OrderPage" className="hover:text-amber-500 transition">
               Order
             </a>
-            <a href="#" className="hover:text-[#E81F1F] transition">
+            <a href="#" className="hover:text-amber-500 transition">
               Contact
             </a>
-            <a href="#" className="hover:text-[#E81F1F] transition">
+            <a href="#" className="hover:text-amber-500 transition">
               FAQ
             </a>
           </div>
         </div>
-        <div className="text-center text-sm mt-4 text-gray-700">
+        <div className="text-center font-bold text-sm mt-4 text-gray-900">
           &copy; {new Date().getFullYear()} JetMeals. All rights reserved.
         </div>
       </footer>

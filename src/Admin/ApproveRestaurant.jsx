@@ -1,147 +1,180 @@
-import React, { useEffect, useState } from "react";
-import { RiDeleteBack2Fill } from "react-icons/ri";
+import { useEffect, useState } from "react";
 
-function ApproveRestaurant() {
-  const [holdDelivery, setHoldDelivery] = useState([]);
-  const [loading, setLoading] = useState(false);
+const ApproveRestaurant = () => {
+  const [restaurants, setRestaurants] = useState([]);
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(true);
 
-  // Fetch restaurants
+  const [currentPage, setCurrentPage] = useState(1);
+  const restaurantsPerPage = 5;
+
+  // ✅ Fetch restaurants
   useEffect(() => {
     const fetchRestaurants = async () => {
-      setLoading(true);
       try {
-        const response = await fetch("http://localhost:3002/restaurant");
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        const data = await response.json();
-        setHoldDelivery(data);
-      } catch (error) {
-        console.error("Error fetching restaurants:", error);
-      } finally {
-        setLoading(false);
+        const res = await fetch("http://localhost:3002/restaurant/all");
+  const data = await res.json();
+  
+  if (Array.isArray(data)) {
+    setRestaurants(data);
+  } else {
+    setRestaurants([]); 
+    console.error("Unexpected API response:", data);
+  }
+  
+      } catch (err) {
+        console.error("Fetch error:", err);
+        setRestaurants([]); 
       }
     };
-
+  
     fetchRestaurants();
   }, []);
 
-  // Delete restaurant
-  const handleDelete = async (restaurantId) => {
+  // ✅ Approve
+  const approveRestaurant = async (id) => {
     try {
-      const response = await fetch(
-        `http://localhost:3002/restaurant/${restaurantId}`,
-        {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          credentials: "include",
-        }
-      );
-      const data = await response.json();
-      console.log("Deleted:", data);
+      const res = await fetch(`http://localhost:3002/restaurant/${id}`, {
+        method: "PUT",
+        credentials: "include",
+      });
 
-      // Update UI after delete
-      setHoldDelivery((prev) =>
-        prev.filter((r) => r._id !== restaurantId)
-      );
-    } catch (error) {
-      console.error("Error deleting restaurant:", error);
+      if (!res.ok) throw new Error("Failed to approve restaurant");
+      setRestaurants((prev) => prev.filter((r) => r._id !== id));
+    } catch (err) {
+      console.error("Error approving restaurant:", err.message);
+      setError(err.message);
     }
   };
 
-  // Accept restaurant
-  const handleAccept = async (restaurantId) => {
+  // ✅ Reject
+  const rejectRestaurant = async (id) => {
     try {
-      const response = await fetch(
-        `http://localhost:3002/restaurant/accept/${restaurantId}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          credentials: "include",
-        }
-      );
-      const data = await response.json();
-      console.log("Accepted:", data);
+      const res = await fetch(`http://localhost:3002/restaurant/${id}`, {
+        method: "DELETE",
+        credentials: "include",
+      });
 
-      // You can update UI (e.g., mark as accepted)
-    } catch (error) {
-      console.error("Error accepting restaurant:", error);
+      if (!res.ok) throw new Error("Failed to reject restaurant");
+      setRestaurants((prev) => prev.filter((r) => r._id !== id));
+    } catch (err) {
+      console.error("Error rejecting restaurant:", err.message);
+      setError(err.message);
     }
   };
+
+  useEffect(() => {
+    rejectRestaurant();
+  }, []);
+
+  if (loading) return <p className="p-6">Loading restaurants...</p>;
+  if (error) return <p className="p-6 text-red-600">{error}</p>;
+
+  // ✅ Pagination
+  const indexOfLast = currentPage * restaurantsPerPage;
+  const indexOfFirst = indexOfLast - restaurantsPerPage;
+  const currentRestaurants = restaurants.slice(indexOfFirst, indexOfLast);
+  const totalPages = Math.ceil(restaurants.length / restaurantsPerPage);
 
   return (
-    <div className="p-4 mt-14">
-      <table className="border-collapse border border-gray-500 bg-white mt-10 w-full">
-        <thead className="bg-gray-100">
-          <tr className="border-b border-gray-200">
-            <th className="p-2 text-left">restaurantPicture</th>
-            <th className="p-2 text-left">restaurantName</th>
-            <th className="p-2 text-left">Address</th>
-            <th className="p-2 text-left">Opentime</th>
-            <th className="p-2 text-left">Closetime</th>
-            <th className="p-2 text-left">Delete</th>
-            <th className="p-2 text-left">Accept</th>
-          </tr>
-        </thead>
+    <main className="flex-1 p-6 min-h-screen bg-amber-100">
+      <h2 className="text-2xl font-bold mb-6">Restaurants Pending Approval</h2>
 
-        <tbody className="divide-y divide-gray-200">
-          {loading ? (
-            <tr>
-              <td colSpan="7" className="p-2 text-center">
-                Loading...
-              </td>
-            </tr>
-          ) : holdDelivery.length > 0 ? (
-            holdDelivery.map((restaurants) => (
-              <tr key={restaurants._id} className="hover:bg-gray-50">
-                <td className="p-2">
-                  {restaurants.picture ? (
-                    <img
-                      src={restaurants.picture}
-                      alt={restaurants.name}
-                      className="h-12 w-12 object-cover rounded"
-                    />
-                  ) : (
-                    "No Image"
-                  )}
-                </td>
-                <td className="p-2">{restaurants.name}</td>
-                <td className="p-2">{restaurants.address}</td>
-                <td className="p-2">{restaurants.opentime}</td>
-                <td className="p-2">{restaurants.closetime}</td>
-                <td className="p-2">
-                  <button
-                    onClick={() => handleDelete(restaurants._id)}
-                    className="bg-red-500 text-white p-2 rounded hover:bg-red-600"
-                  >
-                    <RiDeleteBack2Fill />
-                  </button>
-                </td>
-                <td className="p-2">
-                  <button
-                    onClick={() => handleAccept(restaurants._id)}
-                    className="bg-green-500 text-white p-2 rounded hover:bg-green-600"
-                  >
-                    Accept
-                  </button>
-                </td>
-              </tr>
-            ))
-          ) : (
-            <tr>
-              <td colSpan="7" className="p-2 text-center">
-                No restaurants found.
-              </td>
-            </tr>
-          )}
-        </tbody>
-      </table>
-    </div>
+      {restaurants.length === 0 ? (
+        <p className="text-gray-500">No restaurants waiting for approval.</p>
+      ) : (
+        <>
+          {/* ✅ Scrollable Table */}
+          <div className="max-h-[600px] overflow-y-auto bg-white rounded-xl shadow border">
+            <table className="w-full border-collapse">
+              <thead className="bg-gray-200 sticky top-3">
+                <tr>
+                  <th className="px-4 py-3 text-left">Picture</th>
+                  <th className="px-4 py-3 text-left">Name</th>
+                  <th className="px-4 py-3 text-left">Address</th>
+                  <th className="px-4 py-3 text-left">Opening Time</th>
+                  <th className="px-4 py-3 text-left">Closing Time</th>
+                  <th className="px-4 py-3 text-center">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {currentRestaurants.map((restaurant) => (
+                  <tr key={restaurant._id} className="border-b hover:bg-gray-50">
+                    <td className="px-4 py-3">
+                      {restaurant.restaurantPicture ? (
+                        <img
+                          src={restaurant.restaurantPicture}
+                          alt={restaurant.restaurantName}
+                          className="w-16 h-16 object-cover rounded-lg"
+                        />
+                      ) : (
+                        <span className="text-gray-400">No Image</span>
+                      )}
+                    </td>
+                    <td className="px-4 py-3 font-semibold">
+                      {restaurant.restaurantName}
+                    </td>
+                    <td className="px-4 py-3">{restaurant.address}</td>
+                    <td className="px-4 py-3">{restaurant.opentime}</td>
+                    <td className="px-4 py-3">{restaurant.closetime}</td>
+                    <td className="px-4 py-3 text-center space-x-2">
+                      <button
+                        onClick={() => approveRestaurant(restaurant._id)}
+                        className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700"
+                      >
+                        Approve
+                      </button>
+                      <button
+                        onClick={() => rejectRestaurant(restaurant._id)}
+                        className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700"
+                      >
+                        Reject
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          {/* ✅ Pagination Controls */}
+          <div className="flex justify-center items-center mt-6 space-x-2">
+            <button
+              onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+              disabled={currentPage === 1}
+              className="px-3 py-1 bg-gray-300 text-gray-700 rounded disabled:opacity-50"
+            >
+              Prev
+            </button>
+
+            {[...Array(totalPages)].map((_, idx) => (
+              <button
+                key={idx}
+                onClick={() => setCurrentPage(idx + 1)}
+                className={`px-3 py-1 rounded ${
+                  currentPage === idx + 1
+                    ? "bg-blue-600 text-white"
+                    : "bg-gray-200 text-gray-700"
+                }`}
+              >
+                {idx + 1}
+              </button>
+            ))}
+
+            <button
+              onClick={() =>
+                setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+              }
+              disabled={currentPage === totalPages}
+              className="px-3 py-1 bg-gray-300 text-gray-700 rounded disabled:opacity-50"
+            >
+              Next
+            </button>
+          </div>
+        </>
+      )}
+    </main>
   );
-}
+};
 
 export default ApproveRestaurant;

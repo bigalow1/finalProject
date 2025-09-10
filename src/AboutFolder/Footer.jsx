@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 function Footer() {
   return (
-    <footer className="bg-black text-white py-10">
+    <footer className="bg-black text-white py-8">
       {/* Top Branding */}
       <div className="flex flex-col md:flex-row justify-around items-center gap-6 mb-10">
         <h1 className="text-2xl font-bold flex items-center gap-2">

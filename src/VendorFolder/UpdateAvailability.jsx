@@ -1,334 +1,245 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { FaPlus, FaEdit, FaTrash } from "react-icons/fa";
+import { FaPlus } from "react-icons/fa";
 
 function UpdateAvailability() {
   const [restaurants, setRestaurants] = useState([]);
-  const [newRestaurant, setNewRestaurant] = useState("");
-  const [newFood, setNewFood] = useState({
+  const [newRestaurant, setNewRestaurant] = useState({
+    restaurantPicture: "",
+    restaurantName: "",
+    address: "",
+    opentime: "",
+    closetime: "",
+  });
+  const [newMenu, setNewMenu] = useState({
     menuPicture: "",
     menuName: "",
     menuDescription: "",
     menuPrice: "",
     available: true,
   });
-  const [selectedRestaurant, setSelectedRestaurant] = useState(null);
-  const [editingFood, setEditingFood] = useState(null);
 
-  // Add new restaurant
-  const handleAddRestaurant = () => {
-    if (!newRestaurant.trim()) return;
-    setRestaurants((prev) => [
-      ...prev,
-      { id: Date.now(), name: newRestaurant.trim(), foods: [] },
-    ]);
-    setNewRestaurant("");
+  // ✅ Fetch restaurants
+  useEffect(() => {
+    fetchRestaurants();
+  }, []);
+
+  const fetchRestaurants = async () => {
+    try {
+      const res = await fetch("http://localhost:3002/restaurant"); // ✅ singular
+      const data = await res.json();
+      setRestaurants(data);
+    } catch (error) {
+      console.error("Error fetching restaurants:", error);
+    }
   };
 
-  // Add food to restaurant
-  const handleAddFood = (restaurantId) => {
-    if (!newFood.menuName || !newFood.menuPrice) return;
-    setRestaurants((prev) =>
-      prev.map((rest) =>
-        rest.id === restaurantId
-          ? {
-              ...rest,
-              foods: [
-                ...rest.foods,
-                {
-                  ...newFood,
-                  id: Date.now(),
-                  menuPrice: parseFloat(newFood.menuPrice),
-                },
-              ],
-            }
-          : rest
-      )
-    );
-    setNewFood({
-      menuPicture: "",
-      menuName: "",
-      menuDescription: "",
-      menuPrice: "",
-      available: true,
-    });
+  // ✅ Add Restaurant
+  const handleAddRestaurant = async () => {
+    try {
+      await fetch("http://localhost:3002/restaurant", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(newRestaurant),
+      });
+
+      setNewRestaurant({
+        restaurantPicture: "url",
+        restaurantName: "",
+        address: "",
+        opentime: "",
+        closetime: "",
+      });
+
+      fetchRestaurants();
+    } catch (error) {
+      console.error("Error adding restaurant:", error);
+    }
   };
 
-  // Delete food
-  const handleDeleteFood = (restaurantId, foodId) => {
-    setRestaurants((prev) =>
-      prev.map((rest) =>
-        rest.id === restaurantId
-          ? { ...rest, foods: rest.foods.filter((f) => f.id !== foodId) }
-          : rest
-      )
-    );
-  };
+  // ✅ Add Menu to a restaurant
+  const handleAddMenu = async (restaurantId) => {
+    try {
+      await fetch(`http://localhost:3002/restaurant/all/${restaurantId}/menus`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...newMenu,
+          menuPrice: parseFloat(newMenu.menuPrice),
+        }),
+      });
 
-  // Save edited food
-  const handleEditSave = () => {
-    setRestaurants((prev) =>
-      prev.map((rest) =>
-        rest.id === selectedRestaurant.id
-          ? {
-              ...rest,
-              foods: rest.foods.map((f) =>
-                f.id === editingFood.id ? editingFood : f
-              ),
-            }
-          : rest
-      )
-    );
-    setEditingFood(null);
+      setNewMenu({
+        menuPicture: "",
+        menuName: "",
+        menuDescription: "",
+        menuPrice: "",
+        available: true,
+      });
+
+      fetchRestaurants();
+    } catch (error) {
+      console.error("Error adding menu:", error);
+    }
   };
 
   return (
-    <div className="p-8 bg-gray-100 min-h-screen">
+    <div className="p-8 bg-gray-100 min-h-screen mt-20">
       <h1 className="text-3xl font-bold text-[#E81F1F] mb-6">
-        🍽️ Multi-Restaurant Dashboard
+        🍴 Multi-Restaurant Dashboard
       </h1>
 
-      {/* Add Restaurant Section */}
-      <div className="bg-white shadow-md rounded-lg p-6 mb-8">
+      {/* Add Restaurant */}
+      <div className="bg-white p-6 rounded-lg shadow mb-6">
         <h2 className="text-xl font-semibold mb-4">Add Restaurant</h2>
-        <div className="flex gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+           <input
+            type="file"
+            placeholder="Picture URL"
+            value={newRestaurant.restaurantPicture}
+            onChange={(e) =>
+              setNewRestaurant({ ...newRestaurant, restaurantPicture: e.target.value })
+            }
+            className="border rounded px-3 py-2"
+          />
+
           <input
             type="text"
             placeholder="Restaurant Name"
-            value={newRestaurant}
-            onChange={(e) => setNewRestaurant(e.target.value)}
-            className="border rounded px-3 py-2 flex-1"
+            value={newRestaurant.restaurantName}
+            onChange={(e) =>
+              setNewRestaurant({ ...newRestaurant, restaurantName: e.target.value })
+            }
+            className="border rounded px-3 py-2"
           />
-          <button
-            onClick={handleAddRestaurant}
-            className="flex items-center gap-2 bg-[#E81F1F] text-white px-4 py-2 rounded-lg hover:bg-red-600"
-          >
-            <FaPlus /> Add
-          </button>
+         
+          <input
+            type="text"
+            placeholder="Address"
+            value={newRestaurant.address}
+            onChange={(e) =>
+              setNewRestaurant({ ...newRestaurant, address: e.target.value })
+            }
+            className="border rounded px-3 py-2"
+          />
+          <input
+            type="time"
+            placeholder="Open Time"
+            value={newRestaurant.opentime}
+            onChange={(e) =>
+              setNewRestaurant({ ...newRestaurant, opentime: e.target.value })
+            }
+            className="border rounded px-3 py-2"
+          />
+          <input
+            type="time"
+            placeholder="Close Time"
+            value={newRestaurant.closetime}
+            onChange={(e) =>
+              setNewRestaurant({ ...newRestaurant, closetime: e.target.value })
+            }
+            className="border rounded px-3 py-2"
+          />
         </div>
+        <button
+          onClick={handleAddRestaurant}
+          className="mt-4 bg-[#E81F1F] text-white px-4 py-2 rounded flex items-center gap-2"
+        >
+          <FaPlus /> Add Restaurant
+        </button>
       </div>
 
       {/* Restaurants */}
-      {restaurants.length === 0 ? (
-        <p className="text-gray-500">No restaurants added yet.</p>
-      ) : (
-        restaurants.map((restaurant, idx) => (
-          <motion.div
-            key={restaurant.id}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: idx * 0.1 }}
-            className="bg-white shadow-md rounded-lg p-6 mb-8"
-          >
-            <h2 className="text-2xl font-bold mb-4">{restaurant.name}</h2>
+      {restaurants.map((restaurant) => (
+        <motion.div
+          key={restaurant._id}
+          className="bg-white p-6 rounded-lg shadow mb-6"
+        >
+          <h2 className="text-2xl font-bold">{restaurant.restaurantName}</h2>
+          <p className="text-gray-600">{restaurant.address}</p>
+          <p className="text-sm">
+            ⏰ {restaurant.opentime} - {restaurant.closetime}
+          </p>
 
-            {/* Add Food to this Restaurant */}
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
-              <input
-                type="text"
-                placeholder="Menu Picture URL"
-                value={newFood.menuPicture}
-                onChange={(e) =>
-                  setNewFood({ ...newFood, menuPicture: e.target.value })
-                }
-                className="border rounded px-3 py-2 w-full"
-              />
-              <input
-                type="text"
-                placeholder="Menu Name"
-                value={newFood.menuName}
-                onChange={(e) =>
-                  setNewFood({ ...newFood, menuName: e.target.value })
-                }
-                className="border rounded px-3 py-2 w-full"
-              />
-              <input
-                type="text"
-                placeholder="Description"
-                value={newFood.menuDescription}
-                onChange={(e) =>
-                  setNewFood({ ...newFood, menuDescription: e.target.value })
-                }
-                className="border rounded px-3 py-2 w-full"
-              />
-              <input
-                type="number"
-                placeholder="Price ($)"
-                value={newFood.menuPrice}
-                onChange={(e) =>
-                  setNewFood({ ...newFood, menuPrice: e.target.value })
-                }
-                className="border rounded px-3 py-2 w-full"
-              />
-            </div>
-            <button
-              onClick={() => {
-                setSelectedRestaurant(restaurant);
-                handleAddFood(restaurant.id);
-              }}
-              className="mb-6 flex items-center gap-2 bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700"
-            >
-              <FaPlus /> Add Food
-            </button>
-
-            {/* Food List */}
-            {restaurant.foods.length === 0 ? (
-              <p className="text-gray-500">No foods yet.</p>
-            ) : (
-              <div className="overflow-x-auto">
-                <table className="min-w-full text-sm text-left">
-                  <thead className="bg-[#E81F1F] text-white">
-                    <tr>
-                      <th className="px-6 py-3">Picture</th>
-                      <th className="px-6 py-3">Name</th>
-                      <th className="px-6 py-3">Description</th>
-                      <th className="px-6 py-3">Price</th>
-                      <th className="px-6 py-3">Availability</th>
-                      <th className="px-6 py-3">Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {restaurant.foods.map((food) => (
-                      <motion.tr
-                        key={food.id}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        className="border-b hover:bg-gray-50"
-                      >
-                        <td className="px-6 py-4">
-                          {food.menuPicture ? (
-                            <img
-                              src={food.menuPicture}
-                              alt={food.menuName}
-                              className="w-16 h-16 object-cover rounded"
-                            />
-                          ) : (
-                            <span className="text-gray-400">No Image</span>
-                          )}
-                        </td>
-                        <td className="px-6 py-4 font-semibold">
-                          {food.menuName}
-                        </td>
-                        <td className="px-6 py-4 max-w-[200px] truncate">
-                          {food.menuDescription}
-                        </td>
-                        <td className="px-6 py-4">${food.menuPrice.toFixed(2)}</td>
-                        <td className="px-6 py-4">
-                          <span
-                            className={`px-3 py-1 rounded-full text-xs font-bold ${
-                              food.available
-                                ? "bg-green-100 text-green-700"
-                                : "bg-red-100 text-red-700"
-                            }`}
-                          >
-                            {food.available ? "Available" : "Unavailable"}
-                          </span>
-                        </td>
-                        <td className="px-6 py-4 flex gap-3">
-                          <button
-                            onClick={() => {
-                              setSelectedRestaurant(restaurant);
-                              setEditingFood(food);
-                            }}
-                            className="text-blue-500 hover:text-blue-700"
-                          >
-                            <FaEdit />
-                          </button>
-                          <button
-                            onClick={() =>
-                              handleDeleteFood(restaurant.id, food.id)
-                            }
-                            className="text-red-500 hover:text-red-700"
-                          >
-                            <FaTrash />
-                          </button>
-                        </td>
-                      </motion.tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            )}
-          </motion.div>
-        ))
-      )}
-
-      {/* Edit Food Modal */}
-      {editingFood && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40">
-          <div className="bg-white p-6 rounded-lg shadow-lg w-[400px]">
-            <h2 className="text-xl font-semibold mb-4">Edit Food</h2>
+          {/* Add Menu */}
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mt-4">
             <input
-              type="text"
-              placeholder="Picture URL"
-              value={editingFood.menuPicture}
+              type="file"
+              placeholder="Image URL"
+              value={newMenu.menuPicture}
               onChange={(e) =>
-                setEditingFood({ ...editingFood, menuPicture: e.target.value })
+                setNewMenu({ ...newMenu, menuPicture: e.target.value })
               }
-              className="border rounded px-3 py-2 w-full mb-3"
+              className="border rounded px-3 py-2"
             />
             <input
               type="text"
-              placeholder="Name"
-              value={editingFood.menuName}
+              placeholder="Menu Name"
+              value={newMenu.menuName}
               onChange={(e) =>
-                setEditingFood({ ...editingFood, menuName: e.target.value })
+                setNewMenu({ ...newMenu, menuName: e.target.value })
               }
-              className="border rounded px-3 py-2 w-full mb-3"
+              className="border rounded px-3 py-2"
             />
-            <textarea
+            <input
+              type="text"
               placeholder="Description"
-              value={editingFood.menuDescription}
+              value={newMenu.menuDescription}
               onChange={(e) =>
-                setEditingFood({
-                  ...editingFood,
-                  menuDescription: e.target.value,
-                })
+                setNewMenu({ ...newMenu, menuDescription: e.target.value })
               }
-              className="border rounded px-3 py-2 w-full mb-3"
+              className="border rounded px-3 py-2"
             />
             <input
               type="number"
-              placeholder="Price"
-              value={editingFood.menuPrice}
+              placeholder="Price (₦)"
+              value={newMenu.menuPrice}
               onChange={(e) =>
-                setEditingFood({
-                  ...editingFood,
-                  menuPrice: parseFloat(e.target.value),
-                })
+                setNewMenu({ ...newMenu, menuPrice: e.target.value })
               }
-              className="border rounded px-3 py-2 w-full mb-3"
+              className="border rounded px-3 py-2"
             />
-            <label className="flex items-center gap-2 mb-3">
-              <input
-                type="checkbox"
-                checked={editingFood.available}
-                onChange={(e) =>
-                  setEditingFood({
-                    ...editingFood,
-                    available: e.target.checked,
-                  })
-                }
-              />
-              Available
-            </label>
-            <div className="flex justify-end gap-3">
-              <button
-                onClick={() => setEditingFood(null)}
-                className="px-4 py-2 rounded bg-gray-200 hover:bg-gray-300"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={handleEditSave}
-                className="px-4 py-2 rounded bg-[#E81F1F] text-white hover:bg-red-600"
-              >
-                Save Changes
-              </button>
-            </div>
           </div>
-        </div>
-      )}
+          <button
+            onClick={() => handleAddMenu(restaurant._id)}
+            className="mt-3 bg-green-600 text-white px-4 py-2 rounded flex items-center gap-2"
+          >
+            <FaPlus /> Add Menu
+          </button>
+
+          {/* Menu List */}
+          <table className="w-full mt-6 border">
+            <thead className="bg-[#E81F1F] text-white">
+              <tr>
+                <th className="px-4 py-2">menuPicture</th>
+                <th className="px-4 py-2">menuName</th>
+                <th className="px-4 py-2">menuDescription</th>
+                <th className="px-4 py-2">menuPrice</th>
+              </tr>
+            </thead>
+            <tbody>
+              {restaurant.menus?.map((menu) => (
+                <tr key={menu._id} className="border">
+                  <td className="px-4 py-2">
+                    {menu.menuPicture ? (
+                      <img
+                        src={menu.menuPicture}
+                        alt={menu.menuName}
+                        className="w-16 h-16 rounded"
+                      />
+                    ) : (
+                      "No Image"
+                    )}
+                  </td>
+                  <td className="px-4 py-2">{menu.menuName}</td>
+                  <td className="px-4 py-2">{menu.menuDescription}</td>
+                  <td className="px-4 py-2">₦{menu.menuPrice}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </motion.div>
+      ))}
     </div>
   );
 }

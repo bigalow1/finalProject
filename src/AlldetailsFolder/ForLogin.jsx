@@ -18,7 +18,7 @@ function ForLogin() {
     setSuccess('');
 
     try {
-      const res = await fetch('https://localhost:3002/user/login', {
+      const res = await fetch('http://localhost:3002/user/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',

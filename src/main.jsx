@@ -1,8 +1,7 @@
-// main.jsx
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 
 import Header from "./HomeFolder/Header.jsx";
 import Home from "./HomeFolder/Home.jsx";
@@ -23,33 +22,51 @@ import MonitorOrder from "./Admin/MonitorOrders.jsx";
 import Orders from "./VendorFolder/Orders.jsx";
 import UpdateAvailability from "./VendorFolder/UpdateAvailability.jsx";
 
+// ✅ Layout wrapper to handle Header & Footer visibility
+function Layout() {
+  const location = useLocation();
+
+  // pages where footer should be hidden
+  const hideFooterRoutes = ["/ForSignup", "/ForLogin"];
+
+  // pages where header should be hidden
+  const hideHeaderRoutes = ["/ForSignup", "/ForLogin", "/ApproveRestaurant", "/Dashboard"];
+
+  const shouldHideFooter = hideFooterRoutes.includes(location.pathname);
+  const shouldHideHeader = hideHeaderRoutes.includes(location.pathname);
+
+  return (
+    <>
+      {!shouldHideHeader && <Header />}
+
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/Restaurants" element={<Restaurants />} />
+        <Route path="/OrderPage" element={<OrderPage />} />
+        <Route path="/Services" element={<Services />} />
+        <Route path="/ForSignup" element={<ForSignup />} />
+        <Route path="/ForLogin" element={<ForLogin />} />
+        <Route path="/Faqs" element={<Faqs />} />
+        <Route path="/CartPage" element={<CartPage />} />
+        <Route path="/Dashboard" element={<Dashboard />} />
+        <Route path="/ApproveRestaurant" element={<ApproveRestaurant />} />
+        <Route path="/CheckoutPage" element={<CheckoutPage />} />
+        <Route path="/order" element={<MonitorOrder />} />
+        <Route path="/Orders" element={<Orders />} />
+        <Route path="/Update" element={<UpdateAvailability />} />
+        <Route path="/dash" element={<Dashboard />} />
+      </Routes>
+
+      {!shouldHideFooter && <Footer />}
+    </>
+  );
+}
+
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    {/* ✅ CartProvider wraps everything */}
     <CartProvider>
       <BrowserRouter>
-        <Header />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/Restaurants" element={<Restaurants />} />
-          <Route path="/OrderPage" element={<OrderPage />} />
-          <Route path="/Services" element={<Services />} />
-          <Route path="/ForSignup" element={<ForSignup />} />
-          <Route path="/ForLogin" element={<ForLogin />} />
-          <Route path="/Faqs" element={<Faqs />} />
-          <Route path="/CartPage" element={<CartPage/>} />
-          <Route path="/Dashboard" element={<Dashboard />} />
-          <Route path="/ApproveRes" element={<ApproveRestaurant />} />
-          <Route path="/CheckoutPage" element={<CheckoutPage />} />
-          <Route path="/order" element={<MonitorOrder />} />
-          <Route path="/Orders" element={<Orders />} />
-          <Route path="/update" element={<UpdateAvailability />} />
-
-
-           
-
-        </Routes>
-        <Footer />
+        <Layout />
       </BrowserRouter>
     </CartProvider>
   </StrictMode>

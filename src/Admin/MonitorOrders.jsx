@@ -1,23 +1,52 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { FaSearch, FaClipboardList } from "react-icons/fa";
 
 const statuses = ["Pending", "Preparing", "Out for Delivery", "Delivered", "Cancelled"];
 
 function MonitorOrder() {
-  const [orders, setOrders] = useState([]); // Start with no orders
+  const [orders, setOrders] = useState([]);
   const [search, setSearch] = useState("");
 
-  const updateStatus = (id, newStatus) => {
-    setOrders((prev) =>
-      prev.map((order) => (order.id === id ? { ...order, status: newStatus } : order))
-    );
+  // Fetch orders from backend
+  useEffect(() => {
+    const fetchOrders = async () => {
+      try {
+        const res = await fetch("http://localhost:3002/orders");
+        const data = await res.json();
+        setOrders(data);
+      } catch (err) {
+        console.error("Failed to fetch orders:", err);
+      }
+    };
+
+    fetchOrders();
+  }, []);
+
+  // Update order status (PUT request to backend)
+  const updateStatus = async (id, newStatus) => {
+    try {
+      await fetch(`http://localhost:3002/orders/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ status: newStatus }),
+      });
+
+      // Update state locally after success
+      setOrders((prev) =>
+        prev.map((order) =>
+          order._id === id ? { ...order, status: newStatus } : order
+        )
+      );
+    } catch (err) {
+      console.error("Error updating order:", err);
+    }
   };
 
   const filteredOrders = orders.filter(
     (o) =>
-      o.id.toLowerCase().includes(search.toLowerCase()) ||
-      o.customer.toLowerCase().includes(search.toLowerCase())
+      o._id.toLowerCase().includes(search.toLowerCase()) ||
+      o.name.toLowerCase().includes(search.toLowerCase())
   );
 
   return (
@@ -39,7 +68,7 @@ function MonitorOrder() {
         />
       </div>
 
-      {/* Orders Section */}
+      {/* Orders Table */}
       {filteredOrders.length === 0 ? (
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
@@ -73,27 +102,27 @@ function MonitorOrder() {
             <tbody>
               {filteredOrders.map((order, idx) => (
                 <motion.tr
-                  key={order.id}
+                  key={order._id}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: idx * 0.1 }}
                   className="border-b hover:bg-gray-50"
                 >
-                  <td className="px-6 py-4 font-semibold">{order.id}</td>
+                  <td className="px-6 py-4 font-semibold">{order._id}</td>
                   <td className="px-6 py-4">
-                    <p className="font-bold">{order.customer}</p>
-                    <p className="text-gray-500 text-xs">{order.contact}</p>
+                    <p className="font-bold">{order.name}</p>
+                    <p className="text-gray-500 text-xs">{order.phone}</p>
                   </td>
                   <td className="px-6 py-4">{order.address}</td>
                   <td className="px-6 py-4">
-                    {order.items.map((item, i) => (
+                    {order.items?.map((item, i) => (
                       <p key={i}>
                         {item.qty} × {item.name}
                       </p>
                     ))}
                   </td>
-                  <td className="px-6 py-4 font-bold">${order.total.toFixed(2)}</td>
-                  <td className="px-6 py-4">{order.payment}</td>
+                  <td className="px-6 py-4 font-bold">${order.total?.toFixed(2)}</td>
+                  <td className="px-6 py-4">{order.paymentMethod}</td>
                   <td className="px-6 py-4">
                     <span
                       className={`px-3 py-1 rounded-full text-xs font-bold ${
@@ -114,7 +143,7 @@ function MonitorOrder() {
                   <td className="px-6 py-4">
                     <select
                       value={order.status}
-                      onChange={(e) => updateStatus(order.id, e.target.value)}
+                      onChange={(e) => updateStatus(order._id, e.target.value)}
                       className="border rounded px-2 py-1"
                     >
                       {statuses.map((status) => (
