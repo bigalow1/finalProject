@@ -1,180 +1,121 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
-const ApproveRestaurant = () => {
+function ApproveRestaurant() {
   const [restaurants, setRestaurants] = useState([]);
-  const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const restaurantsPerPage = 5;
-
-  // ✅ Fetch restaurants
+  // ✅ Fetch all restaurants
   useEffect(() => {
-    const fetchRestaurants = async () => {
-      try {
-        const res = await fetch("http://localhost:3002/restaurant/all");
-  const data = await res.json();
-  
-  if (Array.isArray(data)) {
-    setRestaurants(data);
-  } else {
-    setRestaurants([]); 
-    console.error("Unexpected API response:", data);
-  }
-  
-      } catch (err) {
-        console.error("Fetch error:", err);
-        setRestaurants([]); 
-      }
-    };
-  
     fetchRestaurants();
   }, []);
 
-  // ✅ Approve
+  const fetchRestaurants = async () => {
+    try {
+      const res = await fetch("http://localhost:3002/restaurant/all", {
+        headers: {
+          "Content-Type": "application/json",
+          // Add token if backend requires auth
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      const data = await res.json();
+      setRestaurants(data);
+      setLoading(false);
+    } catch (err) {
+      console.error("Error fetching restaurants:", err);
+      setLoading(false);
+    }
+  };
+
+  // ✅ Approve Restaurant
   const approveRestaurant = async (id) => {
     try {
-      const res = await fetch(`http://localhost:3002/restaurant/${id}`, {
+      const res = await fetch(`http://localhost:3002/restaurant/${id}/approve`, {
         method: "PUT",
-        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
       });
 
       if (!res.ok) throw new Error("Failed to approve restaurant");
-      setRestaurants((prev) => prev.filter((r) => r._id !== id));
+
+      setRestaurants((prev) =>
+        prev.map((r) => (r._id === id ? { ...r, status: "Approved" } : r))
+      );
     } catch (err) {
-      console.error("Error approving restaurant:", err.message);
-      setError(err.message);
+      console.error("Error approving restaurant:", err);
     }
   };
 
-  // ✅ Reject
+  // ✅ Reject Restaurant
   const rejectRestaurant = async (id) => {
     try {
-      const res = await fetch(`http://localhost:3002/restaurant/${id}`, {
-        method: "DELETE",
-        credentials: "include",
+      const res = await fetch(`http://localhost:3002/restaurant/${id}/reject`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
       });
 
       if (!res.ok) throw new Error("Failed to reject restaurant");
-      setRestaurants((prev) => prev.filter((r) => r._id !== id));
+
+      setRestaurants((prev) =>
+        prev.map((r) => (r._id === id ? { ...r, status: "Rejected" } : r))
+      );
     } catch (err) {
-      console.error("Error rejecting restaurant:", err.message);
-      setError(err.message);
+      console.error("Error rejecting restaurant:", err);
     }
   };
 
-  useEffect(() => {
-    rejectRestaurant();
-  }, []);
-
   if (loading) return <p className="p-6">Loading restaurants...</p>;
-  if (error) return <p className="p-6 text-red-600">{error}</p>;
-
-  // ✅ Pagination
-  const indexOfLast = currentPage * restaurantsPerPage;
-  const indexOfFirst = indexOfLast - restaurantsPerPage;
-  const currentRestaurants = restaurants.slice(indexOfFirst, indexOfLast);
-  const totalPages = Math.ceil(restaurants.length / restaurantsPerPage);
 
   return (
-    <main className="flex-1 p-6 min-h-screen bg-amber-100">
-      <h2 className="text-2xl font-bold mb-6">Restaurants Pending Approval</h2>
+    <div className="p-8 bg-gray-100 min-h-screen">
+      <h1 className="text-3xl font-bold text-[#E81F1F] mb-6">
+        Approve or Reject Restaurants
+      </h1>
 
-      {restaurants.length === 0 ? (
-        <p className="text-gray-500">No restaurants waiting for approval.</p>
-      ) : (
-        <>
-          {/* ✅ Scrollable Table */}
-          <div className="max-h-[600px] overflow-y-auto bg-white rounded-xl shadow border">
-            <table className="w-full border-collapse">
-              <thead className="bg-gray-200 sticky top-3">
-                <tr>
-                  <th className="px-4 py-3 text-left">Picture</th>
-                  <th className="px-4 py-3 text-left">Name</th>
-                  <th className="px-4 py-3 text-left">Address</th>
-                  <th className="px-4 py-3 text-left">Opening Time</th>
-                  <th className="px-4 py-3 text-left">Closing Time</th>
-                  <th className="px-4 py-3 text-center">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {currentRestaurants.map((restaurant) => (
-                  <tr key={restaurant._id} className="border-b hover:bg-gray-50">
-                    <td className="px-4 py-3">
-                      {restaurant.restaurantPicture ? (
-                        <img
-                          src={restaurant.restaurantPicture}
-                          alt={restaurant.restaurantName}
-                          className="w-16 h-16 object-cover rounded-lg"
-                        />
-                      ) : (
-                        <span className="text-gray-400">No Image</span>
-                      )}
-                    </td>
-                    <td className="px-4 py-3 font-semibold">
-                      {restaurant.restaurantName}
-                    </td>
-                    <td className="px-4 py-3">{restaurant.address}</td>
-                    <td className="px-4 py-3">{restaurant.opentime}</td>
-                    <td className="px-4 py-3">{restaurant.closetime}</td>
-                    <td className="px-4 py-3 text-center space-x-2">
-                      <button
-                        onClick={() => approveRestaurant(restaurant._id)}
-                        className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700"
-                      >
-                        Approve
-                      </button>
-                      <button
-                        onClick={() => rejectRestaurant(restaurant._id)}
-                        className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700"
-                      >
-                        Reject
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-
-          {/* ✅ Pagination Controls */}
-          <div className="flex justify-center items-center mt-6 space-x-2">
-            <button
-              onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-              disabled={currentPage === 1}
-              className="px-3 py-1 bg-gray-300 text-gray-700 rounded disabled:opacity-50"
-            >
-              Prev
-            </button>
-
-            {[...Array(totalPages)].map((_, idx) => (
-              <button
-                key={idx}
-                onClick={() => setCurrentPage(idx + 1)}
-                className={`px-3 py-1 rounded ${
-                  currentPage === idx + 1
-                    ? "bg-blue-600 text-white"
-                    : "bg-gray-200 text-gray-700"
-                }`}
-              >
-                {idx + 1}
-              </button>
+      <div className="overflow-x-auto bg-white shadow-lg rounded-lg">
+        <table className="min-w-full text-sm text-left">
+          <thead className="bg-[#E81F1F] text-white">
+            <tr>
+              <th className="px-6 py-3">Restaurant Name</th>
+              <th className="px-6 py-3">Address</th>
+              <th className="px-6 py-3">Status</th>
+              <th className="px-6 py-3">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {restaurants.map((r) => (
+              <tr key={r._id} className="border-b hover:bg-gray-50">
+                <td className="px-6 py-4">{r.restaurantName}</td>
+                <td className="px-6 py-4">{r.address}</td>
+                <td className="px-6 py-4 font-bold">
+                  {r.status || "Pending"}
+                </td>
+                <td className="px-6 py-4 flex gap-2">
+                  <button
+                    onClick={() => approveRestaurant(r._id)}
+                    className="bg-green-600 text-white px-3 py-1 rounded"
+                  >
+                    Approve
+                  </button>
+                  <button
+                    onClick={() => rejectRestaurant(r._id)}
+                    className="bg-red-600 text-white px-3 py-1 rounded"
+                  >
+                    Reject
+                  </button>
+                </td>
+              </tr>
             ))}
-
-            <button
-              onClick={() =>
-                setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-              }
-              disabled={currentPage === totalPages}
-              className="px-3 py-1 bg-gray-300 text-gray-700 rounded disabled:opacity-50"
-            >
-              Next
-            </button>
-          </div>
-        </>
-      )}
-    </main>
+          </tbody>
+        </table>
+      </div>
+    </div>
   );
-};
+}
 
 export default ApproveRestaurant;

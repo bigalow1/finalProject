@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { FaSearch, FaClipboardList } from "react-icons/fa";
+import { FaSearch, FaClipboardList, FaTrash } from "react-icons/fa";
 
 const statuses = ["Pending", "Preparing", "Out for Delivery", "Delivered", "Cancelled"];
 
@@ -32,7 +32,7 @@ function MonitorOrder() {
         body: JSON.stringify({ status: newStatus }),
       });
 
-      // Update state locally after success
+      // Update state locally
       setOrders((prev) =>
         prev.map((order) =>
           order._id === id ? { ...order, status: newStatus } : order
@@ -40,6 +40,22 @@ function MonitorOrder() {
       );
     } catch (err) {
       console.error("Error updating order:", err);
+    }
+  };
+
+  // ✅ Delete order
+  const deleteOrder = async (id) => {
+    if (!window.confirm("Are you sure you want to delete this order?")) return;
+
+    try {
+      await fetch(`http://localhost:3002/orders/${id}`, {
+        method: "DELETE",
+      });
+
+      // Remove from state
+      setOrders((prev) => prev.filter((order) => order._id !== id));
+    } catch (err) {
+      console.error("Error deleting order:", err);
     }
   };
 
@@ -97,6 +113,7 @@ function MonitorOrder() {
                 <th className="px-6 py-3">Payment</th>
                 <th className="px-6 py-3">Status</th>
                 <th className="px-6 py-3">Action</th>
+                <th className="px-6 py-3">Delete</th> {/* ✅ New column */}
               </tr>
             </thead>
             <tbody>
@@ -124,23 +141,6 @@ function MonitorOrder() {
                   <td className="px-6 py-4 font-bold">${order.total?.toFixed(2)}</td>
                   <td className="px-6 py-4">{order.paymentMethod}</td>
                   <td className="px-6 py-4">
-                    <span
-                      className={`px-3 py-1 rounded-full text-xs font-bold ${
-                        order.status === "Pending"
-                          ? "bg-yellow-100 text-yellow-700"
-                          : order.status === "Preparing"
-                          ? "bg-blue-100 text-blue-700"
-                          : order.status === "Out for Delivery"
-                          ? "bg-purple-100 text-purple-700"
-                          : order.status === "Delivered"
-                          ? "bg-green-100 text-green-700"
-                          : "bg-red-100 text-red-700"
-                      }`}
-                    >
-                      {order.status}
-                    </span>
-                  </td>
-                  <td className="px-6 py-4">
                     <select
                       value={order.status}
                       onChange={(e) => updateStatus(order._id, e.target.value)}
@@ -152,6 +152,15 @@ function MonitorOrder() {
                         </option>
                       ))}
                     </select>
+                  </td>
+                  {/* ✅ Delete button */}
+                  <td className="px-6 py-4">
+                    <button
+                      onClick={() => deleteOrder(order._id)}
+                      className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded flex items-center gap-2"
+                    >
+                      <FaTrash /> Delete
+                    </button>
                   </td>
                 </motion.tr>
               ))}

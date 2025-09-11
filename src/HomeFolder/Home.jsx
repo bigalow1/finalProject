@@ -147,7 +147,7 @@ function Home() {
               <img
                 src={cat.img}
                 alt={cat.name}
-                className="h-32 w-full object-cover"
+                className="h-50 w-full object-cover"
               />
               <div className="p-3 text-center font-bold text-red-500">
                 {cat.name}

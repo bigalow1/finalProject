@@ -161,7 +161,7 @@ const CheckoutPage = () => {
                 className="w-full border p-2 rounded"
                 rows="3"
               />
-              <div>
+              <div className="flex">
                 <label>
                   <input
                     type="radio"
@@ -172,16 +172,18 @@ const CheckoutPage = () => {
                   />
                   Cash on Delivery
                 </label>
-                <label className="ml-4">
-                  <input
-                    type="radio"
-                    name="payment"
-                    value="card"
-                    checked={formData.payment === "card"}
-                    onChange={handleChange}
-                  />
-                  Card
-                </label>
+             <label className="ml-4 flex items-center gap-2">
+                <input
+                   type="radio"
+                  name="payment"
+                  value="card"
+                 checked={formData.payment === "card"}
+                 onChange={handleChange}
+               />
+               <Link to="/payment" className="text-black ">
+               Pay with Debit Card
+                </Link>
+             </label>
               </div>
               <button
                 type="submit"

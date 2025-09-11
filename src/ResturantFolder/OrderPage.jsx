@@ -155,7 +155,7 @@ useEffect(() => {
         <div className="flex justify-between  items-center mb-4">
           <h2 className="text-xl font-bold">Available Foods</h2>
           <Link
-            to="/cartPage"
+            to="/cart"
             className="bg-blue-500 hover:scale-105 transition-transform duration-300 text-white px-4 py-2 rounded"
           >
             Cart ({cart.reduce((sum, item) => sum + item.quantity, 0)})

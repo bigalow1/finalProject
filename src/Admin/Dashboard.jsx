@@ -30,14 +30,14 @@ function Dashboard() {
     {
       title: "Manage Users",
       icon: <FaUsers className="text-4xl text-purple-500 mb-3" />,
-      route: "/admin/users",
+      route: "/Users",
     },
   ];
 
   return (
     <div className="min-h-screen bg-gray-100 p-8">
       {/* Header */}
-      <header className="flex justify-between items-center mb-10">
+      <header className="flex justify-between items-center mt-40 mb-10">
         <h1 className="text-3xl font-bold text-gray-800">Admin Dashboard</h1>
         <button
           onClick={() => navigate("/Forlogin")}

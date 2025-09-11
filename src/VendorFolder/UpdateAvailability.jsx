@@ -5,18 +5,18 @@ import { FaPlus } from "react-icons/fa";
 function UpdateAvailability() {
   const [restaurants, setRestaurants] = useState([]);
   const [newRestaurant, setNewRestaurant] = useState({
-    restaurantPicture: "",
+    restaurantPicture: null,
     restaurantName: "",
     address: "",
     opentime: "",
     closetime: "",
   });
   const [newMenu, setNewMenu] = useState({
-    menuPicture: "",
+    menuPicture: null,
     menuName: "",
     menuDescription: "",
     menuPrice: "",
-    available: true,
+    // available: true,
   });
 
   // ✅ Fetch restaurants
@@ -26,7 +26,7 @@ function UpdateAvailability() {
 
   const fetchRestaurants = async () => {
     try {
-      const res = await fetch("http://localhost:3002/restaurant"); // ✅ singular
+      const res = await fetch("http://localhost:3002/restaurant"); // ✅ plural
       const data = await res.json();
       setRestaurants(data);
     } catch (error) {
@@ -37,14 +37,16 @@ function UpdateAvailability() {
   // ✅ Add Restaurant
   const handleAddRestaurant = async () => {
     try {
-      await fetch("http://localhost:3002/restaurant", {
+      let res = await fetch("http://localhost:3002/restaurant", { // ✅ plural
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newRestaurant),
       });
 
+      console.log(res);
+
       setNewRestaurant({
-        restaurantPicture: "url",
+        restaurantPicture: null,
         restaurantName: "",
         address: "",
         opentime: "",
@@ -60,7 +62,7 @@ function UpdateAvailability() {
   // ✅ Add Menu to a restaurant
   const handleAddMenu = async (restaurantId) => {
     try {
-      await fetch(`http://localhost:3002/restaurant/all/${restaurantId}/menus`, {
+      await fetch(`http://localhost:3002/restaurant/${restaurantId}/menus`, { // ✅ plural
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -70,11 +72,11 @@ function UpdateAvailability() {
       });
 
       setNewMenu({
-        menuPicture: "",
+        menuPicture: null,
         menuName: "",
         menuDescription: "",
         menuPrice: "",
-        available: true,
+        // available: true,
       });
 
       fetchRestaurants();
@@ -93,12 +95,13 @@ function UpdateAvailability() {
       <div className="bg-white p-6 rounded-lg shadow mb-6">
         <h2 className="text-xl font-semibold mb-4">Add Restaurant</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-           <input
+          <input
             type="file"
-            placeholder="Picture URL"
-            value={newRestaurant.restaurantPicture}
             onChange={(e) =>
-              setNewRestaurant({ ...newRestaurant, restaurantPicture: e.target.value })
+              setNewRestaurant({
+                ...newRestaurant,
+                restaurantPicture: e.target.files[0],
+              })
             }
             className="border rounded px-3 py-2"
           />
@@ -108,11 +111,14 @@ function UpdateAvailability() {
             placeholder="Restaurant Name"
             value={newRestaurant.restaurantName}
             onChange={(e) =>
-              setNewRestaurant({ ...newRestaurant, restaurantName: e.target.value })
+              setNewRestaurant({
+                ...newRestaurant,
+                restaurantName: e.target.value,
+              })
             }
             className="border rounded px-3 py-2"
           />
-         
+
           <input
             type="text"
             placeholder="Address"
@@ -165,10 +171,8 @@ function UpdateAvailability() {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mt-4">
             <input
               type="file"
-              placeholder="Image URL"
-              value={newMenu.menuPicture}
               onChange={(e) =>
-                setNewMenu({ ...newMenu, menuPicture: e.target.value })
+                setNewMenu({ ...newMenu, menuPicture: e.target.files[0] })
               }
               className="border rounded px-3 py-2"
             />
@@ -186,7 +190,10 @@ function UpdateAvailability() {
               placeholder="Description"
               value={newMenu.menuDescription}
               onChange={(e) =>
-                setNewMenu({ ...newMenu, menuDescription: e.target.value })
+                setNewMenu({
+                  ...newMenu,
+                  menuDescription: e.target.value,
+                })
               }
               className="border rounded px-3 py-2"
             />
@@ -218,25 +225,26 @@ function UpdateAvailability() {
               </tr>
             </thead>
             <tbody>
-              {restaurant.menus?.map((menu) => (
-                <tr key={menu._id} className="border">
-                  <td className="px-4 py-2">
-                    {menu.menuPicture ? (
-                      <img
-                        src={menu.menuPicture}
-                        alt={menu.menuName}
-                        className="w-16 h-16 rounded"
-                      />
-                    ) : (
-                      "No Image"
-                    )}
-                  </td>
-                  <td className="px-4 py-2">{menu.menuName}</td>
-                  <td className="px-4 py-2">{menu.menuDescription}</td>
-                  <td className="px-4 py-2">₦{menu.menuPrice}</td>
-                </tr>
-              ))}
-            </tbody>
+  {restaurant.menus?.map((menu, index) => (
+    <tr key={menu._id || index} className="border">
+      <td className="px-4 py-2">
+        {menu.menuPicture ? (
+          <img
+            src={menu.menuPicture}
+            alt={menu.menuName}
+            className="w-16 h-16 rounded"
+          />
+        ) : (
+          "No Image"
+        )}
+      </td>
+      <td className="px-4 py-2">{menu.menuName}</td>
+      <td className="px-4 py-2">{menu.menuDescription}</td>
+      <td className="px-4 py-2">₦{menu.menuPrice}</td>
+    </tr>
+  ))}
+</tbody>
+
           </table>
         </motion.div>
       ))}

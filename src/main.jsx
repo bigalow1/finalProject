@@ -15,12 +15,18 @@ import Vendors from "./AlldetailsFolder/Restaurant.jsx";
 import OrderPage from "./ResturantFolder/OrderPage.jsx";
 import CartPage from "./AlldetailsFolder/CartPage.jsx";
 import { CartProvider } from "./AlldetailsFolder/CartContext.jsx";
+import { AuthProvider } from "./AlldetailsFolder/AuthContext.jsx"; // ✅ Import AuthContext
 import Dashboard from "./Admin/Dashboard.jsx";
 import ApproveRestaurant from "./Admin/ApproveRestaurant.jsx";
 import CheckoutPage from "./ResturantFolder/CheckoutPage.jsx";
 import MonitorOrder from "./Admin/MonitorOrders.jsx";
 import Orders from "./VendorFolder/Orders.jsx";
 import UpdateAvailability from "./VendorFolder/UpdateAvailability.jsx";
+import DebitCardPayment from "./HomeFolder/DebitCardPayment.jsx";
+import ThankYouPage from "./HomeFolder/ThankYouPage.jsx";
+import ManageUsers from "./Admin/ManageUsers.jsx";
+import AdminRoute from "./Admin/AdminRoute.jsx";
+import ProtectedRoute from "./AlldetailsFolder/ProtectedRoute.jsx";
 
 // ✅ Layout wrapper to handle Header & Footer visibility
 function Layout() {
@@ -30,7 +36,12 @@ function Layout() {
   const hideFooterRoutes = ["/ForSignup", "/ForLogin"];
 
   // pages where header should be hidden
-  const hideHeaderRoutes = ["/ForSignup", "/ForLogin", "/ApproveRestaurant", "/Dashboard"];
+  const hideHeaderRoutes = [
+    "/ForSignup",
+    "/ForLogin",
+    "/ApproveRestaurant",
+    "/Dashboard",
+  ];
 
   const shouldHideFooter = hideFooterRoutes.includes(location.pathname);
   const shouldHideHeader = hideHeaderRoutes.includes(location.pathname);
@@ -50,11 +61,22 @@ function Layout() {
         <Route path="/CartPage" element={<CartPage />} />
         <Route path="/Dashboard" element={<Dashboard />} />
         <Route path="/ApproveRestaurant" element={<ApproveRestaurant />} />
-        <Route path="/CheckoutPage" element={<CheckoutPage />} />
+        <Route
+          path="/CheckoutPage"
+          element={
+            <ProtectedRoute>
+              <CheckoutPage />
+            </ProtectedRoute>
+          }
+        />
         <Route path="/order" element={<MonitorOrder />} />
         <Route path="/Orders" element={<Orders />} />
+        <Route path="/Users" element={<ManageUsers />} />
         <Route path="/Update" element={<UpdateAvailability />} />
         <Route path="/dash" element={<Dashboard />} />
+        <Route path="/payment" element={<DebitCardPayment />} />
+        <Route path="/thankyou" element={<ThankYouPage />} />
+        <Route path="/admin" element={<AdminRoute />} />
       </Routes>
 
       {!shouldHideFooter && <Footer />}
@@ -64,10 +86,12 @@ function Layout() {
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <CartProvider>
-      <BrowserRouter>
-        <Layout />
-      </BrowserRouter>
-    </CartProvider>
+    <AuthProvider>
+      <CartProvider>
+        <BrowserRouter>
+          <Layout />
+        </BrowserRouter>
+      </CartProvider>
+    </AuthProvider>
   </StrictMode>
 );
