@@ -83,7 +83,7 @@ const CartPage = () => {
                   Clear Cart
                 </button>
 
-                <Link to="/checkoutPage">
+                <Link to="/ForSignup">
                   <button className="bg-rose-600 text-white text-sm px-4 py-2 rounded hover:bg-rose-700 transition">
                     Checkout
                   </button>

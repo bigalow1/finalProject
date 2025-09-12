@@ -145,7 +145,7 @@ const ForSignup = () => {
 
         <p className="mt-6 text-center text-sm text-gray-600">
           Already have an account?{" "}
-          <Link to="/ForLogin" className="text-red-600 font-medium hover:underline">
+          <Link to="/login" className="text-red-600 font-medium hover:underline">
             Log in here
           </Link>
         </p>

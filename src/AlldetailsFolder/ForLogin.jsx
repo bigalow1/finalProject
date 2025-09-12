@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../AlldetailsFolder/AuthContext.jsx"; // ✅ import AuthContext
 
 function ForLogin() {
@@ -8,7 +8,6 @@ function ForLogin() {
   const [success, setSuccess] = useState("");
 
   const navigate = useNavigate();
-  const location = useLocation();
   const { login } = useAuth(); // ✅ from AuthContext
 
   const handleChange = (e) => {
@@ -33,14 +32,13 @@ function ForLogin() {
       if (!res.ok) throw new Error(data.message || "Invalid login credentials.");
 
       // ✅ Save user in AuthContext + localStorage
-      login(data.user || data); // depending on your API shape
+      login(data.user || data);
 
       setSuccess("Login successful!");
       setFormData({ email: "", password: "" });
 
-      // ✅ Redirect back to where they came from OR home
-      const redirectPath = location.state?.from?.pathname || "/";
-      navigate(redirectPath, { replace: true });
+      // ✅ Always redirect to checkout page
+      navigate("/checkoutpage", { replace: true });
     } catch (err) {
       setError(err.message);
     }

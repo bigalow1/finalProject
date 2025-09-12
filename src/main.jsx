@@ -56,7 +56,7 @@ function Layout() {
         <Route path="/OrderPage" element={<OrderPage />} />
         <Route path="/Services" element={<Services />} />
         <Route path="/ForSignup" element={<ForSignup />} />
-        <Route path="/ForLogin" element={<ForLogin />} />
+        <Route path="/Login" element={<ForLogin />} />
         <Route path="/Faqs" element={<Faqs />} />
         <Route path="/CartPage" element={<CartPage />} />
         <Route path="/Dashboard" element={<Dashboard />} />
