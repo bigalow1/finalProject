@@ -118,7 +118,7 @@ export default function DebitCardPayment() {
   };
 
   return (
-    <div className="max-w-xl mx-auto p-6 bg-white rounded-lg shadow">
+    <div className="max-w-xl mx-auto p-6 bg-white mt-40 rounded-lg shadow">
       <h3 className="text-2xl font-semibold mb-4">Pay with Debit Card</h3>
 
       <form onSubmit={handleSubmit} noValidate>

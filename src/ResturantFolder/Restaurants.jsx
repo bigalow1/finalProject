@@ -18,11 +18,11 @@ function Restaurants() {
     { image: "pinerice.jpeg" },
     { image: "sharwama.jpeg" },
     { image: "desert.jpeg" },
-     { image: "Ribs.jpeg" },
+     { image: "jollof.jpeg" },
     { image: "sparg.jpeg" },
-    { image: "pinerice.jpeg" },
-    { image: "sharwama.jpeg" },
-    { image: "desert.jpeg" },
+    { image: "Jollof.jpg" },
+    { image: "pasta.jpeg" },
+    { image: "Egusi1.jpeg" },
   ];
 
   const [index, setIndex] = useState(0);
@@ -30,13 +30,16 @@ function Restaurants() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  // Auto carousel
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setIndex((prev) => (prev + 1) % slides.length);
-    }, 2300);
-    return () => clearInterval(interval);
-  }, [slides.length]);
+   // Example fix
+useEffect(() => {
+  const interval = setInterval(() => {
+    setIndex((prev) =>
+      prev === slides.length ? 0 : prev + 1
+    );
+  }, 2300);
+  return () => clearInterval(interval);
+}, [slides.length]);
+
 
   // Fetch restaurants from backend
   useEffect(() => {
@@ -203,44 +206,56 @@ if (Array.isArray(data)) {
         </div>
       </section>
 
-      {/* Carousel */}
-      <section className="bg-gradient-to-r from-white via-red-500 to-white-400 py-14">
-        <div className="max-w-3xl mx-auto overflow-hidden rounded-2xl shadow-2xl border-4 border-rose-600 relative">
-          <h2 className="absolute top-4 left-1/2 -translate-x-1/2 z-20 text-3xl font-extrabold text-white drop-shadow-lg">
-            JetMeals Carousel
-          </h2>
+    {/* Carousel */}
+<section className="bg-gradient-to-r from-white via-red-500 to-white py-16">
+  <div className="max-w-6xl mx-auto relative rounded-3xl shadow-2xl p-6">
+    {/* Title */}
+    <h2 className="text-center text-4xl md:text-5xl font-extrabold text-white drop-shadow-lg mb-10">
+      JetMeals Carousel
+    </h2>
 
-          <div
-            className="flex transition-transform duration-500 ease-in-out"
-            style={{
-              transform: `translateX(-${index * 100}%)`,
-              width: `${slides.length * 100}%`,
-            }}
+    {/* Swiper Carousel */}
+    <Swiper
+      modules={[Autoplay, Pagination]}
+      autoplay={{ delay: 2500, disableOnInteraction: false }}
+      pagination={{ clickable: true }}
+      loop
+      spaceBetween={30}
+      slidesPerView={1}
+      breakpoints={{
+        640: { slidesPerView: 1 },
+        1024: { slidesPerView: 2 },
+      }}
+      className="max-w-5xl mx-auto"
+    >
+      {slides.map((slide, i) => (
+        <SwiperSlide key={i}>
+          <motion.div
+            whileHover={{ scale: 1.05 }}
+            className="relative w-full h-[200px] md:h-[200px] rounded-3xl overflow-hidden shadow-lg"
           >
-            {slides.map((slide, i) => (
-              <div
-                key={i}
-                className="relative min-w-full h-[400px] md:h-[400px] flex items-center justify-center"
-              >
-                {/* Image */}
-                <img
-                  src={slide.image}
-                  alt={`Slide ${i + 1}`}
-                  className="w-[400px]   kl object-cover rounded-2xl"
-                />
+            {/* Image */}
+            <img
+              src={slide.image}
+              alt={`Slide ${i + 1}`}
+              className="w-full h-full object-cover"
+            />
 
-                {/* Overlay */}
-                <div className="absolute inset-0 bg-black/40 rounded-2xl"></div>
+            {/* Overlay */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent"></div>
 
-                {/* Text */}
-                <span className="absolute z-10 text-3xl md:text-5xl font-bold text-white drop-shadow-lg">
-                  {`Slide ${i + 1}`}
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+            {/* Text */}
+            <span className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 text-2xl md:text-3xl font-bold text-white drop-shadow-lg text-center px-4">
+              {`Delicious Dish ${i + 1}`}
+            </span>
+          </motion.div>
+        </SwiperSlide>
+      ))}
+    </Swiper>
+  </div>
+</section>
+
+
 
       {/* Call to Action */}
       <section className="py-8 bg-gradient-to-r from-rose-100 via-amber-100 to-rose-100 flex flex-col rounded-bl-full items-center animate-slideIn">

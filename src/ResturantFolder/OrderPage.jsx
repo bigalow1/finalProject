@@ -16,6 +16,10 @@ const categories = [
   "Noodles",
   "Soups",
   "Sharwama",
+  "Amala",
+  "pizza",
+  "grilled meats",
+  "Egusi soup"
 ];
 
 const OrderPage = () => {
@@ -99,7 +103,7 @@ useEffect(() => {
   return (
     <div className="flex flex-col lg:flex-row   bg-white p-4">
       {/* Sidebar */}
-      <div className="w-full lg:w-1/4 lg:mr-6 mb-6 lg:mb-0 bg-amber-100 mt-20 p-4 shadow rounded">
+      <div className="w-full lg:w-1/4 lg:mr-6 mb-6 lg:mb-0 bg-white mt-20 p-4 shadow rounded">
         <h2 className="text-xl font-bold mb-4">Filter Foods</h2>
 
         {/* Search */}
@@ -151,7 +155,7 @@ useEffect(() => {
       </div>
 
       {/* Main Content */}
-      <div className="flex-1  mt-20 lg:mt-20 bg-amber-100  p-4 rounded shadow">
+      <div className="flex-1  mt-20 lg:mt-20 bg-white-500  p-4 rounded shadow">
         <div className="flex justify-between  items-center mb-4">
           <h2 className="text-xl font-bold">Available Foods</h2>
           <Link
@@ -169,40 +173,41 @@ useEffect(() => {
         {/* Food Grid */}
         {!loading && !error && (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3   xl:grid-cols-4 gap-6">
-            {filteredFoods.length > 0 ? (
-              filteredFoods.map((item) => (
-                <div
-                  key={item._id || item.id}
-                  className="border  p-4 rounded shadow flex flex-col"
-                >
-                  <img
-                    src={item.menupicture}
-                    alt={item.menuname}
-                    className="h-40 object-contain hover:scale-105 transition-transform duration-300 mx-auto mb-2"
-                  />
-                  <h3
-                    className="font-semibold text-sm mb-1 line-clamp-2"
-                    title={item.menuname}
-                  >
-                    {item.menuname}
-                  </h3>
-                  <p className="text-gray-600 text-xs mb-2">
-                    {item.menudescription}
-                  </p>
-                  <p className="text-green-600 font-bold mb-2">
-                    ${item.menuprice}
-                  </p>
-                  <button
-                    className="bg-blue-600 text-white w-full hover:scale-105 transition-transform duration-300 py-1 rounded hover:bg-blue-700 "
-                    onClick={() => addToCart(item)}
-                  >
-                    Add to cart
-                  </button>
-                </div>
-              ))
-            ) : (
-              <p>No foods match your filters.</p>
-            )}
+           {filteredFoods.length > 0 ? (
+  filteredFoods.map((item) => (
+    <div
+      key={item._id || item.id}
+      className="border p-4 rounded shadow flex flex-col"
+    >
+      <img
+        src={item.menupicture}
+        alt={item.menuname}
+        className="h-40 object-contain hover:scale-105 transition-transform duration-300 mx-auto mb-2"
+      />
+      <h3
+        className="font-semibold text-sm mb-1 line-clamp-2"
+        title={item.menuname}
+      >
+        {item.menuname}
+      </h3>
+      <p className="text-gray-600 text-xs mb-2">
+        {item.menudescription}
+      </p>
+      <p className="text-green-600 font-bold mb-2">
+        ₦{item.menuprice}
+      </p>
+      <button
+        className="bg-blue-600 text-white w-full hover:scale-105 transition-transform duration-300 py-1 rounded hover:bg-blue-700"
+        onClick={() => addToCart(item)}
+      >
+        Add to cart
+      </button>
+    </div>
+  ))
+) : (
+  <p>No foods match your filters.</p>
+)}
+
           </div>
         )}
       </div>
