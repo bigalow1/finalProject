@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useCart } from "../AlldetailsFolder/CartContext";
 import { Link, useNavigate } from "react-router-dom";
+ 
 
 const CheckoutPage = () => {
   const { cart, increaseQuantity, decreaseQuantity, clearCart } = useCart();
