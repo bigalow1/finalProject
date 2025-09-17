@@ -6,6 +6,7 @@ import {
   FaShoppingCart,
   FaUsers,
   FaSignOutAlt,
+  FaUtensils, // ✅ icon for Add Menu
 } from "react-icons/fa";
 
 function Dashboard() {
@@ -13,7 +14,7 @@ function Dashboard() {
 
   const cards = [
     {
-      title: "Manage menus",
+      title: "Manage Restaurants",
       icon: <FaBox className="text-4xl text-blue-500 mb-3" />,
       route: "/Update",
     },
@@ -31,6 +32,11 @@ function Dashboard() {
       title: "Manage Users",
       icon: <FaUsers className="text-4xl text-purple-500 mb-3" />,
       route: "/Users",
+    },
+    {
+      title: "Add Menu",
+      icon: <FaUtensils className="text-4xl text-red-500 mb-3" />, // ✅ new icon
+      route: "/Addmenu",
     },
   ];
 

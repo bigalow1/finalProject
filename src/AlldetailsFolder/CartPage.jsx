@@ -3,10 +3,11 @@ import { useCart } from "../AlldetailsFolder/CartContext";
 import { Link } from "react-router-dom";
 
 const CartPage = () => {
-  const { cart, removeFromCart, clearCart } = useCart();
+  const { cart, removeFromCart, clearCart, increaseQuantity, decreaseQuantity } =
+    useCart();
 
   const totalPrice = cart.reduce(
-    (sum, item) => sum + item.menuprice * item.quantity,
+    (sum, item) => sum + (item.price || 0) * (item.quantity || 0),
     0
   );
 
@@ -35,43 +36,55 @@ const CartPage = () => {
           </div>
         ) : (
           <>
-            {/* Cart Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
               {cart.map((item) => (
                 <div
-                  key={item._id}
+                  key={item.id}
                   className="border p-4 rounded-lg shadow-sm bg-white flex flex-col"
                 >
                   <img
-                    src={item.menupicture}
-                    alt={item.menuname}
+                    src={item.image || "/placeholder.png"}
+                    alt={item.title}
                     className="h-32 object-contain mx-auto mb-3"
                   />
                   <h3 className="font-semibold text-sm mb-1 text-gray-800">
-                    {item.menuname}
+                    {item.title}
                   </h3>
                   <p className="text-gray-500 text-xs mb-2">
-                    {item.quantity} × ${item.menuprice}
+                    {item.quantity} × ₦{(item.price || 0).toLocaleString()}
                   </p>
                   <p className="text-green-600 font-semibold mb-3">
-                    ${(item.menuprice * item.quantity).toFixed(2)}
+                    ₦{((item.price || 0) * (item.quantity || 0)).toLocaleString()}
                   </p>
-                  <button
-                    onClick={() => removeFromCart(item._id)}
-                    className="bg-red-500 text-white text-xs px-3 py-1 rounded hover:bg-red-600 transition mt-auto"
-                  >
-                    Remove
-                  </button>
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => decreaseQuantity(item.id)}
+                      className="bg-gray-200 text-black px-2 rounded"
+                    >
+                      -
+                    </button>
+                    <button
+                      onClick={() => increaseQuantity(item.id)}
+                      className="bg-gray-200 text-black px-2 rounded"
+                    >
+                      +
+                    </button>
+                    <button
+                      onClick={() => removeFromCart(item.id)}
+                      className="bg-red-500 text-white px-2 rounded"
+                    >
+                      Remove
+                    </button>
+                  </div>
                 </div>
               ))}
             </div>
 
-            {/* Cart Summary */}
             <div className="mt-10 flex flex-col md:flex-row justify-between items-center bg-gray-100 p-4 rounded-lg gap-3">
               <h3 className="text-lg font-medium text-gray-800">
                 Total:{" "}
                 <span className="text-green-600 font-semibold">
-                  ${totalPrice.toFixed(2)}
+                  ₦{totalPrice.toLocaleString()}
                 </span>
               </h3>
 
@@ -83,7 +96,7 @@ const CartPage = () => {
                   Clear Cart
                 </button>
 
-                <Link to="/ForSignup">
+                <Link to="/CheckoutPage">
                   <button className="bg-rose-600 text-white text-sm px-4 py-2 rounded hover:bg-rose-700 transition">
                     Checkout
                   </button>

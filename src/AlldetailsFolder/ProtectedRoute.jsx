@@ -3,10 +3,11 @@ import { Navigate } from "react-router-dom";
 import { useAuth } from "./AuthContext";
 
 const ProtectedRoute = ({ children }) => {
-  const { User } = useAuth();
+  const { user } = useAuth();
+  console.log(user)
 
-  if (!User) {
-    return <Navigate to="/CheckoutPage" replace />;
+  if (!user) {
+    return <Navigate to="/login" replace />;
   }
 
   return children;

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useCart } from "../AlldetailsFolder/CartContext";
 import { Link, useNavigate } from "react-router-dom";
- 
 
 const CheckoutPage = () => {
   const { cart, increaseQuantity, decreaseQuantity, clearCart } = useCart();
@@ -11,14 +10,14 @@ const CheckoutPage = () => {
     fullName: "",
     phone: "",
     address: "",
-    payment: "cash_on_delivery", // 👈 match backend default
+    payment: "cash_on_delivery",
   });
 
   const [loading, setLoading] = useState(false);
 
   const cartIsEmpty = cart.length === 0;
   const totalAmount = cart.reduce(
-    (sum, item) => sum + item.price * item.quantity,
+    (sum, item) => sum + (item.price || 0) * (item.quantity || 0),
     0
   );
 
@@ -37,11 +36,12 @@ const CheckoutPage = () => {
       fullName: formData.fullName,
       phone: formData.phone,
       address: formData.address,
-      paymentMethod: formData.payment, // 👈 already "cash_on_delivery" or "card"
+      paymentMethod: formData.payment,
       items: cart.map((item) => ({
-        name: item.title || item.menuname,
-        qty: item.quantity,
-        price: item.price,
+        menuName: item.title,
+        menuPrice: item.price,
+        quantity: item.quantity,
+        menuPicture: item.image,
       })),
       total: totalAmount,
     };
@@ -72,17 +72,16 @@ const CheckoutPage = () => {
   };
 
   return (
-    <div className="p-6 min-h-screen bg-gray-50">
+    <div className="p-6 min-h-screen bg-gray-50 mt-20">
       <h1 className="text-2xl font-bold mb-6 text-rose-600">Checkout</h1>
 
       {cartIsEmpty ? (
         <div className="text-center bg-rose-100 p-6 rounded">
           <h2 className="text-xl font-semibold mb-2">Your cart is empty!</h2>
-          <Link
-            to="/OrderPage"
-            className="bg-rose-600 text-white px-4 py-2 rounded hover:bg-rose-700"
-          >
-            Browse Meals
+          <Link to="/OrderPage">
+            <button className="bg-rose-600 text-white px-4 py-2 rounded hover:bg-rose-700">
+              Browse Meals
+            </button>
           </Link>
         </div>
       ) : (
@@ -97,15 +96,15 @@ const CheckoutPage = () => {
               >
                 <div className="flex items-center gap-3">
                   <img
-                    src={item.image || item.menupicture}
-                    alt={item.title || item.menuname}
+                    src={item.image || "/placeholder.png"}
+                    alt={item.title}
                     className="w-20 h-20 object-contain rounded"
                   />
                   <div>
-                    <h4 className="font-semibold">
-                      {item.title || item.menuname}
-                    </h4>
-                    <p>${(item.price * item.quantity).toFixed(2)}</p>
+                    <h4 className="font-semibold">{item.title}</h4>
+                    <p>
+                      {item.quantity} × ₦{(item.price || 0).toLocaleString()}
+                    </p>
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
@@ -125,7 +124,9 @@ const CheckoutPage = () => {
                 </div>
               </div>
             ))}
-            <p className="mt-4 font-bold">Total: ${totalAmount.toFixed(2)}</p>
+            <p className="mt-4 font-bold">
+              Total: ₦{totalAmount.toLocaleString()}
+            </p>
           </div>
 
           {/* Delivery Details */}
@@ -162,8 +163,8 @@ const CheckoutPage = () => {
                 className="w-full border p-2 rounded"
                 rows="3"
               />
-              <div className="flex">
-                <label>
+              <div className="flex items-center gap-4">
+                <label className="flex items-center gap-2">
                   <input
                     type="radio"
                     name="payment"
@@ -173,18 +174,18 @@ const CheckoutPage = () => {
                   />
                   Cash on Delivery
                 </label>
-             <label className="ml-4 flex items-center gap-2">
-                <input
-                   type="radio"
-                  name="payment"
-                  value="card"
-                 checked={formData.payment === "card"}
-                 onChange={handleChange}
-               />
-               <Link to="/payment" className="text-black ">
-               Pay with Debit Card
-                </Link>
-             </label>
+                <label className="flex items-center gap-2">
+                  <input
+                    type="radio"
+                    name="payment"
+                    value="card"
+                    checked={formData.payment === "card"}
+                    onChange={handleChange}
+                  />
+                  <Link to="/payment" className="text-black">
+                    Pay with Debit Card
+                  </Link>
+                </label>
               </div>
               <button
                 type="submit"

@@ -15,7 +15,7 @@ import Vendors from "./AlldetailsFolder/Restaurant.jsx";
 import OrderPage from "./ResturantFolder/OrderPage.jsx";
 import CartPage from "./AlldetailsFolder/CartPage.jsx";
 import { CartProvider } from "./AlldetailsFolder/CartContext.jsx";
-import { AuthProvider } from "./AlldetailsFolder/AuthContext.jsx"; // ✅ Import AuthContext
+import { AuthProvider } from "./AlldetailsFolder/AuthContext.jsx";
 import Dashboard from "./Admin/Dashboard.jsx";
 import ApproveRestaurant from "./Admin/ApproveRestaurant.jsx";
 import CheckoutPage from "./ResturantFolder/CheckoutPage.jsx";
@@ -28,14 +28,14 @@ import ManageUsers from "./Admin/ManageUsers.jsx";
 import AdminRoute from "./Admin/AdminRoute.jsx";
 import ProtectedRoute from "./AlldetailsFolder/ProtectedRoute.jsx";
 
+import AddMenu from "./Admin/AddMenu.jsx";
+import RestaurantDetails from "./ResturantFolder/RestaurantDetail.jsx";
+
 // ✅ Layout wrapper to handle Header & Footer visibility
 function Layout() {
   const location = useLocation();
 
-  // pages where footer should be hidden
   const hideFooterRoutes = ["/ForSignup", "/ForLogin"];
-
-  // pages where header should be hidden
   const hideHeaderRoutes = [
     "/ForSignup",
     "/ForLogin",
@@ -61,6 +61,7 @@ function Layout() {
         <Route path="/CartPage" element={<CartPage />} />
         <Route path="/Dashboard" element={<Dashboard />} />
         <Route path="/ApproveRestaurant" element={<ApproveRestaurant />} />
+        <Route path="/restaurant/:id" element={<RestaurantDetails />} />
         <Route
           path="/CheckoutPage"
           element={
@@ -77,6 +78,7 @@ function Layout() {
         <Route path="/payment" element={<DebitCardPayment />} />
         <Route path="/thankyou" element={<ThankYouPage />} />
         <Route path="/admin" element={<AdminRoute />} />
+        <Route path="/addmenu" element={<AddMenu />} />
       </Routes>
 
       {!shouldHideFooter && <Footer />}

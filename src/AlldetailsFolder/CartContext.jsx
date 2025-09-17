@@ -2,19 +2,20 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 
 const CartContext = createContext();
 
+// Normalize backend menu objects for frontend consistency
 const normalize = (p) => {
   const id = p?._id || p?.id;
-  const title = p?.menuname ?? p?.title ?? "";
-  const image = p?.menupicture ?? p?.image ?? "";
-  const price = Number(p?.menuprice ?? p?.price ?? 0);
+  const title = p?.menuName ?? p?.menuname ?? p?.title ?? "";
+  const image = p?.menuPicture ?? p?.menupicture ?? p?.image ?? "";
+  const price = Number(p?.menuPrice ?? p?.menuprice ?? p?.price ?? 0);
 
   return {
     id,
-    // generic keys
     title,
     image,
     price,
-    // keep both styles for compatibility
+    quantity: 1,
+    // Keep both versions for compatibility
     menuname: title,
     menupicture: image,
     menuprice: price,
@@ -46,7 +47,7 @@ export const CartProvider = ({ children }) => {
           i.id === p.id ? { ...i, quantity: i.quantity + 1 } : i
         );
       }
-      return [...prev, { ...p, quantity: 1 }];
+      return [...prev, p];
     });
   };
 
