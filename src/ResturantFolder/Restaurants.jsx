@@ -10,16 +10,18 @@ import { Autoplay, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 
+// ✅ Change this to your backend base URL
+const API_BASE = "https://final-backend-57f6.onrender.com";
+
 function Restaurants() {
   // Hero carousel slides
   const slides = [
-    { image: "Ribs.jpeg " },
+    { image: "Ribs.jpeg" },
     { image: "sparg.jpeg" },
     { image: "pinerice.jpeg" },
     { image: "sharwama.jpeg" },
     { image: "desert.jpeg" },
     { image: "jollof.jpeg" },
-    { image: "sparg.jpeg" },
     { image: "Jollof.jpg" },
     { image: "pasta.jpeg" },
     { image: "Egusi1.jpeg" },
@@ -43,12 +45,20 @@ function Restaurants() {
   useEffect(() => {
     const fetchRestaurants = async () => {
       try {
-        const res = await fetch("http://localhost:3002/restaurant/all");
+        const res = await fetch(`${API_BASE}/restaurant/all`, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+
         if (!res.ok) throw new Error(`Server Error: ${res.status}`);
         const data = await res.json();
 
+        // ✅ Handle both possible API shapes
         if (Array.isArray(data)) {
           setRestaurants(data);
+        } else if (Array.isArray(data.restaurants)) {
+          setRestaurants(data.restaurants);
         } else {
           throw new Error("Unexpected API response");
         }
@@ -75,7 +85,11 @@ function Restaurants() {
       {/* Hero Section */}
       <section className="pt-[80px] bg-gradient-to-r from-rose-100 via-amber-100 to-rose-50 min-h-[600px] flex items-center justify-center relative">
         <div className="h-[400px] w-[100%] relative flex items-center justify-center shadow-lg">
-          <img src="bg.jpg" alt="JetMeals" className="w-full h-[600px] object-cover" />
+          <img
+            src="bg.jpg"
+            alt="JetMeals"
+            className="w-full h-[600px] object-cover"
+          />
         </div>
 
         <div className="text-center h-[300px] w-[800px] absolute flex flex-col items-center justify-center rounded-lg shadow-lg bg-opacity-90 left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 cursor-pointer">
@@ -141,7 +155,11 @@ function Restaurants() {
                       className="bg-white rounded-xl shadow-lg p-5 flex flex-col items-center transition-transform"
                     >
                       <img
-                        src={rest.restaurantPicture || "placeholder.jpg"}
+                        src={
+                          rest.restaurantPicture?.startsWith("http")
+                            ? rest.restaurantPicture
+                            : `${API_BASE}/uploads/${rest.restaurantPicture}`
+                        }
                         alt={rest.restaurantName || "Restaurant"}
                         className="w-50 h-32 object-cover mb-4 border-4 border-[#E81F1F]"
                         onError={(e) => (e.target.src = "placeholder.jpg")}
@@ -149,7 +167,9 @@ function Restaurants() {
                       <span className="text-xl font-semibold text-gray-800">
                         {rest.restaurantName || "Unnamed Restaurant"}
                       </span>
-                      <p className="text-gray-600 text-sm mt-2">{rest.address || "Address not available"}</p>
+                      <p className="text-gray-600 text-sm mt-2">
+                        {rest.address || "Address not available"}
+                      </p>
                       <p className="text-gray-500 text-sm">
                         Open: {rest.opentime || "?"} - {rest.closetime || "?"}
                       </p>
