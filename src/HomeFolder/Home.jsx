@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -48,6 +48,43 @@ function Home() {
   const [openIndex, setOpenIndex] = useState(null);
   const toggleFAQ = (idx) => setOpenIndex(openIndex === idx ? null : idx);
 
+  // --- Count-up stats ---
+  const stats = [
+    { label: "Restaurants", value: 120 },
+    { label: "Orders Delivered", value: 50000 },
+    { label: "Avg. Delivery Time", value: 25 },
+  ];
+  const [counts, setCounts] = useState(stats.map(() => 0));
+  const statRef = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          stats.forEach((stat, i) => {
+            let start = 0;
+            const end = stat.value;
+            const duration = 2000;
+            const stepTime = Math.abs(Math.floor(duration / end));
+            const counter = setInterval(() => {
+              start += 1;
+              setCounts((prev) => {
+                const updated = [...prev];
+                updated[i] = start;
+                return updated;
+              });
+              if (start === end) clearInterval(counter);
+            }, stepTime);
+          });
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.5 }
+    );
+    if (statRef.current) observer.observe(statRef.current);
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <>
       {/* Hero Section */}
@@ -84,7 +121,10 @@ function Home() {
         </motion.div>
       </section>
 
-      <h1 className="text-red-500 text-center text-2xl font-bold">How It Works</h1>
+      {/* How It Works */}
+      <h1 className="text-red-500 text-center text-2xl font-bold mt-12">
+        How It Works
+      </h1>
       <section className="py-16 bg-gray-50">
         <div className="grid md:grid-cols-3 gap-10 max-w-6xl mx-auto text-center px-4">
           {[
@@ -157,112 +197,63 @@ function Home() {
         </div>
       </section>
 
-    {/* Chef Showcase Slider */}
-<section className="py-16 bg-gray-50">
-  <Swiper
-    modules={[Pagination, Autoplay]}
-    pagination={{ clickable: true }}
-    autoplay={{ delay: 5000, disableOnInteraction: false }}
-    spaceBetween={30}
-    slidesPerView={1}
-    className="max-w-6xl mx-auto"
-  >
-    {/* Slide 1 */}
-    <SwiperSlide>
-      <div className="flex flex-col md:flex-row justify-center items-center gap-6">
-        {/* Image Section */}
-        <section className="h-[250px] md:h-[400px] w-full md:w-[40%] bg-[url('chef.jpg')] bg-cover bg-center rounded-3xl shadow-lg"></section>
-
-        {/* Text Section */}
-        <section className="h-auto md:h-[400px] w-full md:w-[40%] bg-white flex items-center justify-center p-6 rounded-lg shadow-lg mt-6 md:mt-0">
-          <div className="text-red-500 text-center">
-            <h2 className="text-2xl font-bold mb-2">Meet Chef Amara</h2>
-            <p className="text-sm text-gray-800 leading-relaxed mb-3">
-              Chef Amara is a passionate culinary artist who turned her love for
-              cooking into a thriving food business.
-            </p>
-            <p className="text-sm text-gray-700 leading-relaxed">
-              Through <span className="font-semibold text-rose-600">JetMeals</span>,
-              she now reaches thousands of new customers every week — customers
-              who can browse her menu, place orders instantly, and enjoy her meals
-              right from the comfort of their homes.
-            </p>
-          </div>
-        </section>
-      </div>
-    </SwiperSlide>
-
-    {/* Slide 2 */}
-    <SwiperSlide>
-      <div className="flex flex-col md:flex-row justify-center items-center ">
-        <section className="h-[250px] md:h-[400px] w-full md:w-[40%] bg-[url('partner.png')] bg-cover bg-center rounded-3xl shadow-lg"></section>
-
-        <section className="h-auto md:h-[400px] w-full md:w-[40%] bg-white flex items-center justify-center p-6 rounded-lg shadow-lg mt-6 md:mt-0">
-          <div className="text-red-500 text-center">
-            <h2 className="text-2xl font-bold mb-2">Chef Daniel</h2>
-            <p className="text-sm text-gray-800 leading-relaxed mb-3">
-              Known for his unique take on continental dishes, Chef Daniel blends
-              tradition with modern creativity to craft unforgettable meals.
-            </p>
-            <p className="text-sm text-gray-700 leading-relaxed">
-              By partnering with <span className="font-semibold text-rose-600">JetMeals</span>,
-              Chef Daniel doesn’t worry about location or foot traffic anymore —
-              the platform connects him to a wide audience of food lovers searching
-              online every day.
-            </p>
-          </div>
-        </section>
-      </div>
-    </SwiperSlide>
-
-    {/* Slide 3 */}
-    <SwiperSlide>
-      <div className="flex flex-col md:flex-row justify-center items-center ">
-        <section className="h-[250px] md:h-[400px] w-full md:w-[40%] bg-[url('chef2.jpg')] bg-cover bg-center rounded-3xl shadow-lg"></section>
-
-        <section className="h-auto md:h-[400px] w-full md:w-[40%] bg-white flex items-center justify-center p-6 rounded-lg shadow-lg mt-6 md:mt-0">
-          <div className="text-red-500 text-center">
-            <h2 className="text-2xl font-bold mb-2">Chef Kelechi</h2>
-            <p className="text-sm text-gray-800 leading-relaxed mb-3">
-              Chef Kelechi specializes in Nigerian cuisine with a modern twist,
-              bringing the taste of home to every plate he serves.
-            </p>
-            <p className="text-sm text-gray-700 leading-relaxed">
-              With <span className="font-semibold text-rose-600">JetMeals</span>,
-              his meals are no longer limited to a local neighborhood. The delivery
-              system ensures that families across the city can discover his food,
-              order with ease, and enjoy authentic Nigerian flavors anytime.
-            </p>
-          </div>
-        </section>
-      </div>
-    </SwiperSlide>
-
-    {/* Slide 4 */}
-    <SwiperSlide>
-      <div className="flex flex-col md:flex-row justify-center items-center ">
-        <section className="h-[250px] md:h-[400px] w-full md:w-[40%] bg-[url('chef4.jpg')] bg-cover bg-center rounded-3xl shadow-lg"></section>
-
-        <section className="h-auto md:h-[400px] w-full md:w-[40%] bg-white flex items-center justify-center p-6 rounded-lg shadow-lg mt-6 md:mt-0">
-          <div className="text-red-500 text-center">
-            <h2 className="text-2xl font-bold mb-2">Chef Aisha</h2>
-            <p className="text-sm text-gray-800 leading-relaxed mb-3">
-              Chef Aisha creates rich desserts and continental dishes that are
-              loved by both young and old.
-            </p>
-            <p className="text-sm text-gray-700 leading-relaxed">
-              Thanks to <span className="font-semibold text-rose-600">JetMeals</span>, 
-              she has grown her small kitchen business into a recognized brand. 
-              With just a few clicks, her cakes and pastries now reach customers 
-              celebrating birthdays, weddings, and special occasions across town.
-            </p>
-          </div>
-        </section>
-      </div>
-    </SwiperSlide>
-  </Swiper>
-</section>
-
+      {/* Chef Showcase Slider */}
+      <section className="py-16 bg-gray-50">
+        <Swiper
+          modules={[Pagination, Autoplay]}
+          pagination={{ clickable: true }}
+          autoplay={{ delay: 5000, disableOnInteraction: false }}
+          spaceBetween={30}
+          slidesPerView={1}
+          className="max-w-6xl mx-auto"
+        >
+          {[
+            {
+              img: "chef.jpg",
+              name: "Chef Amara",
+              desc: "Chef Amara is a passionate culinary artist who turned her love for cooking into a thriving food business.",
+              extra: "Through JetMeals, she now reaches thousands of new customers every week.",
+            },
+            {
+              img: "partner.png",
+              name: "Chef Daniel",
+              desc: "Known for his unique take on continental dishes, Chef Daniel blends tradition with modern creativity.",
+              extra: "By partnering with JetMeals, he connects with food lovers across the city.",
+            },
+            {
+              img: "chef2.jpg",
+              name: "Chef Kelechi",
+              desc: "Chef Kelechi specializes in Nigerian cuisine with a modern twist.",
+              extra: "With JetMeals, families across the city now enjoy his authentic flavors.",
+            },
+            {
+              img: "chef4.jpg",
+              name: "Chef Aisha",
+              desc: "Chef Aisha creates rich desserts and continental dishes loved by many.",
+              extra: "Thanks to JetMeals, her cakes and pastries now reach customers for birthdays and weddings.",
+            },
+          ].map((chef, i) => (
+            <SwiperSlide key={i}>
+              <div className="flex flex-col md:flex-row justify-center items-center gap-6">
+                <section
+                  className={`h-[250px] md:h-[400px] w-full md:w-[40%] bg-[url('${chef.img}')] bg-cover bg-center rounded-3xl shadow-lg`}
+                ></section>
+                <section className="h-auto md:h-[400px] w-full md:w-[40%] bg-white flex items-center justify-center p-6 rounded-lg shadow-lg mt-6 md:mt-0">
+                  <div className="text-red-500 text-center">
+                    <h2 className="text-2xl font-bold mb-2">{chef.name}</h2>
+                    <p className="text-sm text-gray-800 leading-relaxed mb-3">
+                      {chef.desc}
+                    </p>
+                    <p className="text-sm text-gray-700 leading-relaxed">
+                      {chef.extra}
+                    </p>
+                  </div>
+                </section>
+              </div>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </section>
 
       {/* Reviews */}
       <section className="py-16 bg-white">
@@ -293,9 +284,7 @@ function Home() {
                 <p className="text-lg text-black italic mb-2 text-center">
                   "{review.text}"
                 </p>
-                <span className="font-bold text-black">
-                  {review.name}
-                </span>
+                <span className="font-bold text-black">{review.name}</span>
               </motion.div>
             </SwiperSlide>
           ))}
@@ -303,13 +292,9 @@ function Home() {
       </section>
 
       {/* Stats */}
-      <section className="py-12 bg-gray-100">
+      <section className="py-12 bg-gray-100" ref={statRef}>
         <div className="max-w-4xl mx-auto flex flex-wrap justify-center gap-10">
-          {[
-            { label: "Restaurants", value: 120 },
-            { label: "Orders Delivered", value: "50,000+" },
-            { label: "Avg. Delivery Time", value: "25 min" },
-          ].map((stat, idx) => (
+          {stats.map((stat, idx) => (
             <motion.div
               key={idx}
               initial={{ opacity: 0, y: 30 }}
@@ -318,7 +303,11 @@ function Home() {
               className="bg-white rounded-xl shadow-lg px-10 py-8 flex flex-col items-center"
             >
               <span className="text-4xl font-extrabold text-red-500 mb-2">
-                {stat.value}
+                {idx === 1
+                  ? counts[idx].toLocaleString() + "+"
+                  : idx === 2
+                  ? counts[idx] + " min"
+                  : counts[idx]}
               </span>
               <span className="text-lg font-semibold text-gray-700">
                 {stat.label}
@@ -362,9 +351,7 @@ function Home() {
       {/* Newsletter */}
       <section className="py-16 bg-white">
         <div className="max-w-xl mx-auto bg-gradient-to-r from-gray-100 to-gray-200 rounded-xl shadow-lg p-8 flex flex-col items-center">
-          <h2 className="text-2xl font-bold text-red-500 mb-4">
-            Stay Updated!
-          </h2>
+          <h2 className="text-2xl font-bold text-red-500 mb-4">Stay Updated!</h2>
           <p className="mb-6 text-gray-700 text-center">
             Subscribe to our newsletter for exclusive deals and updates.
           </p>

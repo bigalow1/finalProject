@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useCart } from "../AlldetailsFolder/CartContext";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 const CheckoutPage = () => {
   const { cart, increaseQuantity, decreaseQuantity, clearCart } = useCart();
@@ -32,6 +32,13 @@ const CheckoutPage = () => {
       return;
     }
 
+    const token = localStorage.getItem("token"); // ✅ get saved JWT
+    if (!token) {
+      alert("⚠️ Please log in to place an order.");
+      navigate("/login");
+      return;
+    }
+
     const orderData = {
       fullName: formData.fullName,
       phone: formData.phone,
@@ -48,9 +55,12 @@ const CheckoutPage = () => {
 
     try {
       setLoading(true);
-      const res = await fetch("http://localhost:3002/orders", {
+      const res = await fetch("https://your-render-url/orders", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`, // ✅ attach token
+        },
         body: JSON.stringify(orderData),
       });
 

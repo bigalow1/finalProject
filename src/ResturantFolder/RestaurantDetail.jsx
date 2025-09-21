@@ -12,7 +12,7 @@ const RestaurantDetails = () => {
   useEffect(() => {
     const fetchRestaurant = async () => {
       try {
-        const res = await fetch(`https://final-backend-57f6.onrender.com/restaurant/${id}`);
+        const res = await fetch(`http://localhost:3002/restaurant/${id}`);
         if (!res.ok) throw new Error("Failed to fetch restaurant");
         const data = await res.json();
         console.log("Restaurant data:", data); // debug API response
@@ -63,7 +63,7 @@ const RestaurantDetails = () => {
                 key={idx}
                 className="bg-white p-4 rounded-xl shadow hover:shadow-lg transition flex flex-col"
               >
-                <img
+                <imga
                   src={menu.menuPicture || "/placeholder.jpg"}
                   alt={menu.menuName}
                   className="h-40 w-full object-cover rounded mb-3"

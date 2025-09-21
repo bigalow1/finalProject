@@ -47,7 +47,7 @@ const OrderPage = () => {
       try {
         setLoading(true);
         const res = await fetch(
-          `https://final-backend-57f6.onrender.com/menus?page=${page}&limit=12`,
+          `http://localhost:3002/menus?page=${page}&limit=12`,
           {
             headers: { "Content-Type": "application/json" },
           }
