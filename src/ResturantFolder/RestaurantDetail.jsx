@@ -9,24 +9,28 @@ const RestaurantDetails = () => {
   const [error, setError] = useState("");
   const { addToCart } = useCart();
 
-  useEffect(() => {
-    const fetchRestaurant = async () => {
-      try {
-        const res = await fetch(`http://localhost:3002/restaurant/${id}`);
-        if (!res.ok) throw new Error("Failed to fetch restaurant");
-        const data = await res.json();
-        console.log("Restaurant data:", data); // debug API response
-        setRestaurant(data);
-      } catch (err) {
-        console.error(err);
-        setError(err.message || "Something went wrong");
-      } finally {
-        setLoading(false);
-      }
-    };
+useEffect(() => {
+  const fetchRestaurant = async () => {
+    try {
+      const res = await fetch(`http://localhost:3002/restaurant/${id}`);
+      if (!res.ok) throw new Error("Failed to fetch restaurant");
+      const data = await res.json();
+      console.log("✅ Restaurant data:", data);
 
-    fetchRestaurant();
-  }, [id]);
+      // ✅ Fix here
+      setRestaurant(data.restaurant || data);
+    } catch (err) {
+      console.error("❌ Fetch error:", err);
+      setError(err.message || "Something went wrong");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  fetchRestaurant();
+}, [id]);
+
+ 
 
   if (loading) return <p className="text-center mt-40">Loading...</p>;
   if (error) return <p className="text-center mt-20 text-red-500">{error}</p>;
@@ -58,25 +62,25 @@ const RestaurantDetails = () => {
 
         {restaurant.menus && restaurant.menus.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-            {restaurant.menus.map((menu, idx) => (
+            {restaurant.menus.map((item, idx) => (
               <div
                 key={idx}
                 className="bg-white p-4 rounded-xl shadow hover:shadow-lg transition flex flex-col"
               >
-                <imga
-                  src={menu.menuPicture || "/placeholder.jpg"}
-                  alt={menu.menuName}
+                <img
+                  src={item.menuPicture || "/placeholder.jpg"}
+                  alt={item.menuName}
                   className="h-40 w-full object-cover rounded mb-3"
                 />
-                <h3 className="font-semibold text-lg mb-1">{menu.menuName}</h3>
+                <h3 className="font-semibold text-lg mb-1">{item.menuName}</h3>
                 <p className="text-gray-600 text-sm mb-2">
-                  {menu.menuDescription}
+                  {item.menuDescription}
                 </p>
                 <p className="text-green-600 font-bold mb-3">
-                  ₦{menu.menuPrice?.toLocaleString()}
+                  ₦{item.menuPrice?.toLocaleString()}
                 </p>
                 <button
-                  onClick={() => addToCart(menu)}
+                  onClick={() => addToCart(item)}
                   className="mt-auto bg-rose-600 text-white py-2 rounded hover:bg-amber-400 transition"
                 >
                   Add to Cart

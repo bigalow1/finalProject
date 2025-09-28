@@ -59,22 +59,88 @@ function Layout() {
         <Route path="/Login" element={<ForLogin />} />
         <Route path="/Faqs" element={<Faqs />} />
         <Route path="/CartPage" element={<CartPage />} />
-        <Route path="/Dashboard" element={<Dashboard />} />
-        <Route path="/ApproveRestaurant" element={<ApproveRestaurant />} />
-        <Route path="/restaurant/:id" element={<RestaurantDetails />} />
-        <Route
-          path="/CheckoutPage"
-          element={
-            <ProtectedRoute>
-              <CheckoutPage />
-            </ProtectedRoute>
-          }
-        />
-        <Route path="/order" element={<MonitorOrder />} />
+        {/* <Route path="/Dashboard" element={<Dashboard />} /> */}
+        {/* <Route path="/ApproveRestaurant" element={<ApproveRestaurant />} /> */}
+        {/* <Route path="/restaurant/:id" element={<RestaurantDetails />} /> */}
+        {/* 🔒 Admin-only */}
+  <Route
+    path="/Dash"
+    element={
+      <AdminRoute>
+        <Dashboard />
+      </AdminRoute>
+    }
+  />
+  <Route
+    path="/ApproveRestaurant"
+    element={
+      <AdminRoute>
+        <ApproveRestaurant />
+      </AdminRoute>
+    }
+  />
+  <Route
+    path="/Users"
+    element={
+      <AdminRoute>
+        <ManageUsers />
+      </AdminRoute>
+    }
+  />
+  <Route
+    path="/addmenu"
+    element={
+      <AdminRoute>
+        <AddMenu />
+      </AdminRoute>
+    }
+  />
+   <Route
+    path="/Update"
+    element={
+      <ProtectedRoute>
+        <UpdateAvailability />
+      </ProtectedRoute>
+    }
+  />
+  <Route
+    path="/order"
+    element={
+      <ProtectedRoute>
+        <MonitorOrder />
+      </ProtectedRoute>
+    }
+  />
+   <Route
+    path="/Orders"
+    element={
+      <ProtectedRoute>
+        <Orders />
+      </ProtectedRoute>
+    }
+  />
+
+  {/* 🔒 Normal users */}
+  <Route
+    path="/CheckoutPage"
+    element={
+      <ProtectedRoute>
+        <CheckoutPage />
+      </ProtectedRoute>
+    }
+  />
+  <Route
+    path="/restaurant/:id"
+    element={<RestaurantDetails />}
+  />
+  
+ 
+ 
+        {/* <Route path="/order" element={<MonitorOrder />} />
         <Route path="/Orders" element={<Orders />} />
         <Route path="/Users" element={<ManageUsers />} />
         <Route path="/Update" element={<UpdateAvailability />} />
-        <Route path="/dash" element={<Dashboard />} />
+        <Route path="/dash" element={<Dashboard />} /> */}
         <Route path="/payment" element={<DebitCardPayment />} />
         <Route path="/thankyou" element={<ThankYouPage />} />
         <Route path="/admin" element={<AdminRoute />} />

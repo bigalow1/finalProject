@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 function ForLogin() {
   const [email, setEmail] = useState("");
@@ -7,37 +7,40 @@ function ForLogin() {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const from = location.state?.from?.pathname || "/"; // default redirect if no state
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
     setSuccess("");
 
-     try {
-    const res = await fetch("http://localhost:3002/user/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      credentials: "include",
-      body: JSON.stringify({ email, password }),
-    });
+    try {
+      const res = await fetch("http://localhost:3002/user/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({ email, password }),
+      });
 
-    const data = await res.json();
-    console.log("Login response:", data);
+      const data = await res.json();
+      console.log("Login response:", data);
 
-    if (!res.ok) throw new Error(data.message || "Login failed");
+      if (!res.ok) throw new Error(data.message || "Login failed");
 
-    if (data.checkUser && data.checkUser.role === "Admin") {
-      navigate("/Dash", { replace: true });
-    } else if (data.checkUser) {
-      navigate("/CheckoutPage", { replace: true });
-    } else {
-      throw new Error("No user data returned from server");
+      if (data.checkUser && data.checkUser.role === "Admin") {
+        navigate("/Dash", { replace: true });
+      } else if (data.checkUser) {
+        navigate(from, { replace: true }); // ✅ go back to where they wanted
+      } else {
+        throw new Error("No user data returned from server");
+      }
+    } catch (err) {
+      console.error(err);
+      alert(err.message);
     }
-  } catch (err) {
-    console.error(err);
-    alert(err.message);
-  }
-};
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-black via-gray-800 to-red-600 px-4">
@@ -45,9 +48,7 @@ function ForLogin() {
         <h2 className="text-2xl font-bold text-center mb-2">Login</h2>
 
         {error && <p className="text-red-500 text-sm text-center mb-3">{error}</p>}
-        {success && (
-          <p className="text-green-500 text-sm text-center mb-3">{success}</p>
-        )}
+        {success && <p className="text-green-500 text-sm text-center mb-3">{success}</p>}
 
         <form onSubmit={handleSubmit}>
           <input
@@ -66,10 +67,7 @@ function ForLogin() {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-          <button
-            type="submit"
-            className="w-full bg-red-600 text-white py-2 rounded-md"
-          >
+          <button type="submit" className="w-full bg-red-600 text-white py-2 rounded-md">
             Login
           </button>
         </form>

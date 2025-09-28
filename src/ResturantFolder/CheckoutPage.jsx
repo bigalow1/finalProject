@@ -55,7 +55,7 @@ const CheckoutPage = () => {
 
     try {
       setLoading(true);
-      const res = await fetch("https://your-render-url/orders", {
+      const res = await fetch("https://final-backend-57f6.onrender.com/orders", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
