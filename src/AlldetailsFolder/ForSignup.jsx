@@ -8,6 +8,7 @@ function ForSignup() {
     password: "",
   });
 
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -16,26 +17,35 @@ function ForSignup() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const res = await fetch("http://localhost:3002/user/signup", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
+    setLoading(true);
 
+    try {
+      const res = await fetch(
+        "https://final-backend-57f6.onrender.com/user/signup",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(formData),
+        }
+      );
+
+      // backend must return JSON
       const data = await res.json();
-      if (res.ok) {
-        alert("Signup successful!");
-        navigate("/CheckoutPage"); // ✅ take new users to checkout
-      } else {
-        alert(data.message);
+
+      if (!res.ok) {
+        throw new Error(data.message || "Signup failed");
       }
+
+      alert("Signup successful!");
+      navigate("/CheckoutPage"); // ✅ take new users to checkout
     } catch (err) {
       console.error("Signup error:", err);
+      alert(err.message || "Something went wrong");
+    } finally {
+      setLoading(false);
     }
   };
 
-  // ✅ return is now inside ForSignup function
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-black via-gray-800 to-red-600 px-4">
       <div className="bg-white shadow-xl rounded-lg w-full max-w-md p-8">
@@ -71,9 +81,10 @@ function ForSignup() {
           />
           <button
             type="submit"
-            className="w-full bg-red-600 text-white py-2 rounded-md font-semibold hover:bg-red-700"
+            disabled={loading}
+            className="w-full bg-red-600 text-white py-2 rounded-md font-semibold hover:bg-red-700 disabled:opacity-50"
           >
-            Sign Up
+            {loading ? "Signing up..." : "Sign Up"}
           </button>
         </form>
 

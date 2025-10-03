@@ -1,44 +1,61 @@
+// ForLogin.jsx
 import React, { useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "./AuthContext";
 
 function ForLogin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
-  const navigate = useNavigate();
-  const location = useLocation();
+  const [loading, setLoading] = useState(false);
 
-  const from = location.state?.from?.pathname || "/"; // default redirect if no state
+  const navigate = useNavigate();
+  const { login } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
-    setSuccess("");
+    setLoading(true);
 
     try {
-      const res = await fetch("http://localhost:3002/user/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify({ email, password }),
-      });
+      const res = await fetch(
+        "https://final-backend-57f6.onrender.com/user/login",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+          body: JSON.stringify({ email, password }),
+        }
+      );
 
-      const data = await res.json();
-      console.log("Login response:", data);
+      const data = await res.json().catch(() => ({}));
+      console.log("[Login Response]", data);
 
-      if (!res.ok) throw new Error(data.message || "Login failed");
+      if (!res.ok) {
+        const msg = data.message || `Login failed (${res.status})`;
+        throw new Error(msg);
+      }
 
-      if (data.checkUser && data.checkUser.role === "Admin") {
+      if (!data.checkUser) {
+        throw new Error("Login succeeded but server returned no user data.");
+      }
+
+      // Save user & token in AuthContext
+      login(data.checkUser, data.token || data.accessToken || null);
+
+      // Redirect by role
+      if (data.checkUser.role?.toLowerCase() === "Admin") {
+        console.log("[Login] Redirecting → /Dash");
         navigate("/Dash", { replace: true });
-      } else if (data.checkUser) {
-        navigate(from, { replace: true }); // ✅ go back to where they wanted
       } else {
-        throw new Error("No user data returned from server");
+        console.log("[Login] Redirecting → /CheckoutPage");
+        navigate("/CheckoutPage", { replace: true });
       }
     } catch (err) {
-      console.error(err);
-      alert(err.message);
+      console.error("[Login Error]", err);
+      setError(err.message || "Login failed");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -47,28 +64,35 @@ function ForLogin() {
       <div className="bg-white shadow-xl rounded-lg w-full max-w-md p-8">
         <h2 className="text-2xl font-bold text-center mb-2">Login</h2>
 
-        {error && <p className="text-red-500 text-sm text-center mb-3">{error}</p>}
-        {success && <p className="text-green-500 text-sm text-center mb-3">{success}</p>}
+        {error && (
+          <p className="text-red-500 text-sm text-center mb-3">{error}</p>
+        )}
 
         <form onSubmit={handleSubmit}>
           <input
             type="email"
             placeholder="Email"
-            className="w-full border p-2 mb-3"
+            className="w-full border p-2 mb-3 rounded"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
           />
+
           <input
             type="password"
             placeholder="Password"
-            className="w-full border p-2 mb-3"
+            className="w-full border p-2 mb-3 rounded"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-          <button type="submit" className="w-full bg-red-600 text-white py-2 rounded-md">
-            Login
+
+          <button
+            type="submit"
+            className="w-full bg-red-600 text-white py-2 rounded-md hover:bg-red-700 transition"
+            disabled={loading}
+          >
+            {loading ? "Logging in..." : "Login"}
           </button>
         </form>
       </div>

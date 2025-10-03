@@ -11,7 +11,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 
 // ✅ Change this to your backend base URL
-const API_BASE = "http://localhost:3002";
+const API_BASE = "https://final-backend-57f6.onrender.com";
 
 function Restaurants() {
   // Hero carousel slides

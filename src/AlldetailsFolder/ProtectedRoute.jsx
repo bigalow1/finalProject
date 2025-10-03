@@ -1,14 +1,17 @@
-// Example ProtectedRoute.jsx
+// ProtectedRoute.jsx
 import { Navigate, useLocation } from "react-router-dom";
-import { useAuth } from "../AlldetailsFolder/AuthContext";
+import { useAuth } from "./AuthContext";
 
 const ProtectedRoute = ({ children }) => {
-  const { user } = useAuth();
+  const { user, initialized } = useAuth();
   const location = useLocation();
 
+  // If auth is still initializing (restoring from localStorage), don't redirect yet
+  if (!initialized) return null; // or a spinner component while loading
+
   if (!user) {
-    // send user to login, but remember where they were going
-    return <Navigate to="/Login" state={{ from: location }} replace />;
+    // Redirect to login, keeping track of where they wanted to go
+    return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
   return children;
