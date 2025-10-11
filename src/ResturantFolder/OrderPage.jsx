@@ -20,37 +20,31 @@ const categories = [
   "Egusi Soup",
 ];
 
-// ✅ Default placeholder image
-const placeholderImage = "/default-food.pn g"; // place this file in you
+// ✅ Use a hosted placeholder image for missing menu photos
+const placeholderImage =
+  "https://via.placeholder.com/300x200.png?text=No+Image+Available";
 
 const OrderPage = () => {
   const [foods, setFoods] = useState([]);
   const { addToCart, cart } = useCart();
 
-  // Filters
   const [search, setSearch] = useState("");
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(1000);
 
-  // Loading & Error states
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Pagination
-  const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
-
-  // Fetch foods
+  // ✅ Fetch all menus from your deployed backend
   useEffect(() => {
-    const fetchmenus = async () => {
+    const fetchMenus = async () => {
       try {
         setLoading(true);
+
         const res = await fetch(
-          `https://final-backend-57f6.onrender.com/menus?page=${page}&limit=12`,
-          {
-            headers: { "Content-Type": "application/json" },
-          }
+          "https://final-backend-57f6.onrender.com/menus",
+          { headers: { "Content-Type": "application/json" } }
         );
 
         if (!res.ok) {
@@ -59,12 +53,15 @@ const OrderPage = () => {
         }
 
         const data = await res.json();
-        console.log("Fetched menus:", data);
 
-        // ✅ Normalize field names & fix missing image
+        // ✅ Normalize field names
         const normalized = (data.items || data || []).map((item) => ({
           _id: item._id || item.id,
-          menuPicture: item.menuPicture || item.menupicture || null, // null instead of ""
+          menuPicture: item.menuPicture
+            ? item.menuPicture.startsWith("http")
+              ? item.menuPicture
+              : `https://final-backend-57f6.onrender.com/${item.menuPicture}`
+            : null,
           menuName: item.menuName || item.menuname || "Unnamed Food",
           menuDescription:
             item.menuDescription || item.menudescription || "No description",
@@ -72,13 +69,10 @@ const OrderPage = () => {
         }));
 
         setFoods(normalized);
-        setTotalPages(data.totalPages || 1);
 
         if (normalized.length > 0) {
-          const prices = normalized
-            .map((f) => f.menuPrice)
-            .filter((p) => !isNaN(p));
-          setMaxPrice(prices.length > 0 ? Math.max(...prices) : 1000);
+          const prices = normalized.map((f) => f.menuPrice).filter((p) => !isNaN(p));
+          setMaxPrice(Math.max(...prices));
         }
       } catch (err) {
         console.error("Fetch error:", err.message);
@@ -88,10 +82,10 @@ const OrderPage = () => {
       }
     };
 
-    fetchmenus();
-  }, [page]);
+    fetchMenus();
+  }, []);
 
-  // Handle category toggle
+  // ✅ Toggle category filters
   const toggleCategory = (category) => {
     setSelectedCategories((prev) =>
       prev.includes(category)
@@ -100,20 +94,15 @@ const OrderPage = () => {
     );
   };
 
-  // Filter logic
+  // ✅ Filter foods
   const filteredFoods = foods.filter((item) => {
-    const matchesSearch = item.menuName
-      ?.toLowerCase()
-      .includes(search.toLowerCase());
-
+    const matchesSearch = item.menuName?.toLowerCase().includes(search.toLowerCase());
     const matchesCategory =
       selectedCategories.length === 0 ||
       selectedCategories.some((cat) =>
         item.menuName?.toLowerCase().includes(cat.toLowerCase())
       );
-
-    const matchesPrice =
-      item.menuPrice >= minPrice && item.menuPrice <= maxPrice;
+    const matchesPrice = item.menuPrice >= minPrice && item.menuPrice <= maxPrice;
 
     return matchesSearch && matchesCategory && matchesPrice;
   });
@@ -195,76 +184,42 @@ const OrderPage = () => {
 
         {/* Food Grid */}
         {!loading && !error && (
-          <>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
-              {filteredFoods.length > 0 ? (
-                filteredFoods.map((item) => (
-                  <div
-                    key={item._id}
-                    className="border p-4 rounded shadow flex flex-col"
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
+            {filteredFoods.length > 0 ? (
+              filteredFoods.map((item) => (
+                <div
+                  key={item._id}
+                  className="border p-4 rounded shadow flex flex-col"
+                >
+                  <img
+                    src={item.menuPicture || placeholderImage}
+                    alt={item.menuName}
+                    className="h-40 object-cover hover:scale-105 transition-transform duration-300 mx-auto mb-2 rounded"
+                  />
+                  <h3
+                    className="font-semibold text-sm mb-1 line-clamp-2"
+                    title={item.menuName}
                   >
-                    {item.menuPicture ? (
-                      <img
-                        src={item.menuPicture}
-                        alt={item.menuName}
-                        className="h-40 object-cover hover:scale-105 transition-transform duration-300 mx-auto mb-2 rounded"
-                      />
-                    ) : (
-                      <img
-                        src={placeholderImage}
-                        alt="No food available"
-                        className="h-40 object-cover mx-auto mb-2 opacity-70 rounded"
-                      />
-                    )}
-
-                    <h3
-                      className="font-semibold text-sm mb-1 line-clamp-2"
-                      title={item.menuName}
-                    >
-                      {item.menuName}
-                    </h3>
-                    <p className="text-gray-600 text-xs mb-2">
-                      {item.menuDescription}
-                    </p>
-                    <p className="text-green-600 font-bold mb-2">
-                      ₦{item.menuPrice}
-                    </p>
-                    <button
-                      className="bg-blue-600 text-white w-full hover:scale-105 transition-transform duration-300 py-1 rounded hover:bg-blue-700"
-                      onClick={() => addToCart(item)}
-                    >
-                      Add to cart
-                    </button>
-                  </div>
-                ))
-              ) : (
-                <p>No foods match your filters.</p>
-              )}
-            </div>
-
-            {/* Pagination Controls */}
-            {totalPages > 1 && (
-              <div className="flex justify-center mt-6 gap-2">
-                <button
-                  disabled={page === 1}
-                  onClick={() => setPage((p) => p - 1)}
-                  className="px-3 py-1 border rounded disabled:opacity-50"
-                >
-                  Prev
-                </button>
-                <span className="px-3 py-1">
-                  Page {page} of {totalPages}
-                </span>
-                <button
-                  disabled={page === totalPages}
-                  onClick={() => setPage((p) => p + 1)}
-                  className="px-3 py-1 border rounded disabled:opacity-50"
-                >
-                  Next
-                </button>
-              </div>
+                    {item.menuName}
+                  </h3>
+                  <p className="text-gray-600 text-xs mb-2">
+                    {item.menuDescription}
+                  </p>
+                  <p className="text-green-600 font-bold mb-2">
+                    ₦{item.menuPrice}
+                  </p>
+                  <button
+                    className="bg-blue-600 text-white w-full hover:scale-105 transition-transform duration-300 py-1 rounded hover:bg-blue-700"
+                    onClick={() => addToCart(item)}
+                  >
+                    Add to cart
+                  </button>
+                </div>
+              ))
+            ) : (
+              <p>No foods match your filters.</p>
             )}
-          </>
+          </div>
         )}
       </div>
     </div>
