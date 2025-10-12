@@ -197,63 +197,71 @@ function Home() {
         </div>
       </section>
 
-      {/* Chef Showcase Slider */}
-      <section className="py-16 bg-gray-50">
-        <Swiper
-          modules={[Pagination, Autoplay]}
-          pagination={{ clickable: true }}
-          autoplay={{ delay: 5000, disableOnInteraction: false }}
-          spaceBetween={30}
-          slidesPerView={1}
-          className="max-w-6xl mx-auto"
-        >
-          {[
-            {
-              img: "chef.jpg",
-              name: "Chef Amara",
-              desc: "Chef Amara is a passionate culinary artist who turned her love for cooking into a thriving food business.",
-              extra: "Through JetMeals, she now reaches thousands of new customers every week.",
-            },
-            {
-              img: "partner.png",
-              name: "Chef Daniel",
-              desc: "Known for his unique take on continental dishes, Chef Daniel blends tradition with modern creativity.",
-              extra: "By partnering with JetMeals, he connects with food lovers across the city.",
-            },
-            {
-              img: "chef2.jpg",
-              name: "Chef Kelechi",
-              desc: "Chef Kelechi specializes in Nigerian cuisine with a modern twist.",
-              extra: "With JetMeals, families across the city now enjoy his authentic flavors.",
-            },
-            {
-              img: "chef4.jpg",
-              name: "Chef Aisha",
-              desc: "Chef Aisha creates rich desserts and continental dishes loved by many.",
-              extra: "Thanks to JetMeals, her cakes and pastries now reach customers for birthdays and weddings.",
-            },
-          ].map((chef, i) => (
-            <SwiperSlide key={i}>
-              <div className="flex flex-col md:flex-row justify-center items-center gap-6">
-                <section
-                  className={`h-[250px] md:h-[400px] w-full md:w-[40%] bg-[url('${chef.img}')] bg-cover bg-center rounded-3xl shadow-lg`}
-                ></section>
-                <section className="h-auto md:h-[400px] w-full md:w-[40%] bg-white flex items-center justify-center p-6 rounded-lg shadow-lg mt-6 md:mt-0">
-                  <div className="text-red-500 text-center">
-                    <h2 className="text-2xl font-bold mb-2">{chef.name}</h2>
-                    <p className="text-sm text-gray-800 leading-relaxed mb-3">
-                      {chef.desc}
-                    </p>
-                    <p className="text-sm text-gray-700 leading-relaxed">
-                      {chef.extra}
-                    </p>
-                  </div>
-                </section>
-              </div>
-            </SwiperSlide>
-          ))}
-        </Swiper>
-      </section>
+    {/* Chef Showcase Slider */}
+<section className="py-16 bg-gray-50">
+  <Swiper
+    modules={[Pagination, Autoplay]}
+    pagination={{ clickable: true }}
+    autoplay={{ delay: 5000, disableOnInteraction: false }}
+    spaceBetween={30}
+    slidesPerView={1}
+    className="max-w-6xl mx-auto"
+  >
+    {[
+      {
+        img: "/chef.jpg", // ✅ make sure these images are in the public folder
+        name: "Chef Amara",
+        desc: "Chef Amara is a passionate culinary artist who turned her love for cooking into a thriving food business.",
+        extra:
+          "Through JetMeals, she now reaches thousands of new customers every week.",
+      },
+      {
+        img: "/partner.png",
+        name: "Chef Daniel",
+        desc: "Known for his unique take on continental dishes, Chef Daniel blends tradition with modern creativity.",
+        extra:
+          "By partnering with JetMeals, he connects with food lovers across the city.",
+      },
+      {
+        img: "/chef2.jpg",
+        name: "Chef Kelechi",
+        desc: "Chef Kelechi specializes in Nigerian cuisine with a modern twist.",
+        extra:
+          "With JetMeals, families across the city now enjoy his authentic flavors.",
+      },
+      {
+        img: "/chef4.jpg",
+        name: "Chef Aisha",
+        desc: "Chef Aisha creates rich desserts and continental dishes loved by many.",
+        extra:
+          "Thanks to JetMeals, her cakes and pastries now reach customers for birthdays and weddings.",
+      },
+    ].map((chef, i) => (
+      <SwiperSlide key={i}>
+        <div className="flex flex-col md:flex-row justify-center items-center gap-6">
+          {/* ✅ Fixed background image */}
+          <section
+            style={{ backgroundImage: `url(${chef.img})` }}
+            className="h-[250px] md:h-[400px] w-full md:w-[40%] bg-cover bg-center rounded-3xl shadow-lg"
+          ></section>
+
+          <section className="h-auto md:h-[400px] w-full md:w-[40%] bg-white flex items-center justify-center p-6 rounded-lg shadow-lg mt-6 md:mt-0">
+            <div className="text-red-500 text-center">
+              <h2 className="text-2xl font-bold mb-2">{chef.name}</h2>
+              <p className="text-sm text-gray-800 leading-relaxed mb-3">
+                {chef.desc}
+              </p>
+              <p className="text-sm text-gray-700 leading-relaxed">
+                {chef.extra}
+              </p>
+            </div>
+          </section>
+        </div>
+      </SwiperSlide>
+    ))}
+  </Swiper>
+</section>
+
 
       {/* Reviews */}
       <section className="py-16 bg-white">
