@@ -1,6 +1,6 @@
 // ForLogin.jsx
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "./AuthContext";
 
 function ForLogin() {
@@ -10,6 +10,7 @@ function ForLogin() {
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
+  const location = useLocation();
   const { login } = useAuth();
 
   const handleSubmit = async (e) => {
@@ -31,24 +32,23 @@ function ForLogin() {
       const data = await res.json().catch(() => ({}));
       console.log("[Login Response]", data);
 
-      if (!res.ok) {
-        const msg = data.message || `Login failed (${res.status})`;
-        throw new Error(msg);
-      }
+      if (!res.ok) throw new Error(data.message || "Login failed");
 
-      if (!data.checkUser) {
-        throw new Error("Login succeeded but server returned no user data.");
-      }
+      if (!data.checkUser)
+        throw new Error("Login succeeded but no user data found");
 
-      // Save user & token in AuthContext
+      // ✅ Save user and token
       login(data.checkUser, data.token || data.accessToken || null);
 
-      // Redirect by role
-      if (data.checkUser.role?.toLowerCase() === "Admin") {
-        console.log("[Login] Redirecting → /Dash");
+      // ✅ Redirect logic
+      const isAdmin = data.checkUser.role?.toLowerCase() === "admin";
+      const fromCheckout = location.state?.fromCheckout;
+
+      if (isAdmin) {
+        console.log("Redirecting → /Dash");
         navigate("/Dash", { replace: true });
       } else {
-        console.log("[Login] Redirecting → /CheckoutPage");
+        console.log("Redirecting → /CheckoutPage");
         navigate("/CheckoutPage", { replace: true });
       }
     } catch (err) {

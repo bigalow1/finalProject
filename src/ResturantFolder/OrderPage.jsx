@@ -20,9 +20,7 @@ const categories = [
   "Egusi Soup",
 ];
 
-// ✅ Use a hosted placeholder image for missing menu photos
-const placeholderImage =
-  "https://via.placeholder.com/300x200.png?text=No+Image+Available";
+const placeholderImage = "https://placehold.co/300x200?text=No+Image";
 
 const OrderPage = () => {
   const [foods, setFoods] = useState([]);
@@ -32,20 +30,19 @@ const OrderPage = () => {
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(1000);
-
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // ✅ Fetch all menus from your deployed backend
+  const BACKEND_URL = "https://final-backend-57f6.onrender.com";
+
   useEffect(() => {
     const fetchMenus = async () => {
       try {
         setLoading(true);
 
-        const res = await fetch(
-          "https://final-backend-57f6.onrender.com/menus",
-          { headers: { "Content-Type": "application/json" } }
-        );
+        const res = await fetch(`${BACKEND_URL}/menus`, {
+          headers: { "Content-Type": "application/json" },
+        });
 
         if (!res.ok) {
           const text = await res.text();
@@ -54,28 +51,46 @@ const OrderPage = () => {
 
         const data = await res.json();
 
-        // ✅ Normalize field names
-        const normalized = (data.items || data || []).map((item) => ({
-          _id: item._id || item.id,
-          menuPicture: item.menuPicture
-            ? item.menuPicture.startsWith("http")
-              ? item.menuPicture
-              : `https://final-backend-57f6.onrender.com/${item.menuPicture}`
-            : null,
-          menuName: item.menuName || item.menuname || "Unnamed Food",
-          menuDescription:
-            item.menuDescription || item.menudescription || "No description",
-          menuPrice: Number(item.menuPrice || item.menuprice || 0),
-        }));
+        // ✅ Normalize menu data
+        const normalized = (Array.isArray(data) ? data : data.items || []).map(
+          (item) => {
+            let imageUrl = placeholderImage;
 
+            if (item.menuPicture) {
+              if (item.menuPicture.startsWith("http")) {
+                // ✅ Cloud / external image URL
+                imageUrl = item.menuPicture;
+              } else {
+                // ✅ Local image from /uploads folder
+                const cleanPath = item.menuPicture.replace(/^uploads[\\/]/, "");
+                imageUrl = `${BACKEND_URL}/uploads/${cleanPath}`;
+              }
+            }
+
+            return {
+              _id: item._id || item.id,
+              menuPicture: imageUrl,
+              menuName: item.menuName || item.menuname || "Unnamed Food",
+              menuDescription:
+                item.menuDescription ||
+                item.menudescription ||
+                "No description available",
+              menuPrice: Number(item.menuPrice || item.menuprice || 0),
+            };
+          }
+        );
+
+        console.log("✅ Normalized menu items:", normalized);
         setFoods(normalized);
 
         if (normalized.length > 0) {
-          const prices = normalized.map((f) => f.menuPrice).filter((p) => !isNaN(p));
+          const prices = normalized
+            .map((f) => f.menuPrice)
+            .filter((p) => !isNaN(p));
           setMaxPrice(Math.max(...prices));
         }
       } catch (err) {
-        console.error("Fetch error:", err.message);
+        console.error("❌ Fetch error:", err.message);
         setError("Failed to load menus: " + err.message);
       } finally {
         setLoading(false);
@@ -85,7 +100,6 @@ const OrderPage = () => {
     fetchMenus();
   }, []);
 
-  // ✅ Toggle category filters
   const toggleCategory = (category) => {
     setSelectedCategories((prev) =>
       prev.includes(category)
@@ -94,15 +108,17 @@ const OrderPage = () => {
     );
   };
 
-  // ✅ Filter foods
   const filteredFoods = foods.filter((item) => {
-    const matchesSearch = item.menuName?.toLowerCase().includes(search.toLowerCase());
+    const matchesSearch = item.menuName
+      ?.toLowerCase()
+      .includes(search.toLowerCase());
     const matchesCategory =
       selectedCategories.length === 0 ||
       selectedCategories.some((cat) =>
         item.menuName?.toLowerCase().includes(cat.toLowerCase())
       );
-    const matchesPrice = item.menuPrice >= minPrice && item.menuPrice <= maxPrice;
+    const matchesPrice =
+      item.menuPrice >= minPrice && item.menuPrice <= maxPrice;
 
     return matchesSearch && matchesCategory && matchesPrice;
   });
@@ -194,8 +210,10 @@ const OrderPage = () => {
                   <img
                     src={item.menuPicture || placeholderImage}
                     alt={item.menuName}
-                    className="h-40 object-cover hover:scale-105 transition-transform duration-300 mx-auto mb-2 rounded"
+                    className="h-40 w-full object-cover hover:scale-105 transition-transform duration-300 mx-auto mb-2 rounded"
+                    onError={(e) => (e.target.src = placeholderImage)}
                   />
+
                   <h3
                     className="font-semibold text-sm mb-1 line-clamp-2"
                     title={item.menuName}
@@ -206,7 +224,7 @@ const OrderPage = () => {
                     {item.menuDescription}
                   </p>
                   <p className="text-green-600 font-bold mb-2">
-                    ₦{item.menuPrice}
+                    ₦{item.menuPrice.toLocaleString()}
                   </p>
                   <button
                     className="bg-blue-600 text-white w-full hover:scale-105 transition-transform duration-300 py-1 rounded hover:bg-blue-700"

@@ -1,10 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useCart } from "../AlldetailsFolder/CartContext";
 import { useNavigate, Link } from "react-router-dom";
+import { useAuth } from "../AlldetailsFolder/AuthContext";
 
 const CheckoutPage = () => {
   const { cart, increaseQuantity, decreaseQuantity, clearCart } = useCart();
+  const { user } = useAuth();
   const navigate = useNavigate();
+
+  // ✅ Redirect to login if not signed in
+  useEffect(() => {
+    if (!user) {
+      navigate("/login", { state: { from: "/CheckoutPage" } });
+    }
+  }, [user, navigate]);
 
   const [formData, setFormData] = useState({
     fullName: "",
@@ -14,8 +23,8 @@ const CheckoutPage = () => {
   });
 
   const [loading, setLoading] = useState(false);
-
   const cartIsEmpty = cart.length === 0;
+
   const totalAmount = cart.reduce(
     (sum, item) => sum + (item.price || 0) * (item.quantity || 0),
     0
@@ -28,11 +37,11 @@ const CheckoutPage = () => {
 
   const handlePlaceOrder = async () => {
     if (!formData.fullName || !formData.phone || !formData.address) {
-      alert("Please fill in all required fields.");
+      alert("⚠️ Please fill in all required fields.");
       return;
     }
 
-    const token = localStorage.getItem("token"); // ✅ get saved JWT
+    const token = localStorage.getItem("token");
     if (!token) {
       alert("⚠️ Please log in to place an order.");
       navigate("/login");
@@ -59,7 +68,7 @@ const CheckoutPage = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`, // ✅ attach token
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(orderData),
       });
@@ -67,11 +76,18 @@ const CheckoutPage = () => {
       const data = await res.json();
 
       if (res.ok) {
-        alert("✅ Order placed successfully!");
         clearCart();
-        navigate("/thankyou");
+        navigate("/thankyou", {
+          state: {
+            orderSummary: {
+              ...orderData,
+              orderId: data._id || Date.now(),
+              status: "Order Placed",
+            },
+          },
+        });
       } else {
-        alert(`❌ Failed to place order: ${data.message || "Error"}`);
+        alert(`❌ Failed to place order: ${data.message || "Unknown error"}`);
       }
     } catch (err) {
       console.error("Order error:", err);
@@ -83,9 +99,13 @@ const CheckoutPage = () => {
 
   return (
     <div className="p-6 min-h-screen bg-gray-50 mt-20">
-      <h1 className="text-2xl font-bold mb-6 text-rose-600">Checkout</h1>
+      <h1 className="text-2xl font-bold mb-6 text-rose-600 text-center">
+        Checkout
+      </h1>
 
-      {cartIsEmpty ? (
+      {!user ? (
+        <p className="text-center">Redirecting to login...</p>
+      ) : cartIsEmpty ? (
         <div className="text-center bg-rose-100 p-6 rounded">
           <h2 className="text-xl font-semibold mb-2">Your cart is empty!</h2>
           <Link to="/OrderPage">
@@ -96,7 +116,7 @@ const CheckoutPage = () => {
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Cart Summary */}
+          {/* 🛒 Order Summary */}
           <div>
             <h2 className="text-xl font-bold mb-4">Order Summary</h2>
             {cart.map((item) => (
@@ -106,9 +126,9 @@ const CheckoutPage = () => {
               >
                 <div className="flex items-center gap-3">
                   <img
-                    src={item.image || "/placeholder.png"}
+                    src={item.image || "https://placehold.co/100x100?text=No+Image"}
                     alt={item.title}
-                    className="w-20 h-20 object-contain rounded"
+                    className="w-20 h-20 object-cover rounded"
                   />
                   <div>
                     <h4 className="font-semibold">{item.title}</h4>
@@ -117,6 +137,7 @@ const CheckoutPage = () => {
                     </p>
                   </div>
                 </div>
+
                 <div className="flex items-center gap-2">
                   <button
                     onClick={() => decreaseQuantity(item.id)}
@@ -134,12 +155,13 @@ const CheckoutPage = () => {
                 </div>
               </div>
             ))}
-            <p className="mt-4 font-bold">
+
+            <p className="mt-4 font-bold text-lg">
               Total: ₦{totalAmount.toLocaleString()}
             </p>
           </div>
 
-          {/* Delivery Details */}
+          {/* 📦 Delivery Details */}
           <div>
             <h2 className="text-xl font-bold mb-4">Delivery Details</h2>
             <form
@@ -158,7 +180,7 @@ const CheckoutPage = () => {
                 className="w-full border p-2 rounded"
               />
               <input
-                type="number"
+                type="tel"
                 name="phone"
                 value={formData.phone}
                 onChange={handleChange}
@@ -173,6 +195,7 @@ const CheckoutPage = () => {
                 className="w-full border p-2 rounded"
                 rows="3"
               />
+
               <div className="flex items-center gap-4">
                 <label className="flex items-center gap-2">
                   <input
@@ -184,6 +207,7 @@ const CheckoutPage = () => {
                   />
                   Cash on Delivery
                 </label>
+
                 <label className="flex items-center gap-2">
                   <input
                     type="radio"
@@ -192,11 +216,12 @@ const CheckoutPage = () => {
                     checked={formData.payment === "card"}
                     onChange={handleChange}
                   />
-                  <Link to="/payment" className="text-black">
+                  <Link to="/payment" className="text-blue-600 underline">
                     Pay with Debit Card
                   </Link>
                 </label>
               </div>
+
               <button
                 type="submit"
                 disabled={loading}
