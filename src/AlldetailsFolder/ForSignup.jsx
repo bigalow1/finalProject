@@ -21,7 +21,7 @@ function ForSignup() {
 
     try {
       const res = await fetch(
-        "https://final-backend-57f6.onrender.com/user/signup",
+        "https://final-backend-57f6.onrender.com/user",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
